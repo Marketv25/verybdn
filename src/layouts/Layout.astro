@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: 'en' | 'es';
+  canonicalUrl: string;
+  alternateUrl?: string;
+  ogImage?: string;
+}
+
+const { title, description, lang, canonicalUrl, alternateUrl, ogImage } = Astro.props;
+
+const siteBase = 'https://verybdn.com';
+const resolvedOgImage = ogImage || `${siteBase}/og-burro.jpg`;
+const ogLocale = lang === 'en' ? 'en_US' : 'es_ES';
+
+const enHref = lang === 'en' ? canonicalUrl : alternateUrl;
+const esHref = lang === 'es' ? canonicalUrl : alternateUrl;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="canonical" href={canonicalUrl}>
+{alternateUrl && (
+  <>
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="es" href={esHref} />
+    <link rel="alternate" hreflang="x-default" href={enHref} />
+  </>
+)}
+
+{/* Open Graph / Facebook */}
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:site_name" content="verybdn" />
+
+{/* Twitter */}
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={resolvedOgImage} />
+
+{/* Slot para inyectar Schema JSON-LD de forma independiente por página */}
+<slot name="head" />
+</head>
+<body>
+  <slot />
+</body>
+</html>

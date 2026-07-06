@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import vistaMinca from '../assets/img/vista-minca.png';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+---
+
+<aside class="hero-card reveal">
+  <Image 
+    src={vistaMinca} 
+    alt={lang === 'en' ? "A golden sunset over the jungle canopy of Minca, Sierra Nevada de Santa Marta" : "Un atardecer dorado sobre la copa de los árboles en la selva de Minca, Sierra Nevada de Santa Marta"}
+    loading="eager"
+    width={400}
+    height={267}
+    class="hero-portrait"
+    style="object-fit:cover;border-radius:4px;display:block;"
+  />
+  <span class="vbdn"><span class="vv">v</span>bdn</span>
+  {lang === 'en' ? (
+    <p>Written from Minca, in the Sierra Nevada. Five years living and working in the territory these pages cover — not visiting it for a week.</p>
+    <span class="live"><span class="dot"></span><span>Updated from the ground</span></span>
+  ) : (
+    <p>Escrito desde Minca, en la Sierra Nevada. Cinco años viviendo y trabajando en el territorio que cubren estas páginas — no visitándolo una semana.</p>
+    <span class="live"><span class="dot"></span><span>Actualizado desde el terreno</span></span>
+  )}
+</aside>

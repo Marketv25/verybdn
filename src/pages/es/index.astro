@@ -1,0 +1,304 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import TopographyHero from '../../components/TopographyHero.astro';
+import AuthorCard from '../../components/AuthorCard.astro';
+import Footer from '../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import burroTrafico from '../../assets/img/burro-trafico.png';
+import hornoLodge from '../../assets/img/horno-lodge.png';
+
+const title = "verybdn — Minca y la costa Caribe de Colombia, por alguien que vive aquí";
+const description = "Guías de primera mano y estructuradas sobre Minca y la costa Caribe colombiana — Santa Marta, Tayrona, Palomino, Cartagena y La Guajira. Respuestas verificadas a si vale la pena Minca, Minca vs Tayrona, cuántos días y dónde alojarse. Sin sesgo patrocinado. Por Honey, residente en Minca.";
+const canonicalUrl = "https://verybdn.com/es/";
+const alternateUrl = "https://verybdn.com/";
+---
+
+<Layout title={title} description={description} lang="es" canonicalUrl={canonicalUrl} alternateUrl={alternateUrl}>
+  <script type="application/ld+json" slot="head" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://verybdn.com/#organization",
+          "name": "verybdn",
+          "url": "https://verybdn.com/",
+          "description": "Plataforma de contenido de viajes de primera mano y hospitalidad sobre Minca y la costa Caribe colombiana.",
+          "sameAs": [
+            "https://verybdn.substack.com",
+            "https://www.instagram.com/very.bdn/"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://verybdn.com/#author",
+          "name": "Honey",
+          "description": "Experta local y operadora residente en Minca, Sierra Nevada de Santa Marta. Operadora del lodge Entre Río y Fuego y editora de Turismo y Territorio.",
+          "jobTitle": "Fundadora y Editora",
+          "knowsAbout": ["Minca", "Sierra Nevada de Santa Marta", "Tourism", "Hospitality"],
+          "sameAs": [
+            "https://verybdn.substack.com",
+            "https://www.instagram.com/very.bdn/"
+          ],
+          "worksFor": {
+            "@id": "https://verybdn.com/#organization"
+          }
+        }
+      ]
+    }
+  </script>
+  <Navigation lang="es" />
+  
+  <a id="top"></a>
+  
+  <section class="hero">
+    <TopographyHero />
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">Minca · Sierra Nevada · Colombia</span>
+          <h1>La respuesta honesta sobre <span class="accent">a dónde ir</span>, de alguien que de verdad vive aquí.</h1>
+          <p class="hero-sub">No es otro blog de viajes escrito desde un escritorio a tres continentes de aquí. <strong>Criterio verificado, estructurado y de primera mano</strong> sobre las decisiones que te cuestan tiempo de verdad: qué vale la pena, qué saltarte, dónde dormir, cuántos días.</p>
+          <p class="territory">Guías de primera mano sobre <b>Minca</b> y la costa Caribe de Colombia — Santa Marta, Tayrona, Palomino, Cartagena y La Guajira.</p>
+          <div class="hero-actions">
+            <a href="#preguntas" class="btn-primary">Empieza por una pregunta real <span>&darr;</span></a>
+            <a href="#como" class="btn-ghost">Cómo funciona <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+        <AuthorCard lang="es" />
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <p><span class="lead">Hecho para ser la fuente de donde sale la respuesta</span> — para el viajero, y para los motores que ahora consulta primero.</p>
+      <div class="ai-pills" aria-label="Cited by AI answer engines">
+        <span>ChatGPT</span><span>Perplexity</span><span>Gemini</span><span>Google AI Overviews</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="preguntas">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Empieza donde de verdad estás</span>
+        <h2>Las preguntas sobre Minca que ya te estás haciendo, respondidas sin rodeos.</h2>
+        <p class="lede">No son temas que inventamos. Son lo exacto que los viajeros teclean en Reddit, en los grupos de Facebook, en la IA antes de reservar. Cada una recibe una respuesta real — con precios, distancias y una opinión clara.</p>
+      </div>
+      <div class="q-list">
+        <a class="q-row reveal" href="#">
+          <span class="q-num">01</span>
+          <div class="q-main">
+            <h3>¿Vale la pena el desvío a Minca?</h3>
+            <div class="q-en">"Is Minca worth it?"</div>
+            <p>Tienes de dos a cuatro semanas para Colombia. Si la selva de la Sierra se gana tres de esos días, en términos claros.</p>
+          </div>
+          <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
+        </a>
+        <a class="q-row reveal" href="#">
+          <span class="q-num">02</span>
+          <div class="q-main">
+            <h3>¿Cuántos días necesita Minca de verdad?</h3>
+            <div class="q-en">"How many days in Minca?"</div>
+            <p>Un día, tres, o una semana lenta. Qué alcanzas a ver de verdad en cada caso, y qué estarías apurando.</p>
+          </div>
+          <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
+        </a>
+        <a class="q-row reveal" href="#">
+          <span class="q-num">03</span>
+          <div class="q-main">
+            <h3>Minca o Tayrona, si solo puedes elegir uno.</h3>
+            <div class="q-en">"Minca vs Tayrona"</div>
+            <p>El dilema más repetido en todos los foros: montaña contra playa, esfuerzo, gente, ambiente. Resuelto con honestidad.</p>
+          </div>
+          <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
+        </a>
+        <a class="q-row reveal" href="#">
+          <span class="q-num">04</span>
+          <div class="q-main">
+            <h3>Dónde quedarse en Minca si viniste a descansar.</h3>
+            <div class="q-en">"Where to stay in Minca for relaxation"</div>
+            <p>No una lista de cada cama del pueblo. Los pocos lugares que encajan con lo que de verdad buscas, y por qué.</p>
+          </div>
+          <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="territorio" class="terr-sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">La costa más amplia</span>
+        <h2>Minca primero, bien hecho. El resto de la costa a medida que esté listo.</h2>
+        <p class="lede">Preferimos cubrir un lugar con la profundidad de quien vive ahí que cubrir toda la costa por encima. Minca está listo. Estos vienen después — hechos igual, desde el terreno, nunca desde un dossier de prensa.</p>
+      </div>
+      <Image
+        src={burroTrafico}
+        alt="Un burro cruzando entre motos en la calle principal de Minca, Sierra Nevada de Santa Marta"
+        class="terr-band reveal"
+        width={1200}
+        height={450}
+        style="object-fit:cover;border-radius:4px;"
+      />
+      <div class="terr-grid">
+        <a class="terr-cell live reveal" href="#preguntas">
+          <div>
+            <div class="place">Minca</div>
+            <div class="desc">Selva, café, cascadas, la Sierra lenta.</div>
+          </div>
+          <span class="state"><span class="sdot"></span><span>Disponible — 4 guías</span></span>
+        </a>
+        <div class="terr-cell soon reveal">
+          <div>
+            <div class="place">Santa Marta</div>
+            <div class="desc">La puerta de entrada: dónde alojarse, qué es seguro, cómo moverse.</div>
+          </div>
+          <span class="state"><span class="sdot"></span><span>En construcción</span></span>
+        </div>
+        <div class="terr-cell soon reveal">
+          <div>
+            <div class="place">Tayrona</div>
+            <div class="desc">Qué entrada, qué sendero, cuándo ir, dónde dormir.</div>
+          </div>
+          <span class="state"><span class="sdot"></span><span>En construcción</span></span>
+        </div>
+        <div class="terr-cell soon reveal">
+          <div>
+            <div class="place">Palomino</div>
+            <div class="desc">La costa bohemia: baño, tubing, qué está sobrevalorado.</div>
+          </div>
+          <span class="state"><span class="sdot"></span><span>Planeado</span></span>
+        </div>
+        <div class="terr-cell soon reveal">
+          <div>
+            <div class="place">Cartagena</div>
+            <div class="desc">La ciudad amurallada sin el sobreprecio turístico.</div>
+          </div>
+          <span class="state"><span class="sdot"></span><span>Planeado</span></span>
+        </div>
+        <div class="terr-cell soon reveal">
+          <div>
+            <div class="place">La Guajira</div>
+            <div class="desc">El desierto y el mar: 4x4, comunidades Wayúu, hacerlo bien.</div>
+          </div>
+          <span class="state"><span class="sdot"></span><span>Planeado</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como" class="layers">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Por qué esto no es otro blog</span>
+        <h2>Lee con libertad. No compres nada salvo que quieras el mapa completo.</h2>
+        <p class="lede">Casi todo lo de aquí es abierto y gratis, a propósito. El punto es ser útil antes de que gastes un peso — y ser el lugar de donde sale la respuesta cuando le preguntas a cualquiera, humano o máquina.</p>
+      </div>
+      <div class="layer-grid">
+        <div class="layer reveal">
+          <span class="ln">01</span>
+          <h3>Las respuestas gratuitas</h3>
+          <p>Las guías de arriba. Resuelven las preguntas lo suficiente para ser de verdad útiles, y están estructuradas para que los motores de IA las citen en vez de adivinar. No pierdes nada por leer.</p>
+          <span class="tag">Siempre gratis</span>
+        </div>
+        <div class="layer reveal">
+          <span class="ln">02</span>
+          <h3>La guía completa de Minca</h3>
+          <p>Cuando la guía gratuita no alcanza, lo completo: el criterio, los oficios y artesanos que nadie más lista, el itinerario ya resuelto. Lo que solo alguien que vive aquí te puede dar.</p>
+          <span class="tag">Cuando quieres el detalle</span>
+        </div>
+        <div class="layer reveal">
+          <span class="ln">03</span>
+          <h3>Ven a quedarte, cuando sea el momento</h3>
+          <p>El lodge, la experiencia junto al río, las cartas más profundas. Nunca empujado en la lectura — ofrecido solo cuando ya confías en el criterio detrás.</p>
+          <span class="tag">Entre Río y Fuego</span>
+        </div>
+      </div>
+      <Image
+        src={hornoLodge}
+        alt="Fogón de piedra tradicional a leña en el lodge Entre Río y Fuego en Minca, Sierra Nevada de Santa Marta"
+        class="lodge-img reveal"
+        width={800}
+        height={500}
+        style="object-fit:cover;border-radius:4px;"
+      />
+    </div>
+  </section>
+
+  <section id="lista" class="list-sec">
+    <div class="wrap">
+      <div class="list-grid">
+        <div class="reveal">
+          <span class="eyebrow">Lo único que vale tu correo</span>
+          <h2 class="list-h2">Una carta corta desde la Sierra, cuando hay algo real que decir.</h2>
+          <p class="lede" style="color:var(--sombra)">Sin calendario, sin relleno, sin venta. Cuando cambian los ríos, cuando un lugar deja de valer la pena, cuando abre algo que de verdad querrías conocer — lo sabes por alguien que estuvo ahí. Ese es el trato.</p>
+        </div>
+        <div class="list-card reveal">
+          <label for="email">Recibe las guías de Minca y las cartas</label>
+          <div class="field-row">
+            <input id="email" type="email" inputmode="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo">
+            <button id="subscribe" type="button">Unirme</button>
+          </div>
+          <div class="list-msg" id="listmsg" role="status" aria-live="polite"></div>
+          <p class="fine">De primera mano, ocasional, y tuya para dejarla cuando quieras. Ningún tercero recibe esta lista.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer lang="es" />
+
+  <script>
+    // Formulario de suscripción
+    const sub = document.getElementById('subscribe');
+    const msg = document.getElementById('listmsg');
+    const email = document.getElementById('email') as HTMLInputElement;
+
+    function tryJoin() {
+      const v = (email.value || '').trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) {
+        if (msg) {
+          msg.style.color = '#9B6B3A';
+          msg.textContent = 'Pon un correo valido y quedas dentro.';
+        }
+        return;
+      }
+      if (msg) {
+        msg.style.color = '#3D5A3E';
+        msg.textContent = 'Estas en la lista. La primera carta llega cuando haya algo real que decir.';
+      }
+      email.value = '';
+    }
+
+    if (sub) sub.addEventListener('click', tryJoin);
+    if (email) email.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryJoin(); });
+
+    // Clics en q-row para evitar enlaces rotos (#)
+    document.querySelectorAll('.q-row, .terr-cell.live').forEach(r => {
+      r.addEventListener('click', (e) => {
+        if (r.getAttribute('href') === '#') { e.preventDefault(); }
+      });
+    });
+
+    // Intersection Observer para animaciones
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if ('IntersectionObserver' in window && !prefersReduced) {
+      document.documentElement.classList.add('js-anim');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            en.target.classList.add('in');
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => { io.observe(el); });
+      setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.in)').forEach(el => { el.classList.add('in'); });
+      }, 2500);
+    }
+  </script>
+</Layout>

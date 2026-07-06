@@ -1,0 +1,78 @@
+---
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+// Decidir a dónde redirigir al cambiar de idioma
+const enTarget = lang === 'es' ? '/' : null;
+const esTarget = lang === 'en' ? '/es/' : null;
+---
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href={lang === 'en' ? '#top' : '/es/#top'} class="logo" aria-label="verybdn home"><span class="v">very</span><span class="b">bdn</span></a>
+    <div class="nav-right">
+      <nav class="nav-links" id="navlinks">
+        {lang === 'en' ? (
+          <>
+            <a href="#preguntas">Minca guides</a>
+            <a href="#territorio">The coast</a>
+            <a href="#como">How it works</a>
+            <a href="#lista">The list</a>
+            <a href="#lista" class="nav-cta">Join the list</a>
+          </>
+        ) : (
+          <>
+            <a href="#preguntas">Guías de Minca</a>
+            <a href="#territorio">La costa</a>
+            <a href="#como">Cómo funciona</a>
+            <a href="#lista">La lista</a>
+            <a href="#lista" class="nav-cta">Únete a la lista</a>
+          </>
+        )}
+      </nav>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <a id="lang-en" class={lang === 'en' ? 'on' : ''} href={enTarget} aria-pressed={lang === 'en' ? 'true' : 'false'}>EN</a>
+        <a id="lang-es" class={lang === 'es' ? 'on' : ''} href={esTarget} aria-pressed={lang === 'es' ? 'true' : 'false'}>ES</a>
+      </div>
+      <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Script del burger menú que se ejecuta en el cliente progresivamente
+  const burger = document.getElementById('burger');
+  const links = document.getElementById('navlinks');
+  
+  if (burger && links) {
+    burger.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Guardar preferencia de idioma en localStorage cuando el usuario hace click en el toggle
+  const langEn = document.getElementById('lang-en');
+  const langEs = document.getElementById('lang-es');
+
+  if (langEn) {
+    langEn.addEventListener('click', () => {
+      try { localStorage.setItem('vbdn_lang', 'en'); } catch (e) {}
+    });
+  }
+  if (langEs) {
+    langEs.addEventListener('click', () => {
+      try { localStorage.setItem('vbdn_lang', 'es'); } catch (e) {}
+    });
+  }
+</script>

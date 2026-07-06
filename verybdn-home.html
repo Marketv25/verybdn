@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>verybdn — Minca & Colombia's Caribbean coast, from someone who lives here</title>
+<meta name="description" content="First-hand, structured guides to Minca and Colombia's Caribbean coast — Santa Marta, Tayrona, Palomino, Cartagena & La Guajira. Verified answers to is Minca worth it, Minca vs Tayrona, how many days, where to stay. No sponsored bias. By Honey, living in Minca.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tierra:#1A1814;--crema:#F2ECE0;--barro:#9B6B3A;--barro-claro:#C4895A;
+    --sombra:#7A6A52;--selva:#3D5A3E;--hueso:#E8E0D0;--borde:#D9D0C0;
+    --serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--maxw:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--crema);color:var(--tierra);font-family:var(--sans);font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--barro);color:var(--crema)}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .eyebrow{font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.22em;font-size:12px;color:var(--sombra)}
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(242,236,224,0.86);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--borde)}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .logo{font-family:var(--sans);font-weight:500;font-size:22px;letter-spacing:-0.02em;line-height:1;white-space:nowrap}
+  .logo .v{color:var(--tierra)}.logo .b{color:var(--barro)}
+  .nav-right{display:flex;align-items:center;gap:22px}
+  .nav-links{display:flex;gap:26px;align-items:center}
+  .nav-links a{font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.14em;font-size:12px;color:var(--sombra);transition:color .2s}
+  .nav-links a:hover{color:var(--tierra)}
+  .nav-cta{font-family:var(--sans);font-weight:500;letter-spacing:0;text-transform:none;font-size:14px;color:var(--crema)!important;background:var(--tierra);padding:9px 18px;border-radius:2px;transition:background .2s}
+  .nav-cta:hover{background:var(--barro)}
+  .lang{display:inline-flex;border:1px solid var(--borde);border-radius:2px;overflow:hidden;flex-shrink:0}
+  .lang button{font-family:var(--sans);font-weight:500;font-size:12px;letter-spacing:0.04em;color:var(--sombra);background:transparent;border:0;padding:7px 11px;cursor:pointer;transition:background .2s,color .2s}
+  .lang button.on{background:var(--tierra);color:var(--crema)}
+  .nav-burger{display:none;background:none;border:0;cursor:pointer;color:var(--tierra);font-size:24px}
+  @media(max-width:900px){
+    .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;gap:0;background:var(--crema);border-bottom:1px solid var(--borde);max-height:0;overflow:hidden;transition:max-height .3s ease}
+    .nav-links.open{max-height:360px}
+    .nav-links a{padding:14px 28px;width:100%;border-top:1px solid var(--borde)}
+    .nav-links .nav-cta{margin:14px 28px;width:calc(100% - 56px);text-align:center}
+    .nav-burger{display:block}
+  }
+  .hero{position:relative;padding:90px 0 72px;overflow:hidden}
+  .hero .wrap{position:relative;z-index:2}
+  .hero-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:end}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:38px}.hero{padding:56px 0 52px}}
+  .hero h1{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(36px,6vw,68px);line-height:1.03;letter-spacing:-0.01em;margin:18px 0 0}
+  .hero h1 .accent{color:var(--barro);font-style:italic}
+  .hero-sub{font-family:var(--sans);font-weight:300;font-size:clamp(16px,2.1vw,20px);line-height:1.6;color:var(--sombra);max-width:48ch;margin-top:22px}
+  .hero-sub strong{font-weight:500;color:var(--tierra)}
+  .territory{margin-top:20px;font-family:var(--sans);font-weight:400;font-size:15px;color:var(--tierra);max-width:50ch;line-height:1.55}
+  .territory b{font-weight:500}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;align-items:center}
+  .btn-primary{font-family:var(--sans);font-weight:500;font-size:15px;color:var(--crema);background:var(--tierra);padding:14px 26px;border-radius:2px;display:inline-flex;align-items:center;gap:10px;transition:background .25s,transform .25s}
+  .btn-primary:hover{background:var(--barro);transform:translateY(-1px)}
+  .btn-ghost{font-family:var(--sans);font-weight:500;font-size:15px;color:var(--tierra);padding:14px 8px;display:inline-flex;align-items:center;gap:8px;border-bottom:1.5px solid transparent;transition:border-color .25s}
+  .btn-ghost:hover{border-color:var(--barro)}
+  .btn-ghost .arrow{color:var(--barro);transition:transform .25s}.btn-ghost:hover .arrow{transform:translateX(4px)}
+  .hero-card{background:var(--tierra);color:var(--crema);border-radius:4px;padding:30px 30px 26px;position:relative}
+  .hero-card .vbdn{font-family:var(--sans);font-weight:500;font-size:15px;letter-spacing:-0.02em;color:var(--barro-claro)}
+  .hero-card .vbdn .vv{color:var(--crema)}
+  .hero-card p{font-family:var(--sans);font-weight:300;font-size:16px;line-height:1.65;color:#D8CFC0;margin-top:16px}
+  .hero-card .live{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.18em;font-size:11px;color:#9A8E7E}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--selva);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(120,160,110,.5)}70%{box-shadow:0 0 0 9px rgba(120,160,110,0)}100%{box-shadow:0 0 0 0 rgba(120,160,110,0)}}
+  .topo{position:absolute;inset:0;z-index:1;opacity:.5;pointer-events:none}
+  .strip{border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);background:var(--hueso)}
+  .strip .wrap{padding:22px 28px;display:flex;flex-wrap:wrap;gap:14px 40px;align-items:center;justify-content:space-between}
+  .strip p{font-family:var(--sans);font-weight:300;font-size:14px;color:var(--sombra);line-height:1.5}
+  .strip .lead{font-weight:400;color:var(--tierra)}
+  .ai-pills{display:flex;flex-wrap:wrap;gap:8px}
+  .ai-pills span{font-family:var(--sans);font-weight:400;font-size:12px;color:var(--sombra);border:1px solid var(--borde);background:var(--crema);padding:5px 11px;border-radius:2px}
+  section{padding:82px 0}
+  @media(max-width:860px){section{padding:58px 0}}
+  .sec-head{max-width:62ch}
+  .sec-head h2{font-family:var(--serif);font-style:normal;font-weight:400;font-size:clamp(28px,4vw,42px);line-height:1.08;letter-spacing:-0.01em;margin:12px 0 0}
+  .sec-head .lede{font-family:var(--sans);font-weight:300;font-size:18px;color:var(--sombra);margin-top:18px;line-height:1.6;max-width:56ch}
+  .q-list{margin-top:46px;border-top:1px solid var(--borde)}
+  .q-row{display:grid;grid-template-columns:64px 1fr auto;gap:24px;align-items:baseline;padding:26px 4px;border-bottom:1px solid var(--borde);transition:padding-left .3s,background .3s;cursor:pointer}
+  .q-row:hover{padding-left:14px;background:rgba(155,107,58,0.05)}
+  .q-num{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--barro)}
+  .q-main h3{font-family:var(--serif);font-style:normal;font-weight:400;font-size:clamp(20px,2.6vw,27px);line-height:1.15}
+  .q-en{font-family:var(--sans);font-weight:300;font-size:13px;letter-spacing:0.04em;color:var(--sombra);margin-top:6px;font-style:italic}
+  .q-main p{font-family:var(--sans);font-weight:400;font-size:15px;color:var(--sombra);margin-top:10px;max-width:54ch}
+  .q-go{font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.16em;font-size:12px;color:var(--barro);white-space:nowrap;display:flex;align-items:center;gap:8px}
+  .q-go .arrow{transition:transform .25s}.q-row:hover .q-go .arrow{transform:translateX(5px)}
+  @media(max-width:680px){.q-row{grid-template-columns:40px 1fr;gap:16px}.q-go{grid-column:2;margin-top:8px}}
+  .terr-sec{background:var(--hueso)}
+  .terr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;margin-top:44px;background:var(--borde);border:1px solid var(--borde)}
+  .terr-cell{background:var(--crema);padding:24px 22px;min-height:132px;display:flex;flex-direction:column;justify-content:space-between}
+  .terr-cell .place{font-family:var(--serif);font-style:normal;font-weight:400;font-size:22px;line-height:1.1}
+  .terr-cell .desc{font-family:var(--sans);font-weight:300;font-size:14px;color:var(--sombra);margin-top:8px;line-height:1.5}
+  .terr-cell .state{font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.16em;font-size:11px;margin-top:16px;display:inline-flex;align-items:center;gap:7px}
+  .terr-cell.live{cursor:pointer;transition:background .25s}
+  .terr-cell.live:hover{background:#fff}
+  .terr-cell.live .state{color:var(--selva)}
+  .terr-cell.soon{background:#EDE6D8}
+  .terr-cell.soon .place{color:var(--sombra)}
+  .terr-cell.soon .state{color:#A8997E}
+  .sdot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
+  .layers{background:var(--tierra);color:var(--crema)}
+  .layers .sec-head h2{color:var(--crema)}.layers .sec-head .lede{color:#A89C8B}.layers .eyebrow{color:var(--barro-claro)}
+  .layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:46px;background:rgba(217,208,192,0.18);border:1px solid rgba(217,208,192,0.18)}
+  @media(max-width:760px){.layer-grid{grid-template-columns:1fr}}
+  .layer{background:var(--tierra);padding:34px 30px}
+  .layer .ln{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--barro-claro)}
+  .layer h3{font-family:var(--serif);font-style:normal;font-weight:400;font-size:25px;margin-top:14px;line-height:1.12;color:var(--crema)}
+  .layer p{font-family:var(--sans);font-weight:300;font-size:15.5px;line-height:1.65;color:#B6AB99;margin-top:14px}
+  .layer .tag{display:inline-block;margin-top:20px;font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.16em;font-size:11px;color:#8E8270;border-top:1px solid rgba(217,208,192,0.2);padding-top:14px}
+  .list-sec{background:var(--crema)}
+  .list-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+  @media(max-width:760px){.list-grid{grid-template-columns:1fr;gap:36px}}
+  .list-card{background:var(--hueso);border:1px solid var(--borde);border-radius:4px;padding:34px 32px}
+  .list-card label{display:block;font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.16em;font-size:12px;color:var(--sombra);margin-bottom:10px}
+  .field-row{display:flex;gap:10px;flex-wrap:wrap}
+  .list-card input{flex:1;min-width:200px;font-family:var(--sans);font-size:16px;color:var(--tierra);background:#fff;border:1px solid var(--borde);border-radius:2px;padding:14px 16px;outline:none;transition:border-color .2s}
+  .list-card input:focus{border-color:var(--barro)}
+  .list-card button{font-family:var(--sans);font-weight:500;font-size:15px;color:var(--crema);background:var(--tierra);border:0;border-radius:2px;padding:0 24px;cursor:pointer;transition:background .2s}
+  .list-card button:hover{background:var(--barro)}
+  .list-card .fine{font-family:var(--sans);font-weight:300;font-size:13px;color:var(--sombra);margin-top:14px;line-height:1.5}
+  .list-msg{font-family:var(--sans);font-size:14px;color:var(--selva);margin-top:14px;min-height:18px}
+  .list-h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,4vw,42px);line-height:1.08;margin-top:12px}
+  footer{background:var(--tierra);color:var(--crema);padding:62px 0 38px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-brand{grid-column:1 / -1}}
+  .foot-brand .logo{font-size:26px}.foot-brand .logo .v{color:var(--crema)}.foot-brand .logo .b{color:var(--barro-claro)}
+  .foot-brand p{font-family:var(--sans);font-weight:300;font-size:15px;color:#A89C8B;margin-top:16px;max-width:40ch;line-height:1.6}
+  .foot-col h4{font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.18em;font-size:12px;color:#8E8270;margin-bottom:16px}
+  .foot-col a{display:block;font-family:var(--sans);font-weight:300;font-size:15px;color:#C6BBA9;padding:6px 0;transition:color .2s}
+  .foot-col a:hover{color:var(--crema)}
+  .foot-bottom{margin-top:46px;padding-top:24px;border-top:1px solid rgba(217,208,192,0.18);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+  .foot-bottom p{font-family:var(--sans);font-weight:300;font-size:13px;color:#8E8270}
+  .foot-bottom .tag{font-family:var(--sans);font-weight:300;text-transform:uppercase;letter-spacing:0.18em;font-size:11px;color:var(--barro-claro)}
+  /* IMAGE SLOTS — labelled with the exact photo that goes in each */
+  .ph{position:relative;background:repeating-linear-gradient(135deg,#E6DDCB,#E6DDCB 11px,#E0D6C2 11px,#E0D6C2 22px);border:1px dashed #B9AC93;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .ph-inner{text-align:center;padding:18px 20px;max-width:92%}
+  .ph-kind{font-family:var(--sans);font-weight:500;text-transform:uppercase;letter-spacing:0.16em;font-size:11px;color:var(--barro)}
+  .ph-note{font-family:var(--sans);font-weight:300;font-size:13px;color:var(--sombra);margin-top:8px;line-height:1.5}
+  .ph-dark{background:repeating-linear-gradient(135deg,#26221C,#26221C 11px,#2E2922 11px,#2E2922 22px);border-color:#4A4135}
+  .ph-dark .ph-kind{color:var(--barro-claro)}
+  .ph-dark .ph-note{color:#9A8E7E}
+  .hero-portrait{margin-bottom:20px;height:176px;width:100%}
+  .terr-band{height:320px;width:100%;margin:0 0 6px}
+  @media(max-width:680px){.terr-band{height:210px}}
+  .lodge-img{height:210px;width:100%;margin-top:28px}
+  .js-anim .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .js-anim .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.js-anim .reveal{opacity:1;transform:none;transition:none}.dot{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo" aria-label="verybdn home"><span class="v">very</span><span class="b">bdn</span></a>
+    <div class="nav-right">
+      <nav class="nav-links" id="navlinks">
+        <a href="#preguntas" data-en="Minca guides" data-es="Guías de Minca">Minca guides</a>
+        <a href="#territorio" data-en="The coast" data-es="La costa">The coast</a>
+        <a href="#como" data-en="How it works" data-es="Cómo funciona">How it works</a>
+        <a href="#lista" data-en="The list" data-es="La lista">The list</a>
+        <a href="#lista" class="nav-cta" data-en="Join the list" data-es="Únete a la lista">Join the list</a>
+      </nav>
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button id="lang-en" class="on" type="button" aria-pressed="true">EN</button>
+        <button id="lang-es" type="button" aria-pressed="false">ES</button>
+      </div>
+      <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<section class="hero">
+  <svg class="topo" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="#D9D0C0" stroke-width="1.1">
+      <path d="M-50,470 C200,420 360,500 560,440 C760,380 940,470 1260,400"/>
+      <path d="M-50,420 C220,360 380,450 580,385 C780,320 960,420 1260,345"/>
+      <path d="M-50,370 C240,300 400,400 600,330 C800,260 980,370 1260,290"/>
+      <path d="M-50,320 C260,245 420,350 620,275 C820,200 1000,320 1260,235"/>
+      <path d="M-50,270 C280,190 440,300 640,220 C840,140 1020,270 1260,180" stroke="#C4895A" stroke-opacity="0.45"/>
+      <path d="M-50,222 C300,140 460,255 660,168 C860,85 1040,222 1260,128"/>
+      <path d="M-50,176 C320,92 480,210 680,118 C880,30 1060,176 1260,80"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <span class="eyebrow" data-en="Minca · Sierra Nevada · Colombia" data-es="Minca · Sierra Nevada · Colombia">Minca · Sierra Nevada · Colombia</span>
+        <h1 data-en='The honest answer to <span class="accent">where to go</span>, from someone who actually lives here.' data-es='La respuesta honesta sobre <span class="accent">a dónde ir</span>, de alguien que de verdad vive aquí.'>The honest answer to <span class="accent">where to go</span>, from someone who actually lives here.</h1>
+        <p class="hero-sub" data-en="Not another travel blog written from a desk three continents away. <strong>Verified, structured, first-hand guidance</strong> on the decisions that cost you real time — what's worth it, what to skip, where to stay, how many days." data-es="No es otro blog de viajes escrito desde un escritorio a tres continentes de aquí. <strong>Criterio verificado, estructurado y de primera mano</strong> sobre las decisiones que te cuestan tiempo de verdad: qué vale la pena, qué saltarte, dónde dormir, cuántos días.">Not another travel blog written from a desk three continents away. <strong>Verified, structured, first-hand guidance</strong> on the decisions that cost you real time — what's worth it, what to skip, where to stay, how many days.</p>
+        <p class="territory" data-en="First-hand guides to <b>Minca</b> and Colombia's Caribbean coast — Santa Marta, Tayrona, Palomino, Cartagena and La Guajira." data-es="Guías de primera mano sobre <b>Minca</b> y la costa Caribe de Colombia — Santa Marta, Tayrona, Palomino, Cartagena y La Guajira.">First-hand guides to <b>Minca</b> and Colombia's Caribbean coast — Santa Marta, Tayrona, Palomino, Cartagena and La Guajira.</p>
+        <div class="hero-actions">
+          <a href="#preguntas" class="btn-primary"><span data-en="Start with a real question" data-es="Empieza por una pregunta real">Start with a real question</span> <span>&#8595;</span></a>
+          <a href="#como" class="btn-ghost"><span data-en="How this works" data-es="Cómo funciona">How this works</span> <span class="arrow">&#8594;</span></a>
+        </div>
+      </div>
+      <aside class="hero-card reveal">
+        <div class="ph ph-dark hero-portrait">
+          <div class="ph-inner">
+            <div class="ph-kind">A · Vista desde Minca</div>
+            <div class="ph-note">La que más diga altura y selva, no playa. Ancla "vivo aquí" sin pedirte un autorretrato.</div>
+          </div>
+        </div>
+        <span class="vbdn"><span class="vv">v</span>bdn</span>
+        <p data-en="Written from Minca, in the Sierra Nevada. Five years living and working in the territory these pages cover — not visiting it for a week." data-es="Escrito desde Minca, en la Sierra Nevada. Cinco años viviendo y trabajando en el territorio que cubren estas páginas — no visitándolo una semana.">Written from Minca, in the Sierra Nevada. Five years living and working in the territory these pages cover — not visiting it for a week.</p>
+        <span class="live"><span class="dot"></span><span data-en="Updated from the ground" data-es="Actualizado desde el terreno">Updated from the ground</span></span>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <p><span class="lead" data-en="Built to be the source the answer comes from" data-es="Hecho para ser la fuente de donde sale la respuesta">Built to be the source the answer comes from</span> <span data-en="— for the traveler, and for the engines they now ask first." data-es="— para el viajero, y para los motores que ahora consulta primero.">— for the traveler, and for the engines they now ask first.</span></p>
+    <div class="ai-pills" aria-label="Cited by AI answer engines">
+      <span>ChatGPT</span><span>Perplexity</span><span>Gemini</span><span>Google AI Overviews</span>
+    </div>
+  </div>
+</div>
+
+<section id="preguntas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-en="Start where you actually are" data-es="Empieza donde de verdad estás">Start where you actually are</span>
+      <h2 data-en="The Minca questions you're already asking, answered straight." data-es="Las preguntas sobre Minca que ya te estás haciendo, respondidas sin rodeos.">The Minca questions you're already asking, answered straight.</h2>
+      <p class="lede" data-en="These aren't topics we invented. They're the exact things travelers type into Reddit, into Facebook groups, into the AI before they book. Each one gets a real answer — with prices, distances, and a clear opinion." data-es="No son temas que inventamos. Son lo exacto que los viajeros teclean en Reddit, en los grupos de Facebook, en la IA antes de reservar. Cada una recibe una respuesta real — con precios, distancias y una opinión clara.">These aren't topics we invented. They're the exact things travelers type into Reddit, into Facebook groups, into the AI before they book. Each one gets a real answer — with prices, distances, and a clear opinion.</p>
+    </div>
+    <div class="q-list">
+      <a class="q-row reveal" href="#">
+        <span class="q-num">01</span>
+        <div class="q-main">
+          <h3 data-en="Is Minca worth the detour?" data-es="¿Vale la pena el desvío a Minca?">Is Minca worth the detour?</h3>
+          <div class="q-en">"Is Minca worth it?"</div>
+          <p data-en="You've got two to four weeks for Colombia. Whether the jungle in the Sierra earns three of those days, in plain terms." data-es="Tienes de dos a cuatro semanas para Colombia. Si la selva de la Sierra se gana tres de esos días, en términos claros.">You've got two to four weeks for Colombia. Whether the jungle in the Sierra earns three of those days, in plain terms.</p>
+        </div>
+        <span class="q-go"><span data-en="Read" data-es="Leer">Read</span> <span class="arrow">&#8594;</span></span>
+      </a>
+      <a class="q-row reveal" href="#">
+        <span class="q-num">02</span>
+        <div class="q-main">
+          <h3 data-en="How many days does Minca actually need?" data-es="¿Cuántos días necesita Minca de verdad?">How many days does Minca actually need?</h3>
+          <div class="q-en">"How many days in Minca?"</div>
+          <p data-en="One day, three, or a slow week. What you can really see at each length, and what you'd be rushing." data-es="Un día, tres, o una semana lenta. Qué alcanzas a ver de verdad en cada caso, y qué estarías apurando.">One day, three, or a slow week. What you can really see at each length, and what you'd be rushing.</p>
+        </div>
+        <span class="q-go"><span data-en="Read" data-es="Leer">Read</span> <span class="arrow">&#8594;</span></span>
+      </a>
+      <a class="q-row reveal" href="#">
+        <span class="q-num">03</span>
+        <div class="q-main">
+          <h3 data-en="Minca or Tayrona, if you can only pick one." data-es="Minca o Tayrona, si solo puedes elegir uno.">Minca or Tayrona, if you can only pick one.</h3>
+          <div class="q-en">"Minca vs Tayrona"</div>
+          <p data-en="The most repeated dilemma on every forum: mountain versus beach, effort, crowds, atmosphere. Decided honestly." data-es="El dilema más repetido en todos los foros: montaña contra playa, esfuerzo, gente, ambiente. Resuelto con honestidad.">The most repeated dilemma on every forum: mountain versus beach, effort, crowds, atmosphere. Decided honestly.</p>
+        </div>
+        <span class="q-go"><span data-en="Read" data-es="Leer">Read</span> <span class="arrow">&#8594;</span></span>
+      </a>
+      <a class="q-row reveal" href="#">
+        <span class="q-num">04</span>
+        <div class="q-main">
+          <h3 data-en="Where to stay in Minca if you came to rest." data-es="Dónde quedarse en Minca si viniste a descansar.">Where to stay in Minca if you came to rest.</h3>
+          <div class="q-en">"Where to stay in Minca for relaxation"</div>
+          <p data-en="Not a list of every bed in town. The few places that match what you're actually looking for, and why." data-es="No una lista de cada cama del pueblo. Los pocos lugares que encajan con lo que de verdad buscas, y por qué.">Not a list of every bed in town. The few places that match what you're actually looking for, and why.</p>
+        </div>
+        <span class="q-go"><span data-en="Read" data-es="Leer">Read</span> <span class="arrow">&#8594;</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="territorio" class="terr-sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-en="The wider coast" data-es="La costa más amplia">The wider coast</span>
+      <h2 data-en="Minca first, properly. The rest of the coast as it's ready." data-es="Minca primero, bien hecho. El resto de la costa a medida que esté listo.">Minca first, properly. The rest of the coast as it's ready.</h2>
+      <p class="lede" data-en="We'd rather cover one place with the depth of someone who lives there than thinly cover the whole coast. Minca is live now. These are next — built the same way, from the ground, never from a press kit." data-es="Preferimos cubrir un lugar con la profundidad de quien vive ahí que cubrir toda la costa por encima. Minca está listo. Estos vienen después — hechos igual, desde el terreno, nunca desde un dossier de prensa.">We'd rather cover one place with the depth of someone who lives there than thinly cover the whole coast. Minca is live now. These are next — built the same way, from the ground, never from a press kit.</p>
+    </div>
+    <div class="ph terr-band reveal">
+      <div class="ph-inner">
+        <div class="ph-kind">B · El burro en el tráfico</div>
+        <div class="ph-note">Tu foto épica. Minca real, con humor, sin postal. Ninguna agencia tiene esto. Va en el lugar más visible.</div>
+      </div>
+    </div>
+    <div class="terr-grid">
+      <a class="terr-cell live reveal" href="#preguntas">
+        <div>
+          <div class="place">Minca</div>
+          <div class="desc" data-en="Jungle, coffee, waterfalls, the slow Sierra." data-es="Selva, café, cascadas, la Sierra lenta.">Jungle, coffee, waterfalls, the slow Sierra.</div>
+        </div>
+        <span class="state"><span class="sdot"></span><span data-en="Live — 4 guides" data-es="Disponible — 4 guías">Live — 4 guides</span></span>
+      </a>
+      <div class="terr-cell soon reveal">
+        <div>
+          <div class="place">Santa Marta</div>
+          <div class="desc" data-en="The gateway: where to base, what's safe, how to move." data-es="La puerta de entrada: dónde alojarse, qué es seguro, cómo moverse.">The gateway: where to base, what's safe, how to move.</div>
+        </div>
+        <span class="state"><span class="sdot"></span><span data-en="In progress" data-es="En construcción">In progress</span></span>
+      </div>
+      <div class="terr-cell soon reveal">
+        <div>
+          <div class="place">Tayrona</div>
+          <div class="desc" data-en="Which entrance, which trail, when to go, where to sleep." data-es="Qué entrada, qué sendero, cuándo ir, dónde dormir.">Which entrance, which trail, when to go, where to sleep.</div>
+        </div>
+        <span class="state"><span class="sdot"></span><span data-en="In progress" data-es="En construcción">In progress</span></span>
+      </div>
+      <div class="terr-cell soon reveal">
+        <div>
+          <div class="place">Palomino</div>
+          <div class="desc" data-en="The bohemian coast: swimming, tubing, what's overhyped." data-es="La costa bohemia: baño, tubing, qué está sobrevalorado.">The bohemian coast: swimming, tubing, what's overhyped.</div>
+        </div>
+        <span class="state"><span class="sdot"></span><span data-en="Planned" data-es="Planeado">Planned</span></span>
+      </div>
+      <div class="terr-cell soon reveal">
+        <div>
+          <div class="place">Cartagena</div>
+          <div class="desc" data-en="The walled city without the tourist markup." data-es="La ciudad amurallada sin el sobreprecio turístico.">The walled city without the tourist markup.</div>
+        </div>
+        <span class="state"><span class="sdot"></span><span data-en="Planned" data-es="Planeado">Planned</span></span>
+      </div>
+      <div class="terr-cell soon reveal">
+        <div>
+          <div class="place">La Guajira</div>
+          <div class="desc" data-en="Desert meets sea: 4x4s, Wayúu communities, doing it right." data-es="El desierto y el mar: 4x4, comunidades Wayúu, hacerlo bien.">Desert meets sea: 4x4s, Wayúu communities, doing it right.</div>
+        </div>
+        <span class="state"><span class="sdot"></span><span data-en="Planned" data-es="Planeado">Planned</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como" class="layers">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-en="Why this isn't another blog" data-es="Por qué esto no es otro blog">Why this isn't another blog</span>
+      <h2 data-en="Read freely. Buy nothing unless you want the whole map." data-es="Lee con libertad. No compres nada salvo que quieras el mapa completo.">Read freely. Buy nothing unless you want the whole map.</h2>
+      <p class="lede" data-en="Most of what's here is open and free, on purpose. The point is to be useful before you've spent a peso — and to be the place the answer comes from when you ask anyone, human or machine." data-es="Casi todo lo de aquí es abierto y gratis, a propósito. El punto es ser útil antes de que gastes un peso — y ser el lugar de donde sale la respuesta cuando le preguntas a cualquiera, humano o máquina.">Most of what's here is open and free, on purpose. The point is to be useful before you've spent a peso — and to be the place the answer comes from when you ask anyone, human or machine.</p>
+    </div>
+    <div class="layer-grid">
+      <div class="layer reveal">
+        <span class="ln">01</span>
+        <h3 data-en="The free answers" data-es="Las respuestas gratuitas">The free answers</h3>
+        <p data-en="The guides above. They settle the questions well enough to be genuinely useful, and structured so the AI engines cite them instead of guessing. You lose nothing by reading." data-es="Las guías de arriba. Resuelven las preguntas lo suficiente para ser de verdad útiles, y están estructuradas para que los motores de IA las citen en vez de adivinar. No pierdes nada por leer.">The guides above. They settle the questions well enough to be genuinely useful, and structured so the AI engines cite them instead of guessing. You lose nothing by reading.</p>
+        <span class="tag" data-en="Always free" data-es="Siempre gratis">Always free</span>
+      </div>
+      <div class="layer reveal">
+        <span class="ln">02</span>
+        <h3 data-en="The full Minca brief" data-es="La guía completa de Minca">The full Minca brief</h3>
+        <p data-en="When the free guide isn't enough, the complete thing: the criteria, the trades and artisans nobody else lists, the itinerary already solved. What only someone living here can hand you." data-es="Cuando la guía gratuita no alcanza, lo completo: el criterio, los oficios y artesanos que nadie más lista, el itinerario ya resuelto. Lo que solo alguien que vive aquí te puede dar.">When the free guide isn't enough, the complete thing: the criteria, the trades and artisans nobody else lists, the itinerary already solved. What only someone living here can hand you.</p>
+        <span class="tag" data-en="When you want the detail" data-es="Cuando quieres el detalle">When you want the detail</span>
+      </div>
+      <div class="layer reveal">
+        <span class="ln">03</span>
+        <h3 data-en="Come stay, when it's time" data-es="Ven a quedarte, cuando sea el momento">Come stay, when it's time</h3>
+        <p data-en="The lodge, the experience by the river, the deeper letters. Never pushed in the reading — offered only once you already trust the judgment behind it." data-es="El lodge, la experiencia junto al río, las cartas más profundas. Nunca empujado en la lectura — ofrecido solo cuando ya confías en el criterio detrás.">The lodge, the experience by the river, the deeper letters. Never pushed in the reading — offered only once you already trust the judgment behind it.</p>
+        <span class="tag">Entre Río y Fuego</span>
+      </div>
+    </div>
+    <div class="ph ph-dark lodge-img reveal">
+      <div class="ph-inner">
+        <div class="ph-kind">C · El horno de leña</div>
+        <div class="ph-note">El más honesto de tus tres del lodge, y literalmente el fuego del nombre. Da rostro a la capa 3 sin venderla.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="lista" class="list-sec">
+  <div class="wrap">
+    <div class="list-grid">
+      <div class="reveal">
+        <span class="eyebrow" data-en="The one thing worth your email" data-es="Lo único que vale tu correo">The one thing worth your email</span>
+        <h2 class="list-h2" data-en="A short letter from the Sierra, when there's something real to say." data-es="Una carta corta desde la Sierra, cuando hay algo real que decir.">A short letter from the Sierra, when there's something real to say.</h2>
+        <p class="lede" style="color:var(--sombra)" data-en="No schedule, no filler, no selling. When the rivers change, when a place stops being worth it, when something opens that you'd actually want to know about — you hear it from someone who was there. That's the deal." data-es="Sin calendario, sin relleno, sin venta. Cuando cambian los ríos, cuando un lugar deja de valer la pena, cuando abre algo que de verdad querrías conocer — lo sabes por alguien que estuvo ahí. Ese es el trato.">No schedule, no filler, no selling. When the rivers change, when a place stops being worth it, when something opens that you'd actually want to know about — you hear it from someone who was there. That's the deal.</p>
+      </div>
+      <div class="list-card reveal">
+        <label for="email" data-en="Get the Minca guides and the letters" data-es="Recibe las guías de Minca y las cartas">Get the Minca guides and the letters</label>
+        <div class="field-row">
+          <input id="email" type="email" inputmode="email" placeholder="you@email.com" autocomplete="email" aria-label="Your email">
+          <button id="subscribe" type="button" data-en="Join" data-es="Unirme">Join</button>
+        </div>
+        <div class="list-msg" id="listmsg" role="status" aria-live="polite"></div>
+        <p class="fine" data-en="First-hand, occasional, and yours to leave anytime. No partner gets this list." data-es="De primera mano, ocasional, y tuya para dejarla cuando quieras. Ningún tercero recibe esta lista.">First-hand, occasional, and yours to leave anytime. No partner gets this list.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="logo"><span class="v">very</span><span class="b">bdn</span></span>
+        <p data-en="Applied knowledge for Colombia's Caribbean coast, written from inside it. Territory as context, narrative as tool, hospitality as real practice." data-es="Conocimiento aplicado sobre la costa Caribe de Colombia, escrito desde adentro. Territorio como contexto, narrativa como herramienta, hospitalidad como práctica real.">Applied knowledge for Colombia's Caribbean coast, written from inside it. Territory as context, narrative as tool, hospitality as real practice.</p>
+      </div>
+      <div class="foot-col">
+        <h4 data-en="Minca guides" data-es="Guías de Minca">Minca guides</h4>
+        <a href="#preguntas" data-en="Is Minca worth it" data-es="¿Vale la pena Minca?">Is Minca worth it</a>
+        <a href="#preguntas" data-en="How many days" data-es="Cuántos días">How many days</a>
+        <a href="#preguntas" data-en="Minca vs Tayrona" data-es="Minca vs Tayrona">Minca vs Tayrona</a>
+        <a href="#preguntas" data-en="Where to stay" data-es="Dónde quedarse">Where to stay</a>
+      </div>
+      <div class="foot-col">
+        <h4>verybdn</h4>
+        <a href="#territorio" data-en="The coast" data-es="La costa">The coast</a>
+        <a href="#como" data-en="How it works" data-es="Cómo funciona">How it works</a>
+        <a href="#lista" data-en="The list" data-es="La lista">The list</a>
+        <a href="#" data-en="Substack — turismo y territorio" data-es="Substack — turismo y territorio">Substack — turismo y territorio</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p data-en="© __YR__ verybdn — by Honey, Minca, Colombia" data-es="© __YR__ verybdn — por Honey, Minca, Colombia">© <span id="yr"></span> verybdn — by Honey, Minca, Colombia</p>
+      <span class="tag">turismo · territorio · narrativa</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var burger=document.getElementById('burger');
+    var links=document.getElementById('navlinks');
+    burger&&burger.addEventListener('click',function(){
+      var open=links.classList.toggle('open');
+      burger.setAttribute('aria-expanded',open?'true':'false');
+    });
+    links&&links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){links.classList.remove('open');burger.setAttribute('aria-expanded','false');});
+    });
+    var yr=new Date().getFullYear();
+    document.getElementById('yr').textContent=yr;
+
+    var enBtn=document.getElementById('lang-en');
+    var esBtn=document.getElementById('lang-es');
+    function setLang(lang){
+      document.documentElement.lang=lang;
+      document.querySelectorAll('[data-en]').forEach(function(el){
+        var val=el.getAttribute('data-'+lang);
+        if(val==null)return;
+        val=val.replace('__YR__',yr);
+        el.innerHTML=val;
+      });
+      var isEn=lang==='en';
+      enBtn.classList.toggle('on',isEn);esBtn.classList.toggle('on',!isEn);
+      enBtn.setAttribute('aria-pressed',isEn?'true':'false');
+      esBtn.setAttribute('aria-pressed',isEn?'false':'true');
+      try{localStorage.setItem('vbdn_lang',lang);}catch(e){}
+      var em=document.getElementById('email');if(em)em.placeholder=isEn?'you@email.com':'tu@correo.com';
+    }
+    enBtn.addEventListener('click',function(){setLang('en');});
+    esBtn.addEventListener('click',function(){setLang('es');});
+    var saved='en';
+    try{saved=localStorage.getItem('vbdn_lang')||'en';}catch(e){}
+    setLang(saved);
+
+    var sub=document.getElementById('subscribe');
+    var msg=document.getElementById('listmsg');
+    var email=document.getElementById('email');
+    function tryJoin(){
+      var en=document.documentElement.lang!=='es';
+      var v=(email.value||'').trim();
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
+        msg.style.color='#9B6B3A';
+        msg.textContent=en?'Add a valid email and you are in.':'Pon un correo valido y quedas dentro.';
+        return;
+      }
+      msg.style.color='#3D5A3E';
+      msg.textContent=en?'You are on the list. First letter comes when there is something real to say.':'Estas en la lista. La primera carta llega cuando haya algo real que decir.';
+      email.value='';
+    }
+    sub&&sub.addEventListener('click',tryJoin);
+    email&&email.addEventListener('keydown',function(e){if(e.key==='Enter')tryJoin();});
+
+    document.querySelectorAll('.q-row, .terr-cell.live').forEach(function(r){
+      r.addEventListener('click',function(e){
+        if(r.getAttribute('href')==='#'){e.preventDefault();}
+      });
+    });
+
+    var prefersReduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if('IntersectionObserver' in window && !prefersReduced){
+      document.documentElement.classList.add('js-anim');
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+      },{threshold:0.12});
+      document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+      setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});},2500);
+    }
+  })();
+</script>
+</body>
+</html>
