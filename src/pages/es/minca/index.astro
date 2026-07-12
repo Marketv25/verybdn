@@ -1,0 +1,152 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navigation from '../../../components/Navigation.astro';
+import Footer from '../../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+const title = "Minca Destination Hub: verybdn";
+const description = "Guías de primera mano y directorio curado de negocios locales en Minca, Sierra Nevada de Santa Marta. Respuestas verificadas y recomendaciones locales.";
+const canonicalUrl = "https://verybdn.com/es/minca/";
+const alternateUrl = "https://verybdn.com/minca/";
+
+// Fetch and filter places in Minca, sorted by curation order
+const lugares = await getCollection('lugares');
+const mincaLugares = lugares
+  .filter(l => l.data.city.toLowerCase() === 'minca')
+  .sort((a, b) => a.data.ordenCuracion - b.data.ordenCuracion);
+---
+
+<Layout title={title} description={description} lang="es" canonicalUrl={canonicalUrl} alternateUrl={alternateUrl}>
+  <script type="application/ld+json" slot="head" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "verybdn",
+          "item": "https://verybdn.com/es/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Minca",
+          "item": "https://verybdn.com/es/minca/"
+        }
+      ]
+    }
+  </script>
+
+  <Navigation lang="es" />
+
+  <a id="top"></a>
+
+  <main style="background: var(--crema); min-height: 100vh; padding-top: 60px; padding-bottom: 80px;">
+    <div class="wrap">
+      {/* Editorial Header Section */}
+      <header style="max-width: 720px; margin: 0 auto 56px;">
+        <span class="eyebrow" style="display: block; margin-bottom: 12px;">Destino</span>
+        <h1 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin-bottom: 24px; color: var(--tierra);">
+          Minca
+        </h1>
+        <div style="font-family: var(--sans); font-weight: 300; font-size: 17px; line-height: 1.8; color: var(--sombra); border-bottom: 1px solid var(--borde); padding-bottom: 32px;">
+          <p>[PENDIENTE: texto de Joney]</p>
+        </div>
+      </header>
+
+      {/* Guides Section */}
+      <section style="margin-bottom: 72px;">
+        <div style="border-bottom: 1px solid var(--borde); padding-bottom: 16px; margin-bottom: 32px;">
+          <h2 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; color: var(--tierra); margin: 0;">
+            Guías de Minca
+          </h2>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+          <a href="/es/minca/como-llegar-a-minca/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
+            <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Guía Práctica</span>
+            <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">Cómo llegar a Minca: La guía completa</h3>
+            <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Guía de primera mano y verificada sobre cómo ir de Santa Marta a Minca en colectivo o taxi, y cómo resolver el segundo tramo por trocha hasta tu hospedaje.</p>
+            <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
+              Leer guía <span style="transition: transform 0.25s;">&rarr;</span>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      {/* Directory Section */}
+      <section>
+        <div style="border-bottom: 1px solid var(--borde); padding-bottom: 16px; margin-bottom: 32px;">
+          <h2 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; color: var(--tierra); margin: 0;">
+            Lugares Curados
+          </h2>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 32px; content-visibility: auto;" class="directory-grid">
+          {mincaLugares.map((lugar) => (
+            <article style="background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s, border-color 0.25s;">
+              <div style="position: relative; width: 100%; aspect-ratio: 3/2; overflow: hidden; background: #d0c8b8;">
+                <Image
+                  src={lugar.data.posterImage}
+                  alt={lugar.data.name}
+                  width={600}
+                  height={400}
+                  style="width: 100%; height: 100%; object-fit: cover;"
+                />
+                <div style="position: absolute; top: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 6px;">
+                  {lugar.data.categories.map((cat) => (
+                    <span style="font-family: var(--sans); font-weight: 300; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(26, 24, 20, 0.85); color: var(--crema); padding: 4px 8px; border-radius: 2px;">
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                <div>
+                  <h3 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 24px; color: var(--tierra); margin: 0 0 12px;">
+                    {lugar.data.name}
+                  </h3>
+                  <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0 0 20px; line-height: 1.6;">
+                    {lugar.data.descripcionCorta}
+                  </p>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--borde); padding-top: 16px; margin-top: auto;">
+                  <span style="font-family: var(--sans); font-weight: 300; font-size: 13px; color: var(--sombra);">
+                    {lugar.data.direccion}
+                  </span>
+                  <span style="font-family: var(--sans); font-weight: 500; font-size: 12px; color: var(--barro); text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid var(--barro); padding: 4px 10px; border-radius: 2px;">
+                    Curado
+                  </span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer lang="es" />
+
+  <style>
+    /* Desktop response styling */
+    @media (min-width: 768px) {
+      .directory-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (min-width: 1024px) {
+      .directory-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+    /* Simple hover effects using pure CSS variables to match aesthetic guidelines */
+    a:hover {
+      border-color: var(--barro) !important;
+      transform: translateY(-2px);
+    }
+    a:hover span {
+      transform: translateX(4px);
+    }
+  </style>
+</Layout>
