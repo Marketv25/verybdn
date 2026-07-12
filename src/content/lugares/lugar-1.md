@@ -7,7 +7,7 @@ descripcionCorta: "[DUMMY: Un eco-lodge de madera rodeado de aves en la Sierra]"
 whatsapp: "+573000000001"
 whatsappMensaje: "[DUMMY: Hola, me gustaría saber la disponibilidad de habitaciones]"
 tour360Url: "https://example.com/tour-dummy-1"
-posterImage: "../../assets/img/vista-minca.png"
+posterImage: "../../assets/img/placeholder-grey.svg"
 coordenadas:
   lat: 11.1234
   lng: -74.1234

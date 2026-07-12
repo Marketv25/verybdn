@@ -6,7 +6,7 @@ categories: ["Experiencia", "Naturaleza"]
 descripcionCorta: "[DUMMY: Sendero privado a tres pozos naturales de agua cristalina]"
 whatsapp: "+573000000003"
 whatsappMensaje: "[DUMMY: Hola, me interesa información de la entrada a las cascadas]"
-posterImage: "../../assets/img/horno-lodge.png"
+posterImage: "../../assets/img/placeholder-grey.svg"
 coordenadas:
   lat: 11.1256
   lng: -74.1256

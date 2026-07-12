@@ -6,7 +6,7 @@ categories: ["Café", "Restaurante"]
 descripcionCorta: "[DUMMY: Café orgánico cultivado y tostado por familias de la vereda]"
 whatsapp: "+573000000002"
 whatsappMensaje: "[DUMMY: Hola, quiero reservar una mesa]"
-posterImage: "../../assets/img/burro-trafico.png"
+posterImage: "../../assets/img/placeholder-grey.svg"
 coordenadas:
   lat: 11.1245
   lng: -74.1245
