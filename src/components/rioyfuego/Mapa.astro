@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import mapVisual from '../../assets/img/vista-minca.png';
+import mapVisual from '../../assets/img/mapa.webp';
 
 interface Props {
   lang: 'en' | 'es';
@@ -58,7 +58,7 @@ const locations = [
     <div style="position: relative; overflow: hidden; border-radius: 4px; border: 1px solid var(--borde); aspect-ratio: 4/3;">
       <Image 
         src={mapVisual} 
-        alt="Regional terrain and route context map of Minca, Sierra Nevada de Santa Marta" 
+        alt={lang === 'en' ? "Map showing travel times and routes around Minca, Sierra Nevada de Santa Marta" : "Mapa que muestra los tiempos de viaje y rutas alrededor de Minca, Sierra Nevada de Santa Marta"} 
         style="width: 100%; height: 100%; object-fit: cover;" 
         width={720}
         height={540}

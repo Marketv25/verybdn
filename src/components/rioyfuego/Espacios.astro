@@ -1,8 +1,10 @@
 ---
 import { Image } from 'astro:assets';
-import imgHero from '../../assets/img/rio-y-fuego-hero.png';
-import imgRiver from '../../assets/img/rio-y-fuego-river.png';
-import imgSauna from '../../assets/img/rio-y-fuego-sauna.png';
+import imgHabitacion from '../../assets/img/espacio-1-habitacion.webp';
+import imgBano from '../../assets/img/espacio-2-bano.webp';
+import imgRefugio from '../../assets/img/espacio-3-refugio.webp';
+import imgFuego from '../../assets/img/espacio-4-fuego.webp';
+import imgCocina from '../../assets/img/espacio-5-cocina-exterior.webp';
 
 interface Props {
   lang: 'en' | 'es';
@@ -19,7 +21,7 @@ const spaces = [
     labelEs: 'Habitación Río',
     bedsEn: '1 double bed · 1 single bed',
     bedsEs: '1 cama doble · 1 cama sencilla',
-    image: imgHero,
+    image: imgHabitacion,
     hasLocationNote: false,
     locationNote: '',
     descEn: 'The river as the backdrop for the whole night. The screen door lets it in; the glass one switches it off. You choose what sound you sleep with.',
@@ -31,7 +33,7 @@ const spaces = [
     labelEs: 'Habitación Fuego',
     bedsEn: '1 double bed · 1 single bed',
     bedsEs: '1 cama doble · 1 cama sencilla',
-    image: imgHero,
+    image: imgBano,
     hasLocationNote: false,
     locationNote: '',
     descEn: 'The same terrace facing the water, the same river below. The name already says what changes.',
@@ -43,7 +45,7 @@ const spaces = [
     labelEs: 'El Refugio',
     bedsEn: '',
     bedsEs: '',
-    image: imgRiver,
+    image: imgRefugio,
     hasLocationNote: false,
     locationNote: '',
     descEn: 'One level down, closer to the river. Hammocks, quiet, and nothing else to ask for.',
@@ -55,7 +57,7 @@ const spaces = [
     labelEs: 'El Fuego',
     bedsEn: '',
     bedsEs: '',
-    image: imgSauna,
+    image: imgFuego,
     hasLocationNote: false,
     locationNote: '',
     descEn: 'The path down to the river. Where the nights end.',
@@ -67,7 +69,7 @@ const spaces = [
     labelEs: 'Cocina compartida',
     bedsEn: '',
     bedsEs: '',
-    image: imgHero,
+    image: imgCocina,
     hasLocationNote: false,
     locationNote: '',
     descEn: 'Separate from the grill and the wood-fired oven. Everything in its place.',

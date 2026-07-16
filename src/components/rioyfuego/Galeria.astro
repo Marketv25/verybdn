@@ -1,9 +1,9 @@
 ---
 import { Image } from 'astro:assets';
-import imgHero from '../../assets/img/rio-y-fuego-hero.png';
-import imgRiver from '../../assets/img/rio-y-fuego-river.png';
-import imgSauna from '../../assets/img/rio-y-fuego-sauna.png';
-import imgHorno from '../../assets/img/horno-lodge.png';
+import imgCabana from '../../assets/img/galeria-01-cabana-exterior.webp';
+import imgRio from '../../assets/img/galeria-02-rio.webp';
+import imgSauna from '../../assets/img/galeria-03-sauna-exterior.webp';
+import imgFogata from '../../assets/img/galeria-04-fogata.webp';
 
 interface Props {
   lang: 'en' | 'es';
@@ -12,10 +12,10 @@ interface Props {
 const { lang } = Astro.props;
 
 const images = [
-  { src: imgHero, alt: lang === 'en' ? 'River next to the lodge terrace' : 'Río junto a la terraza del lodge' },
-  { src: imgRiver, alt: lang === 'en' ? 'Trail through the forest to the lodge' : 'Sendero entre el bosque hacia el lodge' },
-  { src: imgSauna, alt: lang === 'en' ? 'El Refugio terrace with mountain view' : 'Terraza de El Refugio con vista a la sierra' },
-  { src: imgHorno, alt: lang === 'en' ? 'Bonfire lit on the way down to the river' : 'Fogata encendida en la bajada al río' }
+  { src: imgCabana, alt: lang === 'en' ? 'Exterior view of the lodge cabin surrounded by forest' : 'Vista exterior de la cabaña del lodge rodeada de bosque' },
+  { src: imgRio, alt: lang === 'en' ? 'Clean river flowing with stones near the lodge' : 'Río cristalino corriendo sobre piedras cerca del lodge' },
+  { src: imgSauna, alt: lang === 'en' ? 'Exterior view of the wooden sauna building' : 'Vista exterior del sauna de madera' },
+  { src: imgFogata, alt: lang === 'en' ? 'Night bonfire lit on the path' : 'Fogata nocturna encendida en el sendero' }
 ];
 ---
 
