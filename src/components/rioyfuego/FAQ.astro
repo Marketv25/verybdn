@@ -1,0 +1,70 @@
+---
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+// PENDIENTE precio del desayuno y los dos restaurantes recomendados
+const faqs = lang === 'en'
+  ? [
+      { q: 'How many people fit?', a: "Two rooms. That's the answer, and the policy." },
+      { q: 'Is there wifi in the rooms?', a: 'No. Wifi is in the common areas.' },
+      { q: 'Can I request something from the wood-fired oven?', a: 'Yes, with advance notice. It takes almost three hours to be ready.' },
+      { q: "What's the cancellation policy?", a: "A 30% deposit secures the booking. Cancel up to a week before the date and it's refunded. After that, the date is rescheduled, with up to six months' flexibility." },
+      { q: 'What should I bring?', a: 'Repellent, light comfortable clothing. If you plan to hike, proper hiking shoes.' },
+      { q: 'Do you accept pets?', a: 'By special request, and under a commitment to cover any damages.' },
+      { q: 'Can I smoke?', a: 'Not inside the rooms.' },
+      { q: 'Is breakfast included?', a: 'Not by default. It has an additional cost, or we recommend a couple of nearby restaurants for breakfast.' }
+    ]
+  : [
+      { q: '¿Cuántas personas caben?', a: 'Dos habitaciones. Esa es la respuesta y también la política.' },
+      { q: '¿Hay wifi en las habitaciones?', a: 'No. El wifi está en las áreas comunes.' },
+      { q: '¿Puedo pedir algo del horno de leña?', a: 'Sí, avisando con tiempo. Tarda casi tres horas en estar listo.' },
+      { q: '¿Cuál es la política de cancelación?', a: 'Se reserva con un anticipo del 30%. Si cancelas hasta una semana antes de la fecha, se devuelve. Después de esa semana, la fecha se reagenda, con hasta seis meses de margen.' },
+      { q: '¿Qué debo traer?', a: 'Repelente, ropa cómoda y ligera. Si piensas caminar, zapatos de montaña.' },
+      { q: '¿Aceptan mascotas?', a: 'Con petición especial, y bajo compromiso de responder por cualquier daño.' },
+      { q: '¿Se puede fumar?', a: 'No dentro de las habitaciones.' },
+      { q: '¿El desayuno está incluido?', a: 'No por defecto. Tiene un costo adicional, o te recomendamos un par de restaurantes cercanos para desayunar.' }
+    ];
+---
+
+<section id="faq" class="wrap reveal" style="padding: 90px 28px;">
+  <div class="sec-head" style="margin-bottom: 56px; max-width: 65ch;">
+    <span class="eyebrow">{lang === 'en' ? 'Common Questions' : 'Preguntas Frecuentes'}</span>
+    <h2 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin-top: 12px;">
+      {lang === 'en' ? 'Common questions' : 'Preguntas frecuentes'}
+    </h2>
+    <p class="lede" style="font-family: var(--sans); font-weight: 300; font-size: 18px; color: var(--sombra); margin-top: 16px; line-height: 1.6;">
+      {lang === 'en' ? 'The ones people ask before booking.' : 'Las que nos hacen antes de reservar.'}
+    </p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; border-top: 1px solid var(--borde);">
+    {faqs.map(faq => (
+      <details class="faq-item" style="border-bottom: 1px solid var(--borde); cursor: pointer; transition: background 0.25s;">
+        <summary style="font-family: var(--serif); font-weight: 400; font-size: clamp(18px, 2.5vw, 22px); color: var(--tierra); padding: 24px 8px; list-style: none; display: flex; justify-content: space-between; align-items: center; outline: none; user-select: none;">
+          <span>{faq.q}</span>
+          <span class="faq-icon" style="font-family: var(--sans); font-weight: 300; font-size: 20px; color: var(--barro); transition: transform 0.25s;">+</span>
+        </summary>
+        <div style="padding: 0 8px 24px 8px; font-family: var(--sans); font-weight: 300; font-size: 15.5px; color: var(--sombra); line-height: 1.65; max-width: 72ch;">
+          <p style="margin: 0;">{faq.a}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* Remove default disclosure triangle in Webkit */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item:hover {
+    background: rgba(155, 107, 58, 0.03);
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    color: var(--tierra);
+  }
+</style>

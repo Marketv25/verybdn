@@ -1,0 +1,111 @@
+---
+import type { RioFuegoContext } from '../../layouts/RioFuegoLayout.astro';
+
+export interface AlrededorItem {
+  name: string;
+  description: string;
+  contactType: "whatsapp" | "bookingAffiliate" | "self";
+  contactValue: string;
+}
+
+interface Props {
+  lang: 'en' | 'es';
+  context: RioFuegoContext;
+}
+
+const { lang, context } = Astro.props;
+
+// Sauna/vapor is NOT listed here — it belongs to Experiencia (lodge property).
+// [PENDIENTE: números de contacto directo de Otto (avistamiento) y de la instructora de yoga — por ahora ambos se coordinan vía lodge (contactType "self")]
+const items: AlrededorItem[] = [
+  {
+    name: lang === 'en' ? 'Birdwatching' : 'Avistamiento de aves',
+    description: lang === 'en'
+      ? 'With Otto, from Nuwabirdlife. Arranged directly at the lodge.'
+      : 'Con Otto, de Nuwabirdlife. Se coordina directo en el lodge.',
+    contactType: "self",
+    contactValue: ""
+  },
+  {
+    name: lang === 'en' ? 'Yoga' : 'Yoga',
+    description: lang === 'en'
+      ? 'Book a day in advance. The instructor may vary depending on availability.'
+      : 'Reserva con un día de anticipación. La instructora puede variar según disponibilidad.',
+    contactType: "self",
+    contactValue: ""
+  }
+];
+
+function buildContactUrl(item: AlrededorItem, ctx: RioFuegoContext): string {
+  if (item.contactType === "whatsapp") {
+    const num = item.contactValue.replace('+', '');
+    return `https://wa.me/${num}`;
+  }
+  if (item.contactType === "bookingAffiliate") {
+    return item.contactValue;
+  }
+  // "self" — Joney books directly via lodge WhatsApp
+  return `https://wa.me/${ctx.contactCTA.whatsappNumber.replace('+', '')}?text=${encodeURIComponent(ctx.contactCTA.whatsappMessage)}`;
+}
+
+function buildContactLabel(item: AlrededorItem, lang: 'en' | 'es'): string {
+  if (item.contactType === "whatsapp") {
+    return lang === 'en' ? 'Contact on WhatsApp' : 'Contactar por WhatsApp';
+  }
+  if (item.contactType === "bookingAffiliate") {
+    return lang === 'en' ? 'Check availability' : 'Ver disponibilidad';
+  }
+  return lang === 'en' ? 'Ask at the lodge' : 'Consultar en el lodge';
+}
+---
+
+<section
+  id={lang === 'en' ? 'around' : 'alrededor'}
+  class="rf-section-alt reveal"
+  style="padding: 90px 0;"
+>
+  <div class="wrap" style="padding: 0 28px;">
+    <div style="margin-bottom: 56px; max-width: 60ch;">
+      <hr class="rf-divider" />
+      <span class="eyebrow">
+        {lang === 'en' ? 'Nearby' : 'Cerca'}
+      </span>
+      <h2 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; margin-top: 12px; color: var(--rf-carbon, #1A1A1A);">
+        {lang === 'en' ? 'Around the lodge' : 'Alrededor del lodge'}
+      </h2>
+      <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 16px; color: var(--rf-piedra, #6B6B6B); margin-top: 16px; line-height: 1.7; max-width: 56ch;">
+        {lang === 'en'
+          ? 'Things that exist nearby, and who to call if you want them.'
+          : 'Cosas que existen cerca, y a quién llamar si las quieres.'}
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2px; background: var(--rf-borde, rgba(27,58,52,0.15)); border: 1px solid var(--rf-borde, rgba(27,58,52,0.15));">
+      {items.map(item => {
+        const url = buildContactUrl(item, context);
+        const label = buildContactLabel(item, lang);
+        return (
+          <div style="background: #DDD5BC; padding: 32px 28px; display: flex; flex-direction: column; gap: 16px;">
+            <h3 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 400; font-size: 20px; color: var(--rf-carbon, #1A1A1A); margin: 0; line-height: 1.2;">
+              {item.name}
+            </h3>
+            <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 13px; color: var(--rf-piedra, #6B6B6B); line-height: 1.65; margin: 0; flex: 1;">
+              {item.description}
+            </p>
+            <a
+              href={url}
+              target={item.contactType !== 'self' ? '_blank' : undefined}
+              rel={item.contactType !== 'self' ? 'noopener noreferrer' : undefined}
+              style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rf-verde, #1E3A34); text-decoration: none; border-bottom: 1px solid var(--rf-terracota, #B5533C); padding-bottom: 2px; width: fit-content; transition: color 0.2s;"
+            >
+              {label}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

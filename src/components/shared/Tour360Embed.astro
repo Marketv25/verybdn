@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets';
+import posterImage from '../../assets/img/rio-y-fuego-tour.png';
+import type { RioFuegoContext } from '../../layouts/RioFuegoLayout.astro';
+
+interface Props {
+  lang: 'en' | 'es';
+  context: RioFuegoContext;
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="tour" class="wrap reveal">
+  <div class="sec-head" style="margin-bottom: 32px;">
+    <span class="eyebrow">{lang === 'en' ? 'Virtual Tour' : 'Tour Virtual'}</span>
+    <h2 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin-top: 12px;">
+      {lang === 'en' ? 'Virtual tour' : 'Recorrido virtual'}
+    </h2>
+    <p class="lede" style="font-family: var(--sans); font-weight: 300; font-size: 18px; color: var(--sombra); margin-top: 16px; line-height: 1.6; max-width: 60ch;">
+      {lang === 'en' ? 'Before you arrive, step in.' : 'Antes de llegar, entra.'}
+    </p>
+  </div>
+
+  <div class="tour-embed-container" data-src="https://example.com/tour360-placeholder" style="position: relative; width: 100%; aspect-ratio: 16/9; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+    <div class="tour-poster-wrapper" style="position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: opacity 0.3s;">
+      <Image 
+        src={posterImage} 
+        alt="Entre Río y Fuego 360° Tour Preview" 
+        style="width: 100%; height: 100%; object-fit: cover;" 
+        width={1080}
+        height={608}
+        loading="lazy"
+        class="tour-poster"
+      />
+      <div class="play-overlay" style="position: absolute; inset: 0; background: rgba(26, 24, 20, 0.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; transition: background 0.3s;">
+        <div class="play-btn" style="width: 72px; height: 72px; border-radius: 50%; background: var(--rf-arena, #E8DFC8); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.25); color: var(--rf-verde, #1E3A34); transition: transform 0.25s, background 0.25s;">
+          <svg width="22" height="24" viewBox="0 0 22 24" fill="currentColor" aria-hidden="true">
+            <path d="M2 2L20 12L2 22V2Z"/>
+          </svg>
+        </div>
+        <span style="font-family: var(--sans); font-weight: 500; font-size: 14px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--crema);">
+          {lang === 'en' ? 'Explore 360° Tour' : 'Explorar Tour 360°'}
+        </span>
+      </div>
+    </div>
+    <div class="tour-iframe-container" style="display: none; width: 100%; height: 100%;"></div>
+  </div>
+
+  <p style="font-family: var(--sans); font-weight: 300; font-size: 14px; color: var(--sombra); margin-top: 16px; line-height: 1.6; max-width: 60ch;">
+    [PENDIENTE: texto de Joney]
+  </p>
+</section>
+
+<style>
+  .tour-poster-wrapper:hover .play-btn {
+    transform: scale(1.1);
+    background: var(--barro);
+    color: var(--crema);
+  }
+  .tour-poster-wrapper:hover .play-overlay {
+    background: rgba(26, 24, 20, 0.3);
+  }
+</style>
+
+<script>
+  // Progressive enhancement to load iframe on click
+  document.querySelectorAll('.tour-embed-container').forEach(container => {
+    const posterWrapper = container.querySelector('.tour-poster-wrapper');
+    const iframeContainer = container.querySelector('.tour-iframe-container');
+    const embedUrl = container.getAttribute('data-src');
+
+    if (posterWrapper && iframeContainer && embedUrl) {
+      posterWrapper.addEventListener('click', () => {
+        iframeContainer.innerHTML = `<iframe src="${embedUrl}" width="100%" height="100%" frameborder="0" allowfullscreen style="border:0; width:100%; height:100%; aspect-ratio: 16/9; display: block;" title="360 Tour"></iframe>`;
+        posterWrapper.style.display = 'none';
+        iframeContainer.style.display = 'block';
+      });
+    }
+  });
+</script>

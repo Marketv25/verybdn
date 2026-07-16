@@ -1,0 +1,104 @@
+---
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+// Regla: cualquier testimonio que no esté en el idioma nativo de la página
+// lleva su traducción marcada explícitamente, nunca se presenta como si fuera
+// el idioma original del huésped.
+const testimonials = lang === 'en'
+  ? [
+      {
+        quote: 'Honey was very attentive and took great care of us. 10/10',
+        note: '(translated from Spanish)',
+        name: 'Juan Fernando',
+        meta: 'Barranquilla, Colombia · Airbnb · April 2026'
+      },
+      {
+        quote: 'Amazing location right on the river with easy access. good facilities aswell and great deal',
+        note: '',
+        name: 'Aidan',
+        meta: 'Airbnb · April 2026'
+      },
+      {
+        quote: 'The sauna was a great experience.',
+        note: '(translated from Spanish)',
+        name: 'Google review',
+        meta: ''
+      },
+      {
+        quote: 'Incredible amenities and surroundings, Honey was amazing and so accommodating',
+        note: '',
+        name: 'Aline',
+        meta: 'Airbnb · April 2026'
+      }
+    ]
+  : [
+      {
+        quote: 'Honey, fue muy servicial y muy atenta con nosotros 10/10',
+        note: '',
+        name: 'Juan Fernando',
+        meta: 'Barranquilla, Colombia · Airbnb · abril 2026'
+      },
+      {
+        quote: 'Amazing location right on the river with easy access. good facilities aswell and great deal',
+        note: '',
+        name: 'Aidan',
+        meta: 'Airbnb · abril 2026'
+      },
+      {
+        quote: 'El Sauna fue un tremendo plan',
+        note: '',
+        name: 'Reseña de Google',
+        meta: ''
+      },
+      {
+        quote: 'Instalaciones y alrededores increíbles, Honey fue increíble y muy atenta.',
+        note: '(traducido del inglés)',
+        name: 'Aline',
+        meta: 'Airbnb · abril 2026'
+      }
+    ];
+---
+
+<section id={lang === 'en' ? 'testimonials' : 'testimonios'} class="wrap reveal" style="padding: 90px 28px;">
+  <div class="sec-head" style="margin-bottom: 56px; max-width: 65ch;">
+    <span class="eyebrow">{lang === 'en' ? 'Guests' : 'Huéspedes'}</span>
+    <h2 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin-top: 12px;">
+      {lang === 'en' ? "What guests who've been say" : 'Lo que dicen quienes ya vinieron'}
+    </h2>
+    <p class="lede" style="font-family: var(--sans); font-weight: 300; font-size: 18px; color: var(--sombra); margin-top: 16px; line-height: 1.6;">
+      {lang === 'en' ? 'Unedited.' : 'Sin editar.'}
+    </p>
+  </div>
+
+  <div class="test-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+    {testimonials.map(test => (
+      <div style="background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; padding: 40px 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; position: relative;">
+        <span style="font-family: var(--serif); font-size: 64px; color: rgba(155, 107, 58, 0.25); position: absolute; top: 16px; left: 24px; line-height: 1; pointer-events: none;">“</span>
+        
+        <p style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 17px; line-height: 1.6; color: var(--tierra); margin: 0; position: relative; z-index: 2;">
+          {test.quote}
+          {test.note && (
+            <span style="font-family: var(--sans); font-style: normal; font-weight: 300; font-size: 12px; color: var(--sombra); display: block; margin-top: 8px;">
+              {test.note}
+            </span>
+          )}
+        </p>
+
+        <div style="border-top: 1px solid var(--borde); padding-top: 16px; display: flex; flex-direction: column; gap: 4px;">
+          <span style="font-family: var(--sans); font-weight: 500; font-size: 14px; color: var(--tierra);">
+            {test.name}
+          </span>
+          {test.meta && (
+            <span style="font-family: var(--sans); font-weight: 300; font-size: 12px; color: var(--sombra); text-transform: uppercase; letter-spacing: 0.08em;">
+              {test.meta}
+            </span>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

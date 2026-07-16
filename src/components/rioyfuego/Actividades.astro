@@ -1,0 +1,53 @@
+---
+import type { RioFuegoContext } from '../../layouts/RioFuegoLayout.astro';
+
+interface Props {
+  lang: 'en' | 'es';
+  context: RioFuegoContext;
+}
+
+const { lang } = Astro.props;
+
+const activities = [
+  { id: 'birdwatching', labelEn: 'Birdwatching', labelEs: 'Avistamiento de aves' },
+  { id: 'tubing', labelEn: 'Tubing', labelEs: 'Tubing' },
+  { id: 'hiking', labelEn: 'Hiking', labelEs: 'Senderismo' },
+  { id: 'coffee', labelEn: 'Coffee Experience', labelEs: 'Experiencia de Café' },
+  { id: 'cacao', labelEn: 'Cacao Workshop', labelEs: 'Taller de Cacao' },
+  { id: 'yoga', labelEn: 'Yoga', labelEs: 'Yoga' },
+  { id: 'massages', labelEn: 'Massages', labelEs: 'Masajes' },
+  { id: 'tours', labelEn: 'Guided Tours', labelEs: 'Tours Guiados' }
+];
+---
+
+<section id={lang === 'en' ? 'activities' : 'actividades'} class="wrap reveal" style="padding: 90px 28px;">
+  <div class="sec-head" style="margin-bottom: 56px; max-width: 65ch;">
+    <span class="eyebrow">{lang === 'en' ? 'Activities' : 'Actividades'}</span>
+    <h2 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin-top: 12px;">
+      [PENDIENTE: texto de Joney]
+    </h2>
+    <p class="lede" style="font-family: var(--sans); font-weight: 300; font-size: 18px; color: var(--sombra); margin-top: 16px; line-height: 1.6;">
+      [PENDIENTE: texto de Joney]
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px;">
+    {activities.map(activity => (
+      <div class="activity-card" style="background: var(--crema); border: 1px solid var(--borde); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: transform 0.25s, border-color 0.25s; cursor: pointer;">
+        <h3 style="font-family: var(--serif); font-weight: 400; font-size: 20px; color: var(--tierra);">
+          {lang === 'en' ? activity.labelEn : activity.labelEs}
+        </h3>
+        <p style="font-family: var(--sans); font-weight: 300; font-size: 14px; color: var(--sombra); line-height: 1.5; margin: 0;">
+          [PENDIENTE: texto de Joney]
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .activity-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--barro);
+  }
+</style>

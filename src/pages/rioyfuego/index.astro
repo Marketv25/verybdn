@@ -1,0 +1,37 @@
+---
+import RioFuegoLayout, { type RioFuegoContext } from '../../layouts/RioFuegoLayout.astro';
+
+const title = "Entre Río y Fuego | River Lodge in Minca, Sierra Nevada de Santa Marta";
+const description = "A two-room refuge on the river in Minca. Private river access, nightly bonfire, sauna by reservation. No music, no groups, no agenda.";
+const canonicalUrl = "https://verybdn.com/rioyfuego/";
+const alternateUrl = "https://verybdn.com/es/rioyfuego/";
+
+const context: RioFuegoContext = {
+  mode: "direct",
+  contactCTA: {
+    whatsappNumber: "+573117147765",
+    whatsappMessage: "Hi, I'd like more information about Entre Río y Fuego",
+    label: "Message us on WhatsApp"
+  },
+  recommendationBlock: {
+    show: false
+  },
+  footerAttribution: "Entre Río y Fuego · Minca, Sierra Nevada de Santa Marta",
+  pricing: {
+    show: true,
+    tiers: [
+      { occupancy: "Two people", price: "$260.000" },
+      { occupancy: "Three people", price: "$340.000" },
+    ],
+  }
+};
+---
+
+<RioFuegoLayout
+  title={title}
+  description={description}
+  lang="en"
+  canonicalUrl={canonicalUrl}
+  alternateUrl={alternateUrl}
+  context={context}
+/>

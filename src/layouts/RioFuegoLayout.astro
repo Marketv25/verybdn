@@ -1,0 +1,320 @@
+---
+import Layout from './Layout.astro';
+import Hero from '../components/rioyfuego/Hero.astro';
+import Experiencia from '../components/rioyfuego/Experiencia.astro';
+import AlrededorDelLodge from '../components/rioyfuego/AlrededorDelLodge.astro';
+import Galeria from '../components/rioyfuego/Galeria.astro';
+import Tour360Embed from '../components/shared/Tour360Embed.astro';
+import Espacios from '../components/rioyfuego/Espacios.astro';
+import Mapa from '../components/rioyfuego/Mapa.astro';
+import IdealPara from '../components/rioyfuego/IdealPara.astro';
+import Incluye from '../components/rioyfuego/Incluye.astro';
+import FAQ from '../components/rioyfuego/FAQ.astro';
+import Testimonios from '../components/rioyfuego/Testimonios.astro';
+import FixedCTA from '../components/rioyfuego/FixedCTA.astro';
+
+export interface RioFuegoContext {
+  mode: "direct" | "partner";
+  contactCTA: {
+    whatsappNumber: string;
+    whatsappMessage: string;
+    label: string;
+  };
+  recommendationBlock: {
+    show: boolean;
+    partnerName?: string;
+    partnerLogo?: string;
+  };
+  footerAttribution: string;
+  pricing: {
+    show: boolean;
+    tiers: { occupancy: string; price: string }[];
+  };
+}
+
+interface Props {
+  title: string;
+  description: string;
+  lang: 'en' | 'es';
+  canonicalUrl: string;
+  alternateUrl: string;
+  context: RioFuegoContext;
+}
+
+const { title, description, lang, canonicalUrl, alternateUrl, context } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "@id": `${canonicalUrl}#lodge`,
+  "name": "Entre Río y Fuego",
+  "image": "https://verybdn.com/assets/img/rio-y-fuego-hero.png",
+  "telephone": context.contactCTA.whatsappNumber,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Minca",
+    "addressRegion": "Magdalena",
+    "addressCountry": "CO"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "11.15",
+    "longitude": "-74.12"
+  },
+  // PENDIENTE: restaurar "sameAs": ["<URL de Instagram>"] cuando exista la cuenta
+  "inLanguage": lang
+};
+
+const enTarget = lang === 'es' ? '/rioyfuego/' : null;
+const esTarget = lang === 'en' ? '/es/rioyfuego/' : null;
+const homeUrl = lang === 'en' ? '/' : '/es/';
+const whatsappUrl = `https://wa.me/${context.contactCTA.whatsappNumber.replace('+', '')}?text=${encodeURIComponent(context.contactCTA.whatsappMessage)}`;
+---
+
+<Layout title={title} description={description} lang={lang} canonicalUrl={canonicalUrl} alternateUrl={alternateUrl}>
+  <script type="application/ld+json" slot="head" is:inline set:html={JSON.stringify(jsonLd)} />
+  <!-- Rio y Fuego brand fonts — scoped to this layout only -->
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300&display=swap"
+    rel="stylesheet"
+  />
+
+  <style is:global>
+    /* ─── Río y Fuego brand tokens ──────────────────────────────────── */
+    .rf-page {
+      --rf-verde:    #1E3A34;
+      --rf-arena:    #E8DFC8;
+      --rf-piedra:   #6B6B6B;
+      --rf-carbon:   #1A1A1A;
+      --rf-terracota:#B5533C;
+      --rf-serif:    'Cormorant Garamond', Georgia, serif;
+      --rf-mono:     'DM Mono', 'Courier New', monospace;
+      --rf-borde:    rgba(27, 58, 52, 0.15);
+
+      background: var(--rf-arena);
+      color: var(--rf-carbon);
+      font-family: var(--rf-mono);
+      font-weight: 300;
+    }
+
+    /* Headings */
+    .rf-page h1, .rf-page h2, .rf-page h3 {
+      font-family: var(--rf-serif);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* Eyebrow labels */
+    .rf-page .eyebrow {
+      font-family: var(--rf-mono);
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rf-piedra);
+    }
+
+    /* Body text */
+    .rf-page p, .rf-page li, .rf-page td, .rf-page th {
+      font-family: var(--rf-mono);
+      font-weight: 300;
+    }
+
+    /* Terracota accent — numbers, lines, section markers */
+    .rf-page .rf-accent {
+      color: var(--rf-terracota);
+    }
+
+    /* Primary button — verde selva, never terracota solid */
+    .rf-page .btn-primary {
+      background: var(--rf-verde);
+      color: var(--rf-arena);
+      font-family: var(--rf-mono);
+      font-weight: 300;
+      border-radius: 2px;
+    }
+    .rf-page .btn-primary:hover {
+      background: #2a5048;
+    }
+
+    /* Ghost button */
+    .rf-page .btn-ghost {
+      color: var(--rf-carbon);
+      font-family: var(--rf-mono);
+      font-weight: 300;
+    }
+
+    /* Nav overrides */
+    .rf-page header.nav {
+      background: rgba(232, 223, 200, 0.92);
+      border-bottom: 1px solid var(--rf-borde);
+    }
+    .rf-page .nav-links a {
+      font-family: var(--rf-mono);
+      font-weight: 300;
+      font-size: 11px;
+      color: var(--rf-piedra);
+    }
+    .rf-page .nav-links a:hover { color: var(--rf-carbon); }
+    .rf-page .nav-cta {
+      background: var(--rf-verde);
+      color: var(--rf-arena);
+      font-family: var(--rf-mono);
+      font-weight: 300;
+    }
+    .rf-page .nav-cta:hover { background: #2a5048; }
+
+    /* Lang switcher */
+    .rf-page .lang button.on, .rf-page .lang a.on {
+      background: var(--rf-carbon);
+      color: var(--rf-arena);
+    }
+
+    /* Section backgrounds */
+    .rf-page .rf-section {
+      background: var(--rf-arena);
+      padding: 90px 0;
+    }
+    .rf-page .rf-section-alt {
+      background: #DDD5BC;
+      padding: 90px 0;
+    }
+
+    /* Footer */
+    .rf-page footer {
+      background: var(--rf-verde);
+      color: var(--rf-arena);
+    }
+
+    /* Fixed CTA mobile */
+    .rf-page .fixed-cta-wrapper a {
+      background: var(--rf-verde) !important;
+    }
+
+    /* Section dividers use terracota as a thin line */
+    .rf-page .rf-divider {
+      border: none;
+      border-top: 1px solid var(--rf-terracota);
+      width: 40px;
+      margin: 0 0 24px;
+    }
+
+    @media (max-width: 860px) {
+      .rf-page .rf-section, .rf-page .rf-section-alt { padding: 58px 0; }
+    }
+  </style>
+
+  <div class="rf-page">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href={homeUrl} class="rf-logo" aria-label="Río y Fuego — inicio" style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 300; font-size: 20px; letter-spacing: 0.03em; color: var(--rf-carbon, #1A1A1A); text-decoration: none; white-space: nowrap;">
+          río y fuego
+        </a>
+        <div class="nav-right">
+          <nav class="nav-links" id="navlinks">
+            {lang === 'en' ? (
+              <>
+                <a href="#experience">Experience</a>
+                <a href="#around">Around</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#spaces">Spaces</a>
+                <a href="#location">Location</a>
+                <a href="#faq">FAQ</a>
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="nav-cta">
+                  {context.contactCTA.label}
+                </a>
+              </>
+            ) : (
+              <>
+                <a href="#experiencia">Experiencia</a>
+                <a href="#alrededor">Alrededor</a>
+                <a href="#galeria">Galería</a>
+                <a href="#espacios">Espacios</a>
+                <a href="#ubicacion">Ubicación</a>
+                <a href="#faq">FAQ</a>
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="nav-cta">
+                  {context.contactCTA.label}
+                </a>
+              </>
+            )}
+          </nav>
+          <div class="lang" role="group" aria-label="Language / Idioma">
+            <a id="lang-en" class={lang === 'en' ? 'on' : ''} href={enTarget} aria-pressed={lang === 'en' ? 'true' : 'false'}>EN</a>
+            <a id="lang-es" class={lang === 'es' ? 'on' : ''} href={esTarget} aria-pressed={lang === 'es' ? 'true' : 'false'}>ES</a>
+          </div>
+          <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <Hero context={context} lang={lang} />
+      <Experiencia context={context} lang={lang} />
+      <AlrededorDelLodge context={context} lang={lang} />
+      <Galeria context={context} lang={lang} />
+      {/* Tour 360 oculto hasta tener la URL real del embed y el copy del párrafo inferior.
+          Para restaurarlo: descomentar la línea siguiente y los links "#tour" del nav. */}
+      {/* <Tour360Embed context={context} lang={lang} /> */}
+      <Espacios context={context} lang={lang} />
+      <Mapa context={context} lang={lang} />
+      <IdealPara context={context} lang={lang} />
+      <Incluye context={context} lang={lang} />
+      <FAQ context={context} lang={lang} />
+      <Testimonios context={context} lang={lang} />
+    </main>
+
+    <footer>
+      <div class="wrap" style="padding: 56px 28px 36px;">
+        <span style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 300; font-size: 22px; letter-spacing: 0.03em; color: var(--rf-arena, #E8DFC8);">
+          río y fuego
+        </span>
+        <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 13px; color: rgba(232, 223, 200, 0.65); line-height: 1.7; max-width: 55ch; margin-top: 16px;">
+          {context.footerAttribution}
+        </p>
+        <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-top: 1px solid rgba(232, 223, 200, 0.15); padding-top: 20px; margin-top: 32px; gap: 12px;">
+          <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 12px; color: rgba(232, 223, 200, 0.45);">
+            {new Date().getFullYear()} · Entre Río y Fuego · Minca, Sierra Nevada
+          </p>
+          <a href={homeUrl} style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232, 223, 200, 0.45); text-decoration: none;">
+            verybdn
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <FixedCTA context={context} lang={lang} />
+  </div>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const links = document.getElementById('navlinks');
+
+    if (burger && links) {
+      burger.addEventListener('click', () => {
+        const open = links.classList.toggle('open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      links.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          links.classList.remove('open');
+          burger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if ('IntersectionObserver' in window && !prefersReduced) {
+      document.documentElement.classList.add('js-anim');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            en.target.classList.add('in');
+            io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => { io.observe(el); });
+    }
+  </script>
+</Layout>

@@ -1,0 +1,127 @@
+---
+import { Image } from 'astro:assets';
+import imgHero from '../../assets/img/rio-y-fuego-hero.png';
+import imgRiver from '../../assets/img/rio-y-fuego-river.png';
+import imgSauna from '../../assets/img/rio-y-fuego-sauna.png';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+// Physical spaces of Entre Río y Fuego, in exact order.
+// Habitación Río and Habitación Fuego are IDENTICAL in capacity and amenities — only name differs.
+const spaces = [
+  {
+    id: 'hab-rio',
+    labelEn: 'Río Room',
+    labelEs: 'Habitación Río',
+    bedsEn: '1 double bed · 1 single bed',
+    bedsEs: '1 cama doble · 1 cama sencilla',
+    image: imgHero,
+    hasLocationNote: false,
+    locationNote: '',
+    descEn: 'The river as the backdrop for the whole night. The screen door lets it in; the glass one switches it off. You choose what sound you sleep with.',
+    descEs: 'El río como telón de fondo de toda la noche. La puerta mosquitera lo deja entrar; la de vidrio lo apaga. Tú eliges con qué sonido duermes.'
+  },
+  {
+    id: 'hab-fuego',
+    labelEn: 'Fuego Room',
+    labelEs: 'Habitación Fuego',
+    bedsEn: '1 double bed · 1 single bed',
+    bedsEs: '1 cama doble · 1 cama sencilla',
+    image: imgHero,
+    hasLocationNote: false,
+    locationNote: '',
+    descEn: 'The same terrace facing the water, the same river below. The name already says what changes.',
+    descEs: 'La misma terraza frente al agua, el mismo río de fondo. El nombre ya dice lo que cambia.'
+  },
+  {
+    id: 'refugio',
+    labelEn: 'El Refugio',
+    labelEs: 'El Refugio',
+    bedsEn: '',
+    bedsEs: '',
+    image: imgRiver,
+    hasLocationNote: false,
+    locationNote: '',
+    descEn: 'One level down, closer to the river. Hammocks, quiet, and nothing else to ask for.',
+    descEs: 'Un nivel más abajo, más cerca del río. Hamacas, silencio, y nada más que pedirle.'
+  },
+  {
+    id: 'el-fuego',
+    labelEn: 'El Fuego',
+    labelEs: 'El Fuego',
+    bedsEn: '',
+    bedsEs: '',
+    image: imgSauna,
+    hasLocationNote: false,
+    locationNote: '',
+    descEn: 'The path down to the river. Where the nights end.',
+    descEs: 'La bajada al río. Donde terminan las noches.'
+  },
+  {
+    id: 'cocina',
+    labelEn: 'Shared kitchen',
+    labelEs: 'Cocina compartida',
+    bedsEn: '',
+    bedsEs: '',
+    image: imgHero,
+    hasLocationNote: false,
+    locationNote: '',
+    descEn: 'Separate from the grill and the wood-fired oven. Everything in its place.',
+    descEs: 'Separada de la parrilla y del horno de leña. Cada cosa en su lugar.'
+  }
+];
+---
+
+<section id={lang === 'en' ? 'spaces' : 'espacios'} class="rf-section-alt reveal">
+  <div class="wrap" style="padding: 0 28px;">
+    <div style="margin-bottom: 56px; max-width: 60ch;">
+      <hr class="rf-divider" />
+      <span class="eyebrow">{lang === 'en' ? 'The spaces' : 'Los espacios'}</span>
+      <h2 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; margin-top: 12px; color: var(--rf-carbon, #1A1A1A);">
+        {lang === 'en' ? 'Five spaces, one rhythm' : 'Cinco espacios, un mismo ritmo'}
+      </h2>
+      <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 16px; color: var(--rf-piedra, #6B6B6B); margin-top: 16px; line-height: 1.7; max-width: 56ch;">
+        {lang === 'en' ? 'Two rooms, a refuge, the fire, the kitchen.' : 'Dos habitaciones, un refugio, el fuego, la cocina.'}
+      </p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 56px;">
+      {spaces.map((space, index) => (
+        <div style={`display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; align-items: center; ${index % 2 === 1 ? 'direction: rtl;' : ''}`}>
+          <div style="direction: ltr; position: relative; overflow: hidden; border: 1px solid var(--rf-borde, rgba(27,58,52,0.15)); aspect-ratio: 16/10;">
+            <Image
+              src={space.image}
+              alt={lang === 'en' ? space.labelEn : space.labelEs}
+              style="width: 100%; height: 100%; object-fit: cover;"
+              width={720}
+              height={450}
+              loading="lazy"
+            />
+          </div>
+          <div style="direction: ltr; display: flex; flex-direction: column; gap: 14px;">
+            <h3 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-style: italic; font-weight: 400; font-size: clamp(24px, 3.5vw, 34px); line-height: 1.1; color: var(--rf-carbon, #1A1A1A); margin: 0;">
+              {lang === 'en' ? space.labelEn : space.labelEs}
+            </h3>
+            {(space.bedsEn || space.bedsEs) && (
+              <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rf-terracota, #B5533C); margin: 0;">
+                {lang === 'en' ? space.bedsEn : space.bedsEs}
+              </p>
+            )}
+            {space.hasLocationNote && (
+              <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 13px; color: var(--rf-piedra, #6B6B6B); margin: 0; line-height: 1.6;">
+                {space.locationNote}
+              </p>
+            )}
+            <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 14px; color: var(--rf-piedra, #6B6B6B); line-height: 1.7; margin: 0;">
+              {lang === 'en' ? space.descEn : space.descEs}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

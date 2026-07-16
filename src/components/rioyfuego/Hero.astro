@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import heroBg from '../../assets/img/rio-y-fuego-hero.png';
+import type { RioFuegoContext } from '../../layouts/RioFuegoLayout.astro';
+
+interface Props {
+  lang: 'en' | 'es';
+  context: RioFuegoContext;
+}
+
+const { lang, context } = Astro.props;
+const whatsappUrl = `https://wa.me/${context.contactCTA.whatsappNumber.replace('+', '')}?text=${encodeURIComponent(context.contactCTA.whatsappMessage)}`;
+---
+
+<section class="hero rf-hero" style="position: relative; overflow: hidden; background: var(--tierra);">
+  <div style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;">
+    <Image
+      src={heroBg}
+      alt="Entre Río y Fuego Lodge immersive landscape"
+      style="width: 100%; height: 100%; object-fit: cover; opacity: 0.65;"
+      width={1600}
+      height={900}
+      loading="eager"
+    />
+    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(26,24,20,0.35) 0%, rgba(26,24,20,0.78) 100%);"></div>
+  </div>
+
+  <div class="wrap reveal" style="position: relative; z-index: 2; width: 100%; text-align: center; color: var(--crema);">
+    {context.recommendationBlock.show && (
+      <div style="margin-bottom: 24px; display: inline-flex; align-items: center; gap: 10px; background: rgba(242, 236, 224, 0.12); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 4px; border: 1px solid rgba(242, 236, 224, 0.18);">
+        {context.recommendationBlock.partnerLogo && (
+          <img src={context.recommendationBlock.partnerLogo} alt={context.recommendationBlock.partnerName} style="height: 20px; object-fit: contain;" />
+        )}
+        <span style="font-family: var(--sans); font-weight: 300; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--barro-claro);">
+          {lang === 'en' ? 'Recommended by' : 'Recomendado por'} {context.recommendationBlock.partnerName}
+        </span>
+      </div>
+    )}
+
+    <span class="eyebrow" style="color: var(--barro-claro); display: block; margin-bottom: 18px;">
+      Minca · Sierra Nevada · Colombia
+    </span>
+
+    <h1 class="rf-hero-title">
+      {lang === 'en'
+        ? 'The river speaks before anything else.'
+        : 'El río suena antes que cualquier otra cosa.'}
+    </h1>
+
+    <p class="rf-hero-sub">
+      {lang === 'en'
+        ? 'Then the birds, and the terrace looking straight at the water leaves you there, with nothing left to do.'
+        : 'Después llegan los pájaros, y la terraza que mira directo al agua te deja ahí, sin nada más que hacer.'}
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; align-items: center; margin-bottom: 26px;">
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary" style="background: #9B6B3A; color: var(--crema);">
+        {context.contactCTA.label}
+      </a>
+      <a href={lang === 'en' ? '#experience' : '#experiencia'} class="btn-ghost" style="color: var(--crema);">
+        {lang === 'en' ? 'See the lodge' : 'Conoce el lodge'} <span class="arrow" style="color: var(--barro-claro);">&rarr;</span>
+      </a>
+    </div>
+
+    {context.pricing.show && (
+      <details class="rf-tarifas">
+        <summary>
+          {lang === 'en' ? 'Nightly rates' : 'Tarifas por noche'} <span class="chev" aria-hidden="true">▾</span>
+        </summary>
+        <div class="panel">
+          {context.pricing.tiers.map(tier => (
+            <span>{tier.occupancy} · {tier.price}</span>
+          ))}
+        </div>
+      </details>
+    )}
+  </div>
+</section>
+
+<section class="rf-intro reveal">
+  <hr class="rf-intro-divider" />
+  <p>
+    {lang === 'en' ? (
+      <>A two-room refuge in the Sierra Nevada. There's no agenda here: the water runs, the fire burns, the sauna's steam loosens you, the hammock waits. Getting here isn't the hard part. <em>Accepting that nothing is missing — that is.</em></>
+    ) : (
+      <>Un refugio de dos habitaciones en la Sierra Nevada. Aquí no hay agenda: el agua baja, el fuego se enciende, el vapor del sauna relaja, la hamaca espera. Lo difícil no es llegar. <em>Es aceptar que no falta nada.</em></>
+    )}
+  </p>
+</section>
+
+<style>
+  .rf-hero {
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 124px 0 90px;
+  }
+
+  .rf-hero-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 4.6vw, 62px);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    max-width: 22ch;
+    margin: 0 auto 20px;
+  }
+
+  .rf-hero-sub {
+    font-family: var(--rf-mono, 'DM Mono', monospace);
+    font-weight: 300;
+    font-size: clamp(13.5px, 1.2vw, 15.5px);
+    line-height: 1.75;
+    color: #D8CFC0;
+    max-width: 46ch;
+    margin: 0 auto 38px;
+  }
+
+  /* Tarifas: cerrado por defecto, se descubre con un click */
+  .rf-tarifas {
+    width: fit-content;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .rf-tarifas summary {
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--rf-mono, 'DM Mono', monospace);
+    font-weight: 300;
+    font-size: 11.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #D8CFC0;
+    border-bottom: 1px solid var(--rf-terracota, #B5533C);
+    padding-bottom: 4px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .rf-tarifas summary::-webkit-details-marker { display: none; }
+  .rf-tarifas summary .chev { transition: transform 0.3s; font-size: 10px; }
+  .rf-tarifas[open] summary .chev { transform: rotate(180deg); }
+  .rf-tarifas .panel {
+    overflow: hidden;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: rf-slide 0.35s ease;
+  }
+  .rf-tarifas .panel span {
+    font-family: var(--rf-mono, 'DM Mono', monospace);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: #EDE6D4;
+  }
+  @keyframes rf-slide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Bloque editorial: pausa con aire entre el hero y el resto */
+  .rf-intro {
+    background: var(--rf-arena, #E8DFC8);
+    padding: 130px 28px;
+    text-align: center;
+  }
+  .rf-intro-divider {
+    border: none;
+    border-top: 1px solid var(--rf-terracota, #B5533C);
+    width: 40px;
+    margin: 0 auto 34px;
+  }
+  .rf-intro p {
+    font-family: var(--rf-serif, 'Cormorant Garamond', serif);
+    font-weight: 300;
+    font-size: clamp(21px, 2.4vw, 30px);
+    line-height: 1.5;
+    color: var(--rf-carbon, #1A1A1A);
+    max-width: 34ch;
+    margin: 0 auto;
+  }
+  .rf-intro p em {
+    font-style: italic;
+    color: var(--rf-terracota, #B5533C);
+  }
+
+  @media (max-width: 860px) {
+    .rf-hero {
+      min-height: 92svh;
+      padding: 110px 0 140px;
+    }
+    .rf-hero-title {
+      font-size: clamp(30px, 8.6vw, 34px);
+    }
+    .rf-hero-sub {
+      font-size: 14px;
+    }
+    .rf-intro {
+      padding: 90px 26px;
+    }
+  }
+</style>

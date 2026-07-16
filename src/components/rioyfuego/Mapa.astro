@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import mapVisual from '../../assets/img/vista-minca.png';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+const locations = [
+  { id: 'minca', labelEn: 'Minca Town', labelEs: 'El Pueblo (Minca)', timeEn: '5-minute walk', timeEs: '5 minutos caminando' },
+  { id: 'santamarta', labelEn: 'Santa Marta', labelEs: 'Santa Marta', timeEn: '45 minutes', timeEs: '45 minutos' },
+  { id: 'airport', labelEn: 'Santa Marta Airport (SMR)', labelEs: 'Aeropuerto Santa Marta (SMR)', timeEn: '1 hour', timeEs: '1 hora' },
+  { id: 'palomino', labelEn: 'Palomino', labelEs: 'Palomino', timeEn: '2 hours', timeEs: '2 horas' }
+];
+---
+
+<section id={lang === 'en' ? 'location' : 'ubicacion'} class="wrap reveal" style="padding: 90px 28px;">
+  <div class="sec-head" style="margin-bottom: 56px; max-width: 65ch;">
+    <span class="eyebrow">{lang === 'en' ? 'Location' : 'Ubicación'}</span>
+    <h2 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin-top: 12px;">
+      {lang === 'en' ? 'Where it is' : 'Dónde queda'}
+    </h2>
+    <p class="lede" style="font-family: var(--sans); font-weight: 300; font-size: 18px; color: var(--sombra); margin-top: 16px; line-height: 1.6;">
+      {lang === 'en' ? 'Real travel times. No embellishment.' : 'Los tiempos reales, sin adornos.'}
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; align-items: center;">
+    <div>
+      <h3 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 24px; color: var(--barro); margin-bottom: 24px;">
+        {lang === 'en' ? 'Approximate Travel Times' : 'Tiempos de Viaje Aproximados'}
+      </h3>
+      <table style="width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 15px;">
+        <thead>
+          <tr style="border-bottom: 1.5px solid var(--borde); text-align: left; color: var(--sombra); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;">
+            <th style="padding: 12px 8px;">{lang === 'en' ? 'From' : 'Desde'}</th>
+            <th style="padding: 12px 8px; text-align: right;">{lang === 'en' ? 'Travel Time' : 'Tiempo de Viaje'}</th>
+          </tr>
+        </thead>
+        <tbody style="font-weight: 300; color: var(--tierra);">
+          {locations.map(loc => (
+            <tr style="border-bottom: 1px solid var(--borde);">
+              <td style="padding: 16px 8px; font-weight: 400;">{lang === 'en' ? loc.labelEn : loc.labelEs}</td>
+              <td style="padding: 16px 8px; text-align: right; color: var(--sombra);">{lang === 'en' ? loc.timeEn : loc.timeEs}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin-top: 20px; line-height: 1.6;">
+        {lang === 'en'
+          ? 'On foot from the lodge, the town is close. You can walk in any direction; the road to the waterfalls starts right here.'
+          : 'A pie desde el lodge, el pueblo queda cerca. Se puede caminar en cualquier dirección; la vía hacia las cascadas empieza aquí mismo.'}
+      </p>
+    </div>
+
+    <div style="position: relative; overflow: hidden; border-radius: 4px; border: 1px solid var(--borde); aspect-ratio: 4/3;">
+      <Image 
+        src={mapVisual} 
+        alt="Regional terrain and route context map of Minca, Sierra Nevada de Santa Marta" 
+        style="width: 100%; height: 100%; object-fit: cover;" 
+        width={720}
+        height={540}
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

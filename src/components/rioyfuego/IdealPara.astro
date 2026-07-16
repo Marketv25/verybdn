@@ -1,0 +1,61 @@
+---
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+
+// "Group Retreats" has been removed per project spec.
+const categories = [
+  {
+    id: 'couples',
+    labelEn: 'Couples & Solitude',
+    labelEs: 'Parejas & Soledad',
+    descEn: "Two rooms, one river. There's no third option.",
+    descEs: 'Dos habitaciones, un río. No hay tercera opción.'
+  },
+  {
+    id: 'nomads',
+    labelEn: 'Slow Nomads',
+    labelEs: 'Nómadas lentos',
+    descEn: "No wifi in the room. Here you don't work, you stop.",
+    descEs: 'Sin wifi en la habitación. Aquí no se trabaja, se para.'
+  },
+  {
+    id: 'slow-travelers',
+    labelEn: 'Slow travelers',
+    labelEs: 'Viajero lento',
+    descEn: 'Already knows Minca from the reviews. Looking for what almost no one promises and delivers: real quiet, and birds before sunrise.',
+    descEs: 'Ya conoce Minca por las reseñas. Busca lo que casi nadie promete y cumple: silencio real, y los pájaros antes de que amanezca.'
+  }
+];
+---
+
+<section id={lang === 'en' ? 'ideal-for' : 'ideal-para'} class="rf-section reveal">
+  <div class="wrap" style="padding: 0 28px;">
+    <div style="margin-bottom: 56px; max-width: 60ch;">
+      <hr class="rf-divider" />
+      <span class="eyebrow">{lang === 'en' ? "Who it's for" : 'Para quién'}</span>
+      <h2 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; margin-top: 12px; color: var(--rf-carbon, #1A1A1A);">
+        {lang === 'en' ? 'Who this is for' : 'Para quién es esto'}
+      </h2>
+      <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 16px; color: var(--rf-piedra, #6B6B6B); margin-top: 16px; line-height: 1.7; max-width: 56ch;">
+        {lang === 'en' ? "And who it isn't." : 'Y para quién no.'}
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; background: var(--rf-borde, rgba(27,58,52,0.15)); border: 1px solid var(--rf-borde, rgba(27,58,52,0.15));">
+      {categories.map(cat => (
+        <div style="background: var(--rf-arena, #E8DFC8); padding: 36px 32px; display: flex; flex-direction: column; gap: 16px;">
+          <h3 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-style: italic; font-weight: 400; font-size: 26px; color: var(--rf-carbon, #1A1A1A); border-bottom: 1px solid var(--rf-terracota, #B5533C); padding-bottom: 12px; margin: 0;">
+            {lang === 'en' ? cat.labelEn : cat.labelEs}
+          </h3>
+          <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 14px; color: var(--rf-piedra, #6B6B6B); line-height: 1.7; margin: 0;">
+            {lang === 'en' ? cat.descEn : cat.descEs}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+

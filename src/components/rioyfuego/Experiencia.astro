@@ -1,0 +1,100 @@
+---
+import type { RioFuegoContext } from '../../layouts/RioFuegoLayout.astro';
+
+interface Props {
+  lang: 'en' | 'es';
+  context: RioFuegoContext;
+}
+
+const { lang } = Astro.props;
+
+const items = [
+  {
+    id: 'river',
+    labelEn: 'Private river',
+    labelEs: 'Río privado',
+    descEn: 'Not a photo of the river. The river itself, right down the steps from the room.',
+    descEs: 'No es una foto del río. Es el río, bajando los escalones de la habitación.',
+    noteEn: '',
+    noteEs: ''
+  },
+  {
+    id: 'sauna',
+    labelEn: 'Steam',
+    labelEs: 'Vapor',
+    descEn: 'Wet heat. The body gives in before it asks to.',
+    descEs: 'Calor húmedo. El cuerpo cede antes de pedir permiso.',
+    noteEn: 'Available by additional reservation.',
+    noteEs: 'Disponible bajo reserva adicional.'
+  },
+  {
+    id: 'bonfire',
+    labelEn: 'Bonfire',
+    labelEs: 'Fogata',
+    descEn: 'Lit every night, no fixed time: if dinner runs long, the fire waits. No one puts it out early.',
+    descEs: 'Se enciende todas las noches, sin horario fijo: si la cena se alarga, el fuego espera. Nadie la apaga antes de tiempo.',
+    noteEn: '',
+    noteEs: ''
+  },
+  {
+    id: 'oven',
+    labelEn: 'Wood-fired oven',
+    labelEs: 'Horno de leña',
+    descEn: "Bread or pizza, if you give us time. The oven takes almost three hours to heat, and that's part of the rhythm here too.",
+    descEs: 'Pan o pizza, si avisas con tiempo. El horno tarda casi tres horas en estar listo, y eso también es parte del ritmo de aquí.',
+    noteEn: '',
+    noteEs: ''
+  },
+  {
+    id: 'nature',
+    labelEn: 'Nature',
+    labelEs: 'Naturaleza',
+    descEn: 'Sierra Nevada de Santa Marta all around, in every direction.',
+    descEs: 'Sierra Nevada de Santa Marta alrededor, en las cuatro direcciones.',
+    noteEn: '',
+    noteEs: ''
+  },
+  {
+    id: 'internet',
+    labelEn: 'Internet',
+    labelEs: 'Internet',
+    descEn: "Wifi in common areas. It doesn't reach the rooms.",
+    descEs: 'Wifi en las áreas comunes. No llega a las habitaciones.',
+    noteEn: '',
+    noteEs: ''
+  }
+];
+---
+
+<section id={lang === 'en' ? 'experience' : 'experiencia'} class="rf-section reveal">
+  <div class="wrap" style="padding: 0 28px;">
+    <div style="margin-bottom: 56px; max-width: 60ch;">
+      <hr class="rf-divider" />
+      <span class="eyebrow">{lang === 'en' ? 'The lodge' : 'El lodge'}</span>
+      <h2 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; margin-top: 12px; color: var(--rf-carbon, #1A1A1A);">
+        {lang === 'en' ? "What's already here" : 'Lo que ya está aquí'}
+      </h2>
+      <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 16px; color: var(--rf-piedra, #6B6B6B); margin-top: 16px; line-height: 1.7; max-width: 56ch;">
+        {lang === 'en' ? 'Nothing to add. Just there to use.' : 'Nada que agregar, solo usar.'}
+      </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2px; background: var(--rf-borde, rgba(27,58,52,0.15)); border: 1px solid var(--rf-borde, rgba(27,58,52,0.15));">
+      {items.map(item => (
+        <div style="background: var(--rf-arena, #E8DFC8); padding: 28px 24px; display: flex; flex-direction: column; gap: 10px;">
+          <h3 style="font-family: var(--rf-serif, 'Cormorant Garamond', serif); font-weight: 400; font-size: 20px; color: var(--rf-carbon, #1A1A1A); margin: 0; border-bottom: 1px solid var(--rf-terracota, #B5533C); padding-bottom: 8px; line-height: 1.2;">
+            {lang === 'en' ? item.labelEn : item.labelEs}
+          </h3>
+          <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 13px; color: var(--rf-piedra, #6B6B6B); line-height: 1.6; margin: 0;">
+            {lang === 'en' ? item.descEn : item.descEs}
+          </p>
+          {(lang === 'en' ? item.noteEn : item.noteEs) && (
+            <p style="font-family: var(--rf-mono, 'DM Mono', monospace); font-weight: 300; font-size: 11px; letter-spacing: 0.06em; color: var(--rf-terracota, #B5533C); line-height: 1.5; margin: 0;">
+              {lang === 'en' ? item.noteEn : item.noteEs}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
