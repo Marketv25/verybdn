@@ -1,35 +1,41 @@
 ---
 interface Props {
   lang: 'en' | 'es';
+  isHome?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, isHome = false } = Astro.props;
 
 // Decidir a dónde redirigir al cambiar de idioma
 const enTarget = lang === 'es' ? '/' : null;
 const esTarget = lang === 'en' ? '/es/' : null;
+
+// Prefijo de home según idioma, para que los anclas funcionen también desde subpáginas
+const homePrefix = lang === 'en' ? '/' : '/es/';
+const anchor = (id: string) => isHome ? `#${id}` : `${homePrefix}#${id}`;
+const logoHref = isHome ? '#top' : homePrefix;
 ---
 
 <header class="nav">
   <div class="nav-inner">
-    <a href={lang === 'en' ? '#top' : '/es/#top'} class="logo" aria-label="verybdn home"><span class="v">very</span><span class="b">bdn</span></a>
+    <a href={logoHref} class="logo" aria-label="verybdn home"><span class="v">very</span><span class="b">bdn</span></a>
     <div class="nav-right">
       <nav class="nav-links" id="navlinks">
         {lang === 'en' ? (
           <>
-            <a href="#preguntas">Minca guides</a>
-            <a href="#territorio">The coast</a>
-            <a href="#como">How it works</a>
-            <a href="#lista">The list</a>
-            <a href="#lista" class="nav-cta">Join the list</a>
+            <a href={anchor('preguntas')}>Minca guides</a>
+            <a href={anchor('territorio')}>The coast</a>
+            <a href={anchor('como')}>How it works</a>
+            <a href={anchor('lista')}>The list</a>
+            <a href={anchor('lista')} class="nav-cta">Join the list</a>
           </>
         ) : (
           <>
-            <a href="#preguntas">Guías de Minca</a>
-            <a href="#territorio">La costa</a>
-            <a href="#como">Cómo funciona</a>
-            <a href="#lista">La lista</a>
-            <a href="#lista" class="nav-cta">Únete a la lista</a>
+            <a href={anchor('preguntas')}>Guías de Minca</a>
+            <a href={anchor('territorio')}>La costa</a>
+            <a href={anchor('como')}>Cómo funciona</a>
+            <a href={anchor('lista')}>La lista</a>
+            <a href={anchor('lista')} class="nav-cta">Únete a la lista</a>
           </>
         )}
       </nav>

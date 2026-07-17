@@ -1,10 +1,14 @@
 ---
 interface Props {
   lang: 'en' | 'es';
+  isHome?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, isHome = false } = Astro.props;
 const currentYear = new Date().getFullYear();
+
+const homePrefix = lang === 'en' ? '/' : '/es/';
+const anchor = (id: string) => isHome ? `#${id}` : `${homePrefix}#${id}`;
 ---
 
 <footer>
@@ -35,17 +39,17 @@ const currentYear = new Date().getFullYear();
         <h4>verybdn</h4>
         {lang === 'en' ? (
           <>
-            <a href="#territorio">The coast</a>
-            <a href="#como">How it works</a>
-            <a href="#lista">The list</a>
-            <a href="#">Substack · turismo y territorio</a>
+            <a href={anchor('territorio')}>The coast</a>
+            <a href={anchor('como')}>How it works</a>
+            <a href={anchor('lista')}>The list</a>
+            <a href="https://verybdn.substack.com" target="_blank" rel="noopener noreferrer">Substack · turismo y territorio</a>
           </>
         ) : (
           <>
-            <a href="#territorio">La costa</a>
-            <a href="#como">Cómo funciona</a>
-            <a href="#lista">La lista</a>
-            <a href="#">Substack · turismo y territorio</a>
+            <a href={anchor('territorio')}>La costa</a>
+            <a href={anchor('como')}>Cómo funciona</a>
+            <a href={anchor('lista')}>La lista</a>
+            <a href="https://verybdn.substack.com" target="_blank" rel="noopener noreferrer">Substack · turismo y territorio</a>
           </>
         )}
       </div>
