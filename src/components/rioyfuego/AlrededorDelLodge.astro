@@ -6,6 +6,7 @@ export interface AlrededorItem {
   description: string;
   contactType: "whatsapp" | "bookingAffiliate" | "self";
   contactValue: string;
+  whatsappMessage?: string;
 }
 
 interface Props {
@@ -24,7 +25,10 @@ const items: AlrededorItem[] = [
       ? 'With Otto, from Nuwabirdlife. Arranged directly at the lodge.'
       : 'Con Otto, de Nuwabirdlife. Se coordina directo en el lodge.',
     contactType: "self",
-    contactValue: ""
+    contactValue: "",
+    whatsappMessage: lang === 'en'
+      ? "Hi! I'm interested in the birdwatching experience with Otto during my stay at Río y Fuego. My arrival date: / Number of people: / Experience level (beginner / intermediate / enthusiast):"
+      : "Hola, estoy interesado/a en la experiencia de avistamiento de aves con Otto durante mi estadía en Río y Fuego. Fecha de llegada: / Número de personas: / Nivel de experiencia (principiante / intermedio / entusiasta):"
   },
   {
     name: lang === 'en' ? 'Yoga' : 'Yoga',
@@ -32,7 +36,10 @@ const items: AlrededorItem[] = [
       ? 'Book a day in advance. The instructor may vary depending on availability.'
       : 'Reserva con un día de anticipación. La instructora puede variar según disponibilidad.',
     contactType: "self",
-    contactValue: ""
+    contactValue: "",
+    whatsappMessage: lang === 'en'
+      ? "Hi! I'd like to arrange a yoga session during my stay at Río y Fuego. My arrival date: / Number of people: / Preferred time (morning / sunset):"
+      : "Hola, me gustaría coordinar una sesión de yoga durante mi estadía en Río y Fuego. Fecha de llegada: / Número de personas: / Horario preferido (mañana / atardecer):"
   }
 ];
 
@@ -45,7 +52,8 @@ function buildContactUrl(item: AlrededorItem, ctx: RioFuegoContext): string {
     return item.contactValue;
   }
   // "self" — Joney books directly via lodge WhatsApp
-  return `https://wa.me/${ctx.contactCTA.whatsappNumber.replace('+', '')}?text=${encodeURIComponent(ctx.contactCTA.whatsappMessage)}`;
+  const message = item.whatsappMessage ?? ctx.contactCTA.whatsappMessage;
+  return `https://wa.me/${ctx.contactCTA.whatsappNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
 }
 
 function buildContactLabel(item: AlrededorItem, lang: 'en' | 'es'): string {
