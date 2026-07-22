@@ -16,7 +16,8 @@ const mappings = [
   { src: 'espacio-3-refugio.png', dest: 'espacio-3-refugio.webp' },
   { src: 'espacio-4-fuego.png', dest: 'espacio-4-fuego.webp' },
   { src: 'espacio-5-cocina-exterior.png', dest: 'espacio-5-cocina-exterior.webp' },
-  { src: 'mapa.png', dest: 'mapa.webp' }
+  { src: 'mapa.png', dest: 'mapa.webp' },
+  { src: 'rio-y-fuego-lodge.jpg', dest: 'rio-y-fuego-lodge.webp' }
 ];
 
 async function convert() {
