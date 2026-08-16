@@ -50,6 +50,12 @@ const blogCollection = defineCollection({
       .array(z.object({ title: z.string(), url: z.string().url() }))
       .default([]),
     ogImage: z.string().optional(),
+    /**
+     * Ruta del mismo artículo en el otro idioma, si algún día se traduce.
+     * Solo cuando existe de verdad se emite `hreflang`: apuntarlo a un índice
+     * sería declarar una traducción que no está.
+     */
+    alternateUrl: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

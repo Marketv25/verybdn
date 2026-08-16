@@ -9,14 +9,28 @@ export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) =>
     import.meta.env.PROD ? !data.draft : true,
   );
-  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+
+  const porFecha = [...posts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: {
+      post,
+      // Otros artículos del mismo hilo. Es lo que convierte piezas sueltas en
+      // un conjunto que se lee — y que los buscadores leen — como un tema.
+      related: porFecha
+        .filter((otro) => otro.slug !== post.slug && otro.data.cluster === post.data.cluster)
+        .slice(0, 2),
+    },
+  }));
 }
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  related: CollectionEntry<'blog'>[];
 }
 
-const { post } = Astro.props;
+const { post, related } = Astro.props;
 const { Content } = await post.render();
 const d = post.data;
 
@@ -25,12 +39,37 @@ const ogImage = d.ogImage ?? 'https://verybdn.com/og-burro.jpg';
 const locale = d.lang === 'es' ? 'es-CO' : 'en-US';
 
 const formatDate = (date: Date) =>
-  date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+  // timeZone UTC fijo: `pubDate: 2026-08-15` es medianoche UTC, y sin esto la
+  // zona del equipo que construye lo pinta como el dia anterior. La fecha
+  // visible dejaria de coincidir con la del JSON-LD.
+  date.toLocaleDateString(locale, {
+    year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+  });
 
 const t =
   d.lang === 'es'
-    ? { by: 'Por', published: 'Publicado', updated: 'Actualizado', faq: 'Preguntas frecuentes', sources: 'Fuentes', back: 'Todos los artículos' }
-    : { by: 'By', published: 'Published', updated: 'Updated', faq: 'Frequently asked questions', sources: 'Sources', back: 'All articles' };
+    ? {
+        by: 'Por', published: 'Publicado', updated: 'Actualizado',
+        faq: 'Preguntas frecuentes', sources: 'Fuentes', back: 'Todos los escritos',
+        keep: 'Seguir leyendo', blogPath: '/es/blog/',
+        aboutTitle: 'Quién escribe esto',
+        aboutBody: 'Honey vive en Minca, en la Sierra Nevada. Lo que hay aquí sale de vivir y trabajar en el territorio que estas páginas cubren, no de visitarlo una semana. Cuando algo depende de la temporada o ha cambiado, el texto lo dice.',
+        thread: { travel: 'Para quien está de paso', operators: 'Para quien se quedó' },
+      }
+    : {
+        by: 'By', published: 'Published', updated: 'Updated',
+        faq: 'Frequently asked questions', sources: 'Sources', back: 'All writing',
+        keep: 'Keep reading', blogPath: '/blog/',
+        aboutTitle: 'Who writes this',
+        aboutBody: 'Honey lives in Minca, in the Sierra Nevada. What is here comes from living and working in the territory these pages cover, not from visiting it for a week. Where something is seasonal or has changed, the text says so.',
+        thread: { travel: 'For the ones passing through', operators: 'For the ones who stayed' },
+      };
+
+const threadLabel = t.thread[d.cluster];
+
+// El conmutador de idioma nunca deja al lector tirado: si el artículo está
+// traducido va a su equivalente, y si no, al índice en el otro idioma.
+const navAlternate = d.alternateUrl ?? (d.lang === 'es' ? '/blog/' : '/es/blog/');
 
 /**
  * Un solo bloque JSON-LD con `@graph`: el Article y, si hay preguntas, el
@@ -75,20 +114,21 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
   description={d.description}
   lang={d.lang}
   canonicalUrl={canonicalUrl}
+  alternateUrl={d.alternateUrl}
   ogImage={ogImage}
 >
   <script type="application/ld+json" slot="head" is:inline set:html={jsonLd} />
 
-  <Navigation lang={d.lang} />
+  <Navigation lang={d.lang} alternateUrl={navAlternate} />
 
   <a id="top"></a>
 
   <article class="wrap post">
     <header class="post-head">
-      {d.eyebrow && <span class="eyebrow post-eyebrow">{d.eyebrow}</span>}
+      <a class="eyebrow post-eyebrow" href={`${t.blogPath}#${d.cluster}`}>{d.eyebrow ?? threadLabel}</a>
       <h1>{d.title}</h1>
       <div class="post-meta">
-        <span>{t.by} <strong>Honey</strong></span>
+        <span>{t.by} <strong>Honey</strong>, Minca</span>
         <span>{t.published}: {formatDate(d.pubDate)}</span>
         {d.updatedDate && <span>{t.updated}: {formatDate(d.updatedDate)}</span>}
       </div>
@@ -127,7 +167,27 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
         </section>
       )}
 
-      <a class="post-back" href="/blog/">← {t.back}</a>
+      <section class="post-about">
+        <span class="eyebrow">{t.aboutTitle}</span>
+        <p>{t.aboutBody}</p>
+      </section>
+
+      {related.length > 0 && (
+        <section class="post-related">
+          <span class="eyebrow">{t.keep} · {threadLabel}</span>
+          <div class="related-list">
+            {related.map((otro) => (
+              <a class="related-item" href={`/blog/${otro.slug}/`}>
+                <h3>{otro.data.title}</h3>
+                <p>{otro.data.description}</p>
+                <span class="related-go">{d.lang === 'es' ? 'Leer' : 'Read'} <span class="arrow">→</span></span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <a class="post-back" href={t.blogPath}>← {t.back}</a>
     </div>
   </article>
 
@@ -143,11 +203,6 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
   .post-head {
     max-width: 720px;
     margin: 0 auto 40px;
-  }
-
-  .post-eyebrow {
-    display: block;
-    margin-bottom: 12px;
   }
 
   .post-head h1 {
@@ -340,5 +395,98 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     letter-spacing: 0.16em;
     font-size: 12px;
     color: var(--barro);
+  }
+
+  .post-eyebrow {
+    display: block;
+    margin-bottom: 12px;
+    transition: color 0.2s;
+  }
+
+  .post-eyebrow:hover {
+    color: var(--barro);
+  }
+
+  /* Nota de autor. No es decoración: decir quién escribe y desde dónde es
+     parte de por qué el texto vale, y los motores generativos lo leen. */
+  .post-about {
+    margin-top: 56px;
+    padding: 28px 30px;
+    background: var(--hueso);
+    border-left: 2px solid var(--barro);
+    border-radius: 2px;
+  }
+
+  .post-about p {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--tierra);
+  }
+
+  .post-related {
+    margin-top: 48px;
+    border-top: 1px solid var(--borde);
+    padding-top: 32px;
+  }
+
+  .related-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: 22px;
+    background: var(--borde);
+    border: 1px solid var(--borde);
+  }
+
+  @media (max-width: 680px) {
+    .related-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .related-item {
+    background: var(--crema);
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.25s;
+  }
+
+  .related-item:hover {
+    background: #fff;
+  }
+
+  .related-item h3 {
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.15;
+    color: var(--tierra);
+  }
+
+  .related-item p {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--sombra);
+  }
+
+  .related-go {
+    margin-top: auto;
+    padding-top: 10px;
+    font-family: var(--sans);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: var(--barro);
+  }
+
+  .related-item:hover .arrow {
+    display: inline-block;
+    transform: translateX(4px);
+    transition: transform 0.25s;
   }
 </style>

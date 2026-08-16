@@ -2,13 +2,20 @@
 interface Props {
   lang: 'en' | 'es';
   isHome?: boolean;
+  /**
+   * Equivalente de esta página en el otro idioma. Sin esto el conmutador manda
+   * al lector a la portada, que es perder la página que estaba leyendo: si
+   * estás en `/minca/how-many-days/` y pulsas ES, lo que quieres es
+   * `/es/minca/cuantos-dias/`, no volver al principio.
+   */
+  alternateUrl?: string;
 }
 
-const { lang, isHome = false } = Astro.props;
+const { lang, isHome = false, alternateUrl } = Astro.props;
 
-// Decidir a dónde redirigir al cambiar de idioma
-const enTarget = lang === 'es' ? '/' : null;
-const esTarget = lang === 'en' ? '/es/' : null;
+// Al cambiar de idioma se va al equivalente si existe; si no, a la portada.
+const enTarget = lang === 'es' ? (alternateUrl ?? '/') : null;
+const esTarget = lang === 'en' ? (alternateUrl ?? '/es/') : null;
 
 // Prefijo de home según idioma, para que los anclas funcionen también desde subpáginas
 const homePrefix = lang === 'en' ? '/' : '/es/';

@@ -1,0 +1,160 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Navigation from '../../../components/Navigation.astro';
+import Footer from '../../../components/Footer.astro';
+import AuthorCard from '../../../components/AuthorCard.astro';
+import TopographyHero from '../../../components/TopographyHero.astro';
+
+const posts = await getCollection('blog', ({ data }) =>
+  import.meta.env.PROD ? !data.draft : true,
+);
+
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const clusters = [
+  {
+    id: 'travel',
+    eyebrow: 'Para quien está de paso',
+    title: 'Lo que nadie te cuenta hasta que ya estás aquí.',
+    lede: 'Las guías responden a lo que se pregunta antes de reservar. Esto es lo que aparece después: lo que resultó ser distinto, el plan que hubo que cambiar, el detalle que solo importa cuando ya estás dentro.',
+    empty: 'Todavía no hay nada. Las guías son un buen sitio para empezar.',
+    posts: posts.filter((post) => post.data.cluster === 'travel'),
+  },
+  {
+    id: 'operators',
+    eyebrow: 'Para quien se quedó',
+    title: 'Llevar un lugar pequeño sin desgastarlo.',
+    lede: 'Escrito para quien tiene el hostal, el lodge, las cuatro habitaciones encima del café. Tienes algo real. Convertirlo en negocio sin aplanar lo que lo hacía valer la pena es el problema de verdad, y casi nadie escribe sobre eso con honestidad.',
+    empty: 'Todavía no hay nada.',
+    posts: posts.filter((post) => post.data.cluster === 'operators'),
+  },
+];
+
+const canonicalUrl = 'https://verybdn.com/es/blog/';
+
+const formatDate = (date: Date) =>
+  // timeZone UTC fijo: sin esto la fecha se pinta un dia antes segun donde se construya.
+  date.toLocaleDateString('es-CO', {
+    year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+  });
+---
+
+<Layout
+  title="Escritos — verybdn"
+  description="Notas sobre turismo, territorio y hospitalidad en la costa Caribe de Colombia. Escritas desde Minca por alguien que vive y trabaja aquí, no de paso."
+  lang="es"
+  canonicalUrl={canonicalUrl}
+  alternateUrl="https://verybdn.com/blog/"
+>
+  <Navigation lang="es" alternateUrl="/blog/" />
+
+  <a id="top"></a>
+
+  <section class="hero">
+    <TopographyHero />
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">verybdn · escritos</span>
+          <h1>Notas desde una carretera que <span class="accent">se vacía</span> a las cuatro de la tarde.</h1>
+          <p class="hero-sub">
+            Las guías responden a lo que la gente pregunta antes de venir. Esto es la otra mitad:
+            <strong>cómo se ve el lugar desde dentro</strong>, y lo que cuesta de verdad sostener
+            algo aquí.
+          </p>
+          <p class="territory">
+            Dos hilos. Uno para quien está de paso. Otro para quien se quedó y construyó algo.
+            Los dos escritos desde la misma montaña.
+          </p>
+          <div class="hero-actions">
+            <a href="#travel" class="btn-primary">Si vas a venir <span>&darr;</span></a>
+            <a href="#operators" class="btn-ghost">Si llevas un lugar <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+        <AuthorCard lang="es" />
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <p>
+        <span class="lead">Los artículos están en inglés por ahora.</span>
+        Es el idioma en el que llega la mayoría de quienes viajan hasta aquí. Las guías sí están
+        en los dos.
+      </p>
+      <div class="ai-pills" aria-label="Cómo se escribe esto">
+        <span>De primera mano</span><span>Con fuentes</span><span>Actualizado desde el terreno</span>
+      </div>
+    </div>
+  </div>
+
+  {clusters.map((cluster, clusterIndex) => (
+    <section id={cluster.id} class={clusterIndex === 1 ? 'terr-sec' : undefined}>
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">{cluster.eyebrow}</span>
+          <h2>{cluster.title}</h2>
+          <p class="lede">{cluster.lede}</p>
+        </div>
+
+        {cluster.posts.length === 0 ? (
+          <p class="cluster-empty reveal">{cluster.empty}</p>
+        ) : (
+          <div class="q-list">
+            {cluster.posts.map((post, index) => (
+              <a class="q-row reveal" href={`/blog/${post.slug}/`}>
+                <span class="q-num">{String(index + 1).padStart(2, '0')}</span>
+                <div class="q-main">
+                  <h3>{post.data.title}</h3>
+                  <div class="q-en">{formatDate(post.data.pubDate)} · en inglés</div>
+                  <p>{post.data.description}</p>
+                </div>
+                <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <section class="list-sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Cómo se escribe esto</span>
+        <h2>Despacio, y con los recibos.</h2>
+        <p class="lede">
+          Cada cifra está enlazada a su fuente. Cuando algo depende de la temporada, o ha cambiado
+          desde que se escribió, el texto lo dice en vez de disimularlo. Cuando una pieza deja de
+          ser cierta, se actualiza — no se borra en silencio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Footer lang="es" />
+</Layout>
+
+<style>
+  .cluster-empty {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--sombra);
+    margin-top: 40px;
+    padding-top: 26px;
+    border-top: 1px solid var(--borde);
+  }
+
+  .list-sec .sec-head {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .list-sec .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
