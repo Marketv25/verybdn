@@ -1,0 +1,131 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = await getCollection('blog', ({ data }) =>
+  import.meta.env.PROD ? !data.draft : true,
+);
+
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const clusters = [
+  {
+    id: 'travel',
+    title: 'For travellers',
+    lede: 'What to expect on the ground, before you spend a peso.',
+    posts: posts.filter((post) => post.data.cluster === 'travel'),
+  },
+  {
+    id: 'operators',
+    title: 'For operators',
+    lede: 'For anyone running a small place and trying to do it well.',
+    posts: posts.filter((post) => post.data.cluster === 'operators'),
+  },
+];
+
+const canonicalUrl = 'https://verybdn.com/blog/';
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<Layout
+  title="Writing — verybdn"
+  description="Notes on tourism, territory and hospitality from Colombia's Caribbean coast. Written from inside it, by Honey."
+  lang="en"
+  canonicalUrl={canonicalUrl}
+>
+  <Navigation lang="en" />
+
+  <a id="top"></a>
+
+  <section class="wrap blog-index">
+    <div class="sec-head">
+      <span class="eyebrow">verybdn · writing</span>
+      <h2>Notes from the coast</h2>
+      <p class="lede">
+        Two threads. One for people passing through, one for people who stay and run
+        something here. Both written from the same place.
+      </p>
+    </div>
+
+    {clusters.map((cluster) => (
+      <div class="cluster">
+        <h3 class="cluster-title">{cluster.title}</h3>
+        <p class="cluster-lede">{cluster.lede}</p>
+
+        {cluster.posts.length === 0 ? (
+          <p class="cluster-empty">Nothing published here yet.</p>
+        ) : (
+          <div class="q-list">
+            {cluster.posts.map((post, index) => (
+              <a class="q-row" href={`/blog/${post.slug}/`}>
+                <span class="q-num">{String(index + 1).padStart(2, '0')}</span>
+                <div class="q-main">
+                  <h3>{post.data.title}</h3>
+                  <p>{post.data.description}</p>
+                </div>
+                <span class="q-go">
+                  {formatDate(post.data.pubDate)}
+                  <span class="arrow">→</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+  </section>
+
+  <Footer lang="en" />
+</Layout>
+
+<style>
+  .blog-index {
+    padding: 82px 28px;
+  }
+
+  @media (max-width: 860px) {
+    .blog-index {
+      padding: 58px 28px;
+    }
+  }
+
+  .cluster {
+    margin-top: 62px;
+  }
+
+  .cluster-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(24px, 3.4vw, 32px);
+    line-height: 1.1;
+    color: var(--tierra);
+  }
+
+  .cluster-lede {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--sombra);
+    margin-top: 8px;
+    max-width: 54ch;
+  }
+
+  .cluster-empty {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15px;
+    color: var(--sombra);
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid var(--borde);
+  }
+
+  .cluster .q-list {
+    margin-top: 26px;
+  }
+</style>
