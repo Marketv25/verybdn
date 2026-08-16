@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
+import AuthorCard from '../../components/AuthorCard.astro';
+import TopographyHero from '../../components/TopographyHero.astro';
 
 const posts = await getCollection('blog', ({ data }) =>
   import.meta.env.PROD ? !data.draft : true,
@@ -13,14 +15,18 @@ posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const clusters = [
   {
     id: 'travel',
-    title: 'For travellers',
-    lede: 'What to expect on the ground, before you spend a peso.',
+    eyebrow: 'For the ones passing through',
+    title: 'What nobody tells you until you are already here.',
+    lede: "The guides answer the questions you ask before booking. These are the ones that come up after — the thing that turned out to be different, the plan that needed changing, the detail that only matters once you are standing in it.",
+    empty: 'Nothing here yet. The guides are the place to start.',
     posts: posts.filter((post) => post.data.cluster === 'travel'),
   },
   {
     id: 'operators',
-    title: 'For operators',
-    lede: 'For anyone running a small place and trying to do it well.',
+    eyebrow: 'For the ones who stayed',
+    title: 'Running a small place, without grinding it down.',
+    lede: 'Written for whoever owns the hostel, the lodge, the four rooms above the café. You have something real. Turning it into a business without flattening what made it worth visiting is the actual problem, and almost nobody writes about it honestly.',
+    empty: 'Nothing here yet.',
     posts: posts.filter((post) => post.data.cluster === 'operators'),
   },
 ];
@@ -28,104 +34,126 @@ const clusters = [
 const canonicalUrl = 'https://verybdn.com/blog/';
 
 const formatDate = (date: Date) =>
-  date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  // timeZone UTC fijo: sin esto la fecha se pinta un dia antes segun donde se construya.
+  date.toLocaleDateString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
+  });
 ---
 
 <Layout
   title="Writing — verybdn"
-  description="Notes on tourism, territory and hospitality from Colombia's Caribbean coast. Written from inside it, by Honey."
+  description="Notes on tourism, territory and hospitality from Colombia's Caribbean coast. Written from Minca by someone who lives and works here, not by someone passing through."
   lang="en"
   canonicalUrl={canonicalUrl}
+  alternateUrl="https://verybdn.com/es/blog/"
 >
-  <Navigation lang="en" />
+  <Navigation lang="en" alternateUrl="/es/blog/" />
 
   <a id="top"></a>
 
-  <section class="wrap blog-index">
-    <div class="sec-head">
-      <span class="eyebrow">verybdn · writing</span>
-      <h2>Notes from the coast</h2>
-      <p class="lede">
-        Two threads. One for people passing through, one for people who stay and run
-        something here. Both written from the same place.
-      </p>
+  <section class="hero">
+    <TopographyHero />
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">verybdn · writing</span>
+          <h1>Notes from a road that <span class="accent">empties out</span> by four in the afternoon.</h1>
+          <p class="hero-sub">
+            The guides answer the questions people ask before they come. This is the other half:
+            <strong>what the place looks like from inside it</strong>, and what running something
+            here actually costs.
+          </p>
+          <p class="territory">
+            Two threads. One for people passing through. One for the people who stayed and built
+            something. Both written from the same mountain.
+          </p>
+          <div class="hero-actions">
+            <a href="#travel" class="btn-primary">If you are coming <span>&darr;</span></a>
+            <a href="#operators" class="btn-ghost">If you run a place <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+        <AuthorCard lang="en" />
+      </div>
     </div>
+  </section>
 
-    {clusters.map((cluster) => (
-      <div class="cluster">
-        <h3 class="cluster-title">{cluster.title}</h3>
-        <p class="cluster-lede">{cluster.lede}</p>
+  <div class="strip">
+    <div class="wrap">
+      <p>
+        <span class="lead">Nothing here is written to fill a calendar.</span>
+        If a week goes by without something worth saying, nothing gets published.
+      </p>
+      <div class="ai-pills" aria-label="How this is written">
+        <span>First-hand</span><span>Sourced</span><span>Updated from the ground</span>
+      </div>
+    </div>
+  </div>
+
+  {clusters.map((cluster, clusterIndex) => (
+    <section id={cluster.id} class={clusterIndex === 1 ? 'terr-sec' : undefined}>
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">{cluster.eyebrow}</span>
+          <h2>{cluster.title}</h2>
+          <p class="lede">{cluster.lede}</p>
+        </div>
 
         {cluster.posts.length === 0 ? (
-          <p class="cluster-empty">Nothing published here yet.</p>
+          <p class="cluster-empty reveal">{cluster.empty}</p>
         ) : (
           <div class="q-list">
             {cluster.posts.map((post, index) => (
-              <a class="q-row" href={`/blog/${post.slug}/`}>
+              <a class="q-row reveal" href={`/blog/${post.slug}/`}>
                 <span class="q-num">{String(index + 1).padStart(2, '0')}</span>
                 <div class="q-main">
                   <h3>{post.data.title}</h3>
+                  <div class="q-en">{formatDate(post.data.pubDate)}</div>
                   <p>{post.data.description}</p>
                 </div>
-                <span class="q-go">
-                  {formatDate(post.data.pubDate)}
-                  <span class="arrow">→</span>
-                </span>
+                <span class="q-go">Read <span class="arrow">&rarr;</span></span>
               </a>
             ))}
           </div>
         )}
       </div>
-    ))}
+    </section>
+  ))}
+
+  <section class="list-sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How this gets written</span>
+        <h2>Slowly, and with the receipts.</h2>
+        <p class="lede">
+          Every figure here is linked to where it came from. When something is seasonal, or has
+          changed since it was written, the text says so instead of pretending otherwise. When a
+          piece stops being true, it gets updated — not quietly deleted.
+        </p>
+      </div>
+    </div>
   </section>
 
   <Footer lang="en" />
 </Layout>
 
 <style>
-  .blog-index {
-    padding: 82px 28px;
-  }
-
-  @media (max-width: 860px) {
-    .blog-index {
-      padding: 58px 28px;
-    }
-  }
-
-  .cluster {
-    margin-top: 62px;
-  }
-
-  .cluster-title {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(24px, 3.4vw, 32px);
-    line-height: 1.1;
-    color: var(--tierra);
-  }
-
-  .cluster-lede {
+  .cluster-empty {
     font-family: var(--sans);
     font-weight: 300;
     font-size: 16px;
     color: var(--sombra);
-    margin-top: 8px;
-    max-width: 54ch;
-  }
-
-  .cluster-empty {
-    font-family: var(--sans);
-    font-weight: 300;
-    font-size: 15px;
-    color: var(--sombra);
-    margin-top: 26px;
+    margin-top: 40px;
     padding-top: 26px;
     border-top: 1px solid var(--borde);
   }
 
-  .cluster .q-list {
-    margin-top: 26px;
+  .list-sec .sec-head {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .list-sec .lede {
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>
