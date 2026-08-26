@@ -1,43 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import Navigation from '../../../components/Navigation.astro';
 import Footer from '../../../components/Footer.astro';
 import AuthorCard from '../../../components/AuthorCard.astro';
 import TopographyHero from '../../../components/TopographyHero.astro';
+import {
+  getPublishedPosts, sortByDate, clusterCopy, formatDate, postPath,
+} from '../../../lib/blog';
 
-const posts = await getCollection('blog', ({ data }) =>
-  import.meta.env.PROD ? !data.draft : true,
-);
+const posts = sortByDate(await getPublishedPosts()).filter((post) => post.data.lang === 'es');
 
-posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const clusters = [
-  {
-    id: 'travel',
-    eyebrow: 'Para quien está de paso',
-    title: 'Lo que nadie te cuenta hasta que ya estás aquí.',
-    lede: 'Las guías responden a lo que se pregunta antes de reservar. Esto es lo que aparece después: lo que resultó ser distinto, el plan que hubo que cambiar, el detalle que solo importa cuando ya estás dentro.',
-    empty: 'Todavía no hay nada. Las guías son un buen sitio para empezar.',
-    posts: posts.filter((post) => post.data.cluster === 'travel'),
-  },
-  {
-    id: 'operators',
-    eyebrow: 'Para quien se quedó',
-    title: 'Llevar un lugar pequeño sin desgastarlo.',
-    lede: 'Escrito para quien tiene el hostal, el lodge, las cuatro habitaciones encima del café. Tienes algo real. Convertirlo en negocio sin aplanar lo que lo hacía valer la pena es el problema de verdad, y casi nadie escribe sobre eso con honestidad.',
-    empty: 'Todavía no hay nada.',
-    posts: posts.filter((post) => post.data.cluster === 'operators'),
-  },
-];
+const clusters = clusterCopy.es.map((cluster) => ({
+  ...cluster,
+  posts: posts.filter((post) => post.data.cluster === cluster.id),
+}));
 
 const canonicalUrl = 'https://verybdn.com/es/blog/';
-
-const formatDate = (date: Date) =>
-  // timeZone UTC fijo: sin esto la fecha se pinta un dia antes segun donde se construya.
-  date.toLocaleDateString('es-CO', {
-    year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
-  });
 ---
 
 <Layout
@@ -64,8 +42,8 @@ const formatDate = (date: Date) =>
             algo aquí.
           </p>
           <p class="territory">
-            Dos hilos. Uno para quien está de paso. Otro para quien se quedó y construyó algo.
-            Los dos escritos desde la misma montaña.
+            Tres hilos. Uno para quien está de paso, otro para quien se quedó y construyó algo, y
+            otro para cuando resulta que son la misma pregunta.
           </p>
           <div class="hero-actions">
             <a href="#travel" class="btn-primary">Si vas a venir <span>&darr;</span></a>
@@ -80,9 +58,8 @@ const formatDate = (date: Date) =>
   <div class="strip">
     <div class="wrap">
       <p>
-        <span class="lead">Los artículos están en inglés por ahora.</span>
-        Es el idioma en el que llega la mayoría de quienes viajan hasta aquí. Las guías sí están
-        en los dos.
+        <span class="lead">Aquí no se publica por llenar calendario.</span>
+        Si pasa una semana sin nada que merezca decirse, no sale nada.
       </p>
       <div class="ai-pills" aria-label="Cómo se escribe esto">
         <span>De primera mano</span><span>Con fuentes</span><span>Actualizado desde el terreno</span>
@@ -90,8 +67,8 @@ const formatDate = (date: Date) =>
     </div>
   </div>
 
-  {clusters.map((cluster, clusterIndex) => (
-    <section id={cluster.id} class={clusterIndex === 1 ? 'terr-sec' : undefined}>
+  {clusters.map((cluster, i) => (
+    <section id={cluster.id} class={i === 1 ? 'terr-sec' : undefined}>
       <div class="wrap">
         <div class="sec-head reveal">
           <span class="eyebrow">{cluster.eyebrow}</span>
@@ -104,11 +81,11 @@ const formatDate = (date: Date) =>
         ) : (
           <div class="q-list">
             {cluster.posts.map((post, index) => (
-              <a class="q-row reveal" href={`/blog/${post.slug}/`}>
+              <a class="q-row reveal" href={postPath('es', post.slug)}>
                 <span class="q-num">{String(index + 1).padStart(2, '0')}</span>
                 <div class="q-main">
                   <h3>{post.data.title}</h3>
-                  <div class="q-en">{formatDate(post.data.pubDate)} · en inglés</div>
+                  <div class="q-en">{formatDate(post.data.pubDate, 'es', 'short')}</div>
                   <p>{post.data.description}</p>
                 </div>
                 <span class="q-go">Leer <span class="arrow">&rarr;</span></span>

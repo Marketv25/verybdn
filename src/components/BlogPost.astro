@@ -1,0 +1,452 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from './Navigation.astro';
+import Footer from './Footer.astro';
+import {
+  blogBase, postPath, formatDate, postCopy, threadLabels,
+  type BlogPost, type Lang, type Cluster,
+} from '../lib/blog';
+
+interface Props {
+  post: BlogPost;
+  related: BlogPost[];
+  /** URL absoluta de la traducción, solo si existe de verdad. */
+  alternateUrl?: string;
+}
+
+const { post, related, alternateUrl } = Astro.props;
+const { Content } = await post.render();
+const d = post.data;
+const lang = d.lang as Lang;
+
+const canonicalUrl = `https://verybdn.com${postPath(lang, post.slug)}`;
+const ogImage = d.ogImage ?? 'https://verybdn.com/og-burro.jpg';
+
+const t = postCopy[lang];
+const threadLabel = threadLabels[lang][d.cluster as Cluster];
+const base = blogBase(lang);
+
+// El conmutador nunca deja al lector tirado: si hay traducción va a ella, y si
+// no, al índice del otro idioma. El hreflang es más estricto y solo se emite
+// cuando la traducción existe.
+const navAlternate = alternateUrl ?? (lang === 'es' ? '/blog/' : '/es/blog/');
+
+/**
+ * Un solo bloque JSON-LD con `@graph`: el Article y, si hay preguntas, el
+ * FAQPage. Autor y editor se referencian por `@id` contra las entidades que ya
+ * define la home, para que todo el sitio hable de la misma entidad.
+ */
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'Article',
+    '@id': `${canonicalUrl}#article`,
+    isPartOf: { '@type': 'WebPage', '@id': canonicalUrl },
+    headline: d.title,
+    description: d.description,
+    abstract: d.directAnswer,
+    inLanguage: lang,
+    datePublished: d.pubDate.toISOString(),
+    dateModified: (d.updatedDate ?? d.pubDate).toISOString(),
+    author: { '@id': 'https://verybdn.com/#author' },
+    publisher: { '@id': 'https://verybdn.com/#organization' },
+    image: ogImage,
+    mainEntityOfPage: canonicalUrl,
+  },
+];
+
+if (d.faq.length > 0) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${canonicalUrl}#faq`,
+    mainEntity: d.faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  });
+}
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<Layout
+  title={`${d.title} — verybdn`}
+  description={d.description}
+  lang={lang}
+  canonicalUrl={canonicalUrl}
+  alternateUrl={alternateUrl}
+  ogImage={ogImage}
+>
+  <script type="application/ld+json" slot="head" is:inline set:html={jsonLd} />
+
+  <Navigation lang={lang} alternateUrl={navAlternate} />
+
+  <a id="top"></a>
+
+  <article class="wrap post">
+    <header class="post-head">
+      <a class="eyebrow post-eyebrow" href={`${base}#${d.cluster}`}>{d.eyebrow ?? threadLabel}</a>
+      <h1>{d.title}</h1>
+      <div class="post-meta">
+        <span>{t.by} <strong>Honey</strong>, Minca</span>
+        <span>{t.published}: {formatDate(d.pubDate, lang)}</span>
+        {d.updatedDate && <span>{t.updated}: {formatDate(d.updatedDate, lang)}</span>}
+      </div>
+    </header>
+
+    <div class="post-body">
+      {/* Respuesta directa: el bloque autocontenido que los motores generativos citan. */}
+      <p class="direct-answer">{d.directAnswer}</p>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      {d.faq.length > 0 && (
+        <section class="post-faq">
+          <h2>{t.faq}</h2>
+          {d.faq.map((item) => (
+            <div class="faq-item">
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {d.sources.length > 0 && (
+        <section class="post-sources">
+          <h2>{t.sources}</h2>
+          <ul>
+            {d.sources.map((source) => (
+              <li>
+                <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section class="post-about">
+        <span class="eyebrow">{t.aboutTitle}</span>
+        <p>{t.aboutBody}</p>
+      </section>
+
+      {related.length > 0 && (
+        <section class="post-related">
+          <span class="eyebrow">{t.keep} · {threadLabel}</span>
+          <div class="related-list">
+            {related.map((otro) => (
+              <a class="related-item" href={postPath(lang, otro.slug)}>
+                <h3>{otro.data.title}</h3>
+                <p>{otro.data.description}</p>
+                <span class="related-go">{t.read} <span class="arrow">→</span></span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <a class="post-back" href={base}>← {t.back}</a>
+    </div>
+  </article>
+
+  <Footer lang={lang} />
+</Layout>
+
+<style>
+  .post {
+    padding-top: 60px;
+    padding-bottom: 80px;
+  }
+
+  .post-head {
+    max-width: 720px;
+    margin: 0 auto 40px;
+  }
+
+  .post-head h1 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--tierra);
+  }
+
+  .post-meta {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--sombra);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-bottom: 1px solid var(--borde);
+    padding-bottom: 20px;
+  }
+
+  .post-body {
+    max-width: 720px;
+    margin: 0 auto;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--tierra);
+  }
+
+  .direct-answer {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--tierra);
+    border-left: 2px solid var(--barro);
+    padding-left: 22px;
+    margin-bottom: 36px;
+  }
+
+  /* El HTML que sale del Markdown no lleva el hash de scope de Astro,
+     así que sus etiquetas se alcanzan con :global(). */
+  .prose :global(p) {
+    margin-bottom: 24px;
+  }
+
+  .prose :global(h2) {
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(24px, 3.4vw, 32px);
+    line-height: 1.15;
+    color: var(--tierra);
+    margin: 48px 0 18px;
+  }
+
+  .prose :global(h3) {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--tierra);
+    margin: 34px 0 14px;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 24px 22px;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 10px;
+  }
+
+  .prose :global(a) {
+    color: var(--barro);
+    border-bottom: 1px solid var(--borde);
+    transition: border-color 0.2s;
+  }
+
+  .prose :global(a:hover) {
+    border-color: var(--barro);
+  }
+
+  .prose :global(strong) {
+    font-weight: 500;
+    color: var(--tierra);
+  }
+
+  .prose :global(blockquote) {
+    border-left: 2px solid var(--borde);
+    padding-left: 22px;
+    margin: 0 0 24px;
+    font-style: italic;
+    color: var(--sombra);
+  }
+
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 28px;
+    font-size: 15px;
+  }
+
+  .prose :global(th),
+  .prose :global(td) {
+    border: 1px solid var(--borde);
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  .prose :global(th) {
+    background: var(--hueso);
+    font-weight: 500;
+  }
+
+  .prose :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 24px;
+  }
+
+  .prose :global(code) {
+    font-size: 15px;
+    background: var(--hueso);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  .post-faq,
+  .post-sources {
+    margin-top: 56px;
+    border-top: 1px solid var(--borde);
+    padding-top: 34px;
+  }
+
+  .post-faq h2,
+  .post-sources h2 {
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .faq-item {
+    margin-bottom: 26px;
+  }
+
+  .faq-item h3 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 8px;
+    color: var(--tierra);
+  }
+
+  .faq-item p {
+    color: var(--sombra);
+  }
+
+  .post-sources ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-sources li {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+
+  .post-sources a {
+    color: var(--barro);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .post-back {
+    display: inline-block;
+    margin-top: 56px;
+    font-family: var(--sans);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 12px;
+    color: var(--barro);
+  }
+
+  .post-eyebrow {
+    display: block;
+    margin-bottom: 12px;
+    transition: color 0.2s;
+  }
+
+  .post-eyebrow:hover {
+    color: var(--barro);
+  }
+
+  /* Nota de autor. No es decoración: decir quién escribe y desde dónde es
+     parte de por qué el texto vale, y los motores generativos lo leen. */
+  .post-about {
+    margin-top: 56px;
+    padding: 28px 30px;
+    background: var(--hueso);
+    border-left: 2px solid var(--barro);
+    border-radius: 2px;
+  }
+
+  .post-about p {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--tierra);
+  }
+
+  .post-related {
+    margin-top: 48px;
+    border-top: 1px solid var(--borde);
+    padding-top: 32px;
+  }
+
+  .related-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: 22px;
+    background: var(--borde);
+    border: 1px solid var(--borde);
+  }
+
+  @media (max-width: 680px) {
+    .related-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .related-item {
+    background: var(--crema);
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.25s;
+  }
+
+  .related-item:hover {
+    background: #fff;
+  }
+
+  .related-item h3 {
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.15;
+    color: var(--tierra);
+  }
+
+  .related-item p {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--sombra);
+  }
+
+  .related-go {
+    margin-top: auto;
+    padding-top: 10px;
+    font-family: var(--sans);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: var(--barro);
+  }
+
+  .related-item:hover .arrow {
+    display: inline-block;
+    transform: translateX(4px);
+    transition: transform 0.25s;
+  }
+</style>

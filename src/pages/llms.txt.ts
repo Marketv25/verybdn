@@ -49,13 +49,13 @@ export const GET: APIRoute = async () => {
     (guide) => `- [${guide.title}](${SITE}${guide.path}): ${collapse(guide.description)}`,
   );
 
-  const postLines = (cluster: 'travel' | 'operators') =>
+  const postLines = (cluster: 'travel' | 'operators' | 'coast', lang: 'en' | 'es') =>
     posts
-      .filter((post) => post.data.cluster === cluster)
-      .map(
-        (post) =>
-          `- [${post.data.title}](${SITE}/blog/${post.slug}/): ${collapse(post.data.directAnswer)}`,
-      );
+      .filter((post) => post.data.cluster === cluster && post.data.lang === lang)
+      .map((post) => {
+        const base = lang === 'es' ? `${SITE}/es/blog/` : `${SITE}/blog/`;
+        return `- [${post.data.title}](${base}${post.slug}/): ${collapse(post.data.directAnswer)}`;
+      });
 
   const header = [
     '# verybdn',
@@ -73,11 +73,20 @@ export const GET: APIRoute = async () => {
   // pero las líneas en blanco de la cabecera se conservan.
   const sections = [
     section('Guides', guideLines),
-    section('Writing for travellers', postLines('travel')),
-    section('Writing for operators', postLines('operators')),
+    section('Writing for travellers', postLines('travel', 'en')),
+    section('Writing where both sides meet', postLines('coast', 'en')),
+    section('Writing for operators', postLines('operators', 'en')),
+    // El bloque en espanol va aparte y rotulado: un indice que mezcla idiomas
+    // sin decirlo le complica a un motor decidir cual servir a quien pregunta.
+    section('Escritos en espanol', [
+      ...postLines('travel', 'es'),
+      ...postLines('coast', 'es'),
+      ...postLines('operators', 'es'),
+    ]),
     section('About', [
       `- [Home](${SITE}/): What verybdn is and how it works.`,
       `- [All writing](${SITE}/blog/): Index of published articles.`,
+      `- [Escritos](${SITE}/es/blog/): Indice de articulos en espanol.`,
       '- [Substack](https://verybdn.substack.com): Short letters from the Sierra.',
     ]),
   ].filter(Boolean);

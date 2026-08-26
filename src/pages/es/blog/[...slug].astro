@@ -1,9 +1,9 @@
 ---
-import BlogPost from '../../components/BlogPost.astro';
-import { buildPostPaths, type BlogPost as Post } from '../../lib/blog';
+import BlogPost from '../../../components/BlogPost.astro';
+import { buildPostPaths, type BlogPost as Post } from '../../../lib/blog';
 
 export async function getStaticPaths() {
-  return await buildPostPaths('en');
+  return await buildPostPaths("es");
 }
 
 interface Props {
