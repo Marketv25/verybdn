@@ -38,8 +38,12 @@ const blogCollection = defineCollection({
     directAnswer: z.string(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    /** `travel` habla a viajeros; `operators`, a dueños de alojamientos. */
-    cluster: z.enum(['travel', 'operators']),
+    /**
+     * `travel` habla a viajeros; `operators`, a dueños de alojamientos;
+     * `coast` es la pieza puente, la que leen los dos y donde la contradicción
+     * entre ambos intereses es justamente el tema.
+     */
+    cluster: z.enum(['travel', 'operators', 'coast']),
     lang: z.enum(['en', 'es']).default('en'),
     /** Se pinta sobre el título, como "Minca guides · Layer 1" en las guías. */
     eyebrow: z.string().optional(),
@@ -51,10 +55,12 @@ const blogCollection = defineCollection({
       .default([]),
     ogImage: z.string().optional(),
     /**
-     * Ruta del mismo artículo en el otro idioma, si algún día se traduce.
-     * Solo cuando existe de verdad se emite `hreflang`: apuntarlo a un índice
-     * sería declarar una traducción que no está.
+     * Identificador compartido por las dos versiones de un mismo artículo.
+     * De aquí sale el emparejamiento en / es: el `hreflang` y el conmutador de
+     * idioma se calculan solos, sin que nadie escriba una URL a mano.
      */
+    translationKey: z.string().optional(),
+    /** Escotilla de escape: fuerza el equivalente cuando no hay par en la colección. */
     alternateUrl: z.string().optional(),
     draft: z.boolean().default(false),
   }),

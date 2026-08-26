@@ -1,43 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation.astro';
 import Footer from '../../components/Footer.astro';
 import AuthorCard from '../../components/AuthorCard.astro';
 import TopographyHero from '../../components/TopographyHero.astro';
+import {
+  getPublishedPosts, sortByDate, clusterCopy, formatDate, postPath,
+} from '../../lib/blog';
 
-const posts = await getCollection('blog', ({ data }) =>
-  import.meta.env.PROD ? !data.draft : true,
-);
+const posts = sortByDate(await getPublishedPosts()).filter((post) => post.data.lang === 'en');
 
-posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const clusters = [
-  {
-    id: 'travel',
-    eyebrow: 'For the ones passing through',
-    title: 'What nobody tells you until you are already here.',
-    lede: "The guides answer the questions you ask before booking. These are the ones that come up after — the thing that turned out to be different, the plan that needed changing, the detail that only matters once you are standing in it.",
-    empty: 'Nothing here yet. The guides are the place to start.',
-    posts: posts.filter((post) => post.data.cluster === 'travel'),
-  },
-  {
-    id: 'operators',
-    eyebrow: 'For the ones who stayed',
-    title: 'Running a small place, without grinding it down.',
-    lede: 'Written for whoever owns the hostel, the lodge, the four rooms above the café. You have something real. Turning it into a business without flattening what made it worth visiting is the actual problem, and almost nobody writes about it honestly.',
-    empty: 'Nothing here yet.',
-    posts: posts.filter((post) => post.data.cluster === 'operators'),
-  },
-];
+const clusters = clusterCopy.en.map((cluster) => ({
+  ...cluster,
+  posts: posts.filter((post) => post.data.cluster === cluster.id),
+}));
 
 const canonicalUrl = 'https://verybdn.com/blog/';
-
-const formatDate = (date: Date) =>
-  // timeZone UTC fijo: sin esto la fecha se pinta un dia antes segun donde se construya.
-  date.toLocaleDateString('en-US', {
-    year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC',
-  });
 ---
 
 <Layout
@@ -64,8 +42,8 @@ const formatDate = (date: Date) =>
             here actually costs.
           </p>
           <p class="territory">
-            Two threads. One for people passing through. One for the people who stayed and built
-            something. Both written from the same mountain.
+            Three threads. One for people passing through, one for the people who stayed and built
+            something, and one for where those two turn out to be the same question.
           </p>
           <div class="hero-actions">
             <a href="#travel" class="btn-primary">If you are coming <span>&darr;</span></a>
@@ -89,8 +67,8 @@ const formatDate = (date: Date) =>
     </div>
   </div>
 
-  {clusters.map((cluster, clusterIndex) => (
-    <section id={cluster.id} class={clusterIndex === 1 ? 'terr-sec' : undefined}>
+  {clusters.map((cluster, i) => (
+    <section id={cluster.id} class={i === 1 ? 'terr-sec' : undefined}>
       <div class="wrap">
         <div class="sec-head reveal">
           <span class="eyebrow">{cluster.eyebrow}</span>
@@ -103,11 +81,11 @@ const formatDate = (date: Date) =>
         ) : (
           <div class="q-list">
             {cluster.posts.map((post, index) => (
-              <a class="q-row reveal" href={`/blog/${post.slug}/`}>
+              <a class="q-row reveal" href={postPath('en', post.slug)}>
                 <span class="q-num">{String(index + 1).padStart(2, '0')}</span>
                 <div class="q-main">
                   <h3>{post.data.title}</h3>
-                  <div class="q-en">{formatDate(post.data.pubDate)}</div>
+                  <div class="q-en">{formatDate(post.data.pubDate, 'en', 'short')}</div>
                   <p>{post.data.description}</p>
                 </div>
                 <span class="q-go">Read <span class="arrow">&rarr;</span></span>
