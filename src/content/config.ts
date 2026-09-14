@@ -59,7 +59,7 @@ const blogCollection = defineCollection({
      * De aquí sale el emparejamiento en / es: el `hreflang` y el conmutador de
      * idioma se calculan solos, sin que nadie escriba una URL a mano.
      */
-    translationKey: z.string().optional(),
+    translationKey: z.coerce.string().optional(),
     /** Escotilla de escape: fuerza el equivalente cuando no hay par en la colección. */
     alternateUrl: z.string().optional(),
     draft: z.boolean().default(false),
