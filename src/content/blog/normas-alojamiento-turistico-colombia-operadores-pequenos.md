@@ -1,7 +1,7 @@
 ---
-title: "Qué significan las normas de alojamiento turístico en Colombia para operadores pequeños"
-description: "El registro protege a los huéspedes y legitima tu operación, pero el proceso mismo mantiene a muchos anfitriones pequeños en la informalidad. Esto es lo que realmente requiere cumplir."
-directAnswer: "Colombia exige que los operadores de alojamiento turístico se registren en el Registro Nacional de Turismo (RNT) a través del Ministerio de Comercio. Cumplir implica tarifas de registro, seguro, estándares de seguridad y obligaciones tributarias. Operar sin registro te expone a multas, pero la fiscalización es inconsistente y muchos operadores pequeños permanecen informales porque el proceso es opaco, no porque rechacen los estándares."
+title: "Normas de alojamiento turístico en Colombia para operadores pequeños"
+description: "El registro protege al huésped y legitima tu operación, pero el trámite mantiene a muchos anfitriones pequeños en la informalidad. Esto es lo que exige cumplir."
+directAnswer: "Colombia exige que los operadores de alojamiento turístico se registren en el Registro Nacional de Turismo (RNT) del Ministerio de Comercio. Cumplir implica tarifas, seguro, estándares de seguridad y obligaciones tributarias. Operar sin registro te expone a multas, pero la fiscalización es inconsistente y muchos operadores pequeños permanecen informales porque el proceso es opaco, no porque rechacen los estándares."
 pubDate: "2026-09-12"
 cluster: "operators"
 translationKey: 3
