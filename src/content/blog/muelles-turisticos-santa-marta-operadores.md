@@ -1,6 +1,6 @@
 ---
-title: "Los seis muelles turísticos nuevos de Santa Marta: lo que los operadores tienen que saber"
-description: "Seis muelles turísticos vienen para Santa Marta. La pregunta es si los operadores actuales consiguen acceso o si se quedan viendo cómo nuevos intermediarios se apropian de los puestos de atraque."
+title: "Seis muelles nuevos en Santa Marta: lo que deben saber los operadores"
+description: "Vienen seis muelles turísticos a Santa Marta. ¿Los operadores actuales tendrán acceso o verán a nuevos intermediarios quedarse con los atraques?"
 directAnswer: "Santa Marta está planeando seis muelles turísticos nuevos, pero los anuncios del proyecto no aclaran los derechos de atraque para los operadores que ya trabajan desde la playa, ni los requisitos de permisos, ni quién controla el acceso. Sin detalles publicados sobre ubicaciones, estructura de administración o tarifas, los operadores enfrentan una infraestructura que puede ampliar la capacidad o crear nuevas barreras para salir al agua."
 pubDate: "2026-09-14"
 cluster: "operators"

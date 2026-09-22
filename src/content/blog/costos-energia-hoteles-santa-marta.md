@@ -1,6 +1,6 @@
 ---
-title: "Costos de energía en Santa Marta: lo que los hoteles pagan ahora mismo"
-description: "Los nuevos cargos energéticos golpean a los hoteles de Santa Marta, pero la verdadera pregunta es cuáles operadores ya venían tan ajustados que cualquier golpe los quiebra."
+title: "Costos de energía en Santa Marta: lo que pagan hoy los hoteles"
+description: "Los nuevos cargos de energía golpean a los hoteles de Santa Marta. La pregunta real: qué operadores venían tan ajustados que cualquier golpe los quiebra."
 directAnswer: "Los hoteles en Santa Marta enfrentan nuevos cargos de energía que exponen cuáles propiedades operaban con márgenes insostenibles desde antes del aumento. La crisis no es la tarifa en sí—es que muchos operadores construyeron modelos de negocio asumiendo que la energía seguiría barata, mientras otros ya habían adaptado su infraestructura hace años."
 pubDate: "2026-09-14"
 cluster: "operators"
