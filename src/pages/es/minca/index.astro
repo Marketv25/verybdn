@@ -5,8 +5,8 @@ import Footer from '../../../components/Footer.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
-const title = "Minca Destination Hub: verybdn";
-const description = "Guías de primera mano y directorio curado de negocios locales en Minca, Sierra Nevada de Santa Marta. Respuestas verificadas y recomendaciones locales.";
+const title = "Minca: guías de primera mano — verybdn";
+const description = "Guías de primera mano sobre Minca, Sierra Nevada de Santa Marta: cómo llegar, cuántos días necesitas y si vale la pena el desvío.";
 const canonicalUrl = "https://verybdn.com/es/minca/";
 const alternateUrl = "https://verybdn.com/minca/";
 
@@ -15,6 +15,8 @@ const lugares = await getCollection('lugares');
 const mincaLugares = lugares
   .filter(l => l.data.city.toLowerCase() === 'minca')
   .sort((a, b) => a.data.ordenCuracion - b.data.ordenCuracion);
+// Los lugares de src/content/lugares son de prueba (DUMMY): ocultos hasta que haya lugares reales.
+const SHOW_CURATED_PLACES = false;
 const categoryTranslations: Record<string, string> = {
   "Hospedaje": "Hospedaje",
   "Eco-lodge": "Eco-lodge",
@@ -60,9 +62,6 @@ const categoryTranslations: Record<string, string> = {
           <h1 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin-bottom: 24px; color: var(--tierra);">
             Minca
           </h1>
-          <div style="font-family: var(--sans); font-weight: 300; font-size: 17px; line-height: 1.8; color: var(--sombra); border-bottom: 1px solid var(--borde); padding-bottom: 32px;">
-            <p>[PENDIENTE: texto de Joney]</p>
-          </div>
         </header>
 
         {/* Guides Section */}
@@ -81,10 +80,27 @@ const categoryTranslations: Record<string, string> = {
                 Leer guía <span style="transition: transform 0.25s;">&rarr;</span>
               </span>
             </a>
+            <a href="/es/minca/cuantos-dias/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
+              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Guía de Campo</span>
+              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">¿Cuántos días necesita Minca?</h3>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Tres días si viniste a recorrer. Lo que cambia si no. Guía de campo desde Minca con datos verificados: transporte, pagos, cortes de luz, Ciudad Perdida y rutas reales.</p>
+              <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
+                Leer guía <span style="transition: transform 0.25s;">&rarr;</span>
+              </span>
+            </a>
+            <a href="/es/minca/vale-la-pena-el-desvio-a-minca/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
+              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Respuesta Honesta</span>
+              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">¿Vale la pena el desvío a Minca?</h3>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Una respuesta honesta y de primera mano sobre si Minca merece un lugar en tu itinerario por Colombia: lo que es cierto del centro saturado, los senderos de verdad, y quién paga cuando un lugar se vuelve 'descubierto'.</p>
+              <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
+                Leer guía <span style="transition: transform 0.25s;">&rarr;</span>
+              </span>
+            </a>
           </div>
         </div>
 
-        {/* Directory Section */}
+        {/* Directory Section: hidden while src/content/lugares holds placeholder places */}
+        {SHOW_CURATED_PLACES && (
         <div>
           <div style="border-bottom: 1px solid var(--borde); padding-bottom: 16px; margin-bottom: 32px;">
             <h2 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; color: var(--tierra); margin: 0;">
@@ -129,6 +145,7 @@ const categoryTranslations: Record<string, string> = {
             ))}
           </div>
         </div>
+        )}
       </section>
     </div>
   </main>
