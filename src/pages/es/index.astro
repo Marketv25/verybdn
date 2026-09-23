@@ -6,11 +6,14 @@ import AuthorCard from '../../components/AuthorCard.astro';
 import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
 import burroTrafico from '../../assets/img/burro-trafico.png';
+import { getPublishedPosts, sortByDate, threadLabels, formatDate, postPath } from '../../lib/blog';
 import hornoLodge from '../../assets/img/horno-lodge.png';
 
 const title = "verybdn — Minca y la costa Caribe de Colombia, por alguien que vive aquí";
 const description = "Guías de primera mano y estructuradas sobre Minca y la costa Caribe colombiana — Santa Marta, Tayrona, Palomino, Cartagena y La Guajira. Respuestas verificadas a si vale la pena Minca, Minca vs Tayrona, cuántos días y dónde alojarse. Sin sesgo patrocinado. Por Honey, residente en Minca.";
 const canonicalUrl = "https://verybdn.com/es/";
+// Los tres articulos mas recientes de este idioma; en produccion los borradores no entran.
+const latest = sortByDate(await getPublishedPosts()).filter((post) => post.data.lang === 'es').slice(0, 3);
 const alternateUrl = "https://verybdn.com/";
 ---
 
@@ -127,6 +130,32 @@ const alternateUrl = "https://verybdn.com/";
       </div>
     </div>
   </section>
+
+  {latest.length > 0 && (
+    <section id="escritos">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Lo último</span>
+          <h2>La otra mitad: cómo se ve desde adentro.</h2>
+          <p class="lede">Las guías responden lo que se pregunta antes de venir. Estas notas cuentan lo que de verdad cuesta sostener un lugar aquí.</p>
+        </div>
+        <div class="q-list">
+          {latest.map((post, index) => (
+            <a class="q-row reveal" href={postPath('es', post.slug)}>
+              <span class="q-num">{String(index + 1).padStart(2, '0')}</span>
+              <div class="q-main">
+                <h3>{post.data.title}</h3>
+                <div class="q-en">{threadLabels['es'][post.data.cluster]} · {formatDate(post.data.pubDate, 'es', 'short')}</div>
+                <p>{post.data.description}</p>
+              </div>
+              <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
+            </a>
+          ))}
+        </div>
+        <p class="latest-all reveal"><a class="q-go" href="/es/blog/">Todos los escritos <span class="arrow">&rarr;</span></a></p>
+      </div>
+    </section>
+  )}
 
   <section id="territorio" class="terr-sec">
     <div class="wrap">
@@ -302,3 +331,12 @@ const alternateUrl = "https://verybdn.com/";
     }
   </script>
 </Layout>
+
+  <style>
+    .latest-all .q-go:hover .arrow {
+      transform: translateX(5px);
+    }
+    .latest-all {
+      margin-top: 30px;
+    }
+  </style>
