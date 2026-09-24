@@ -1,0 +1,54 @@
+---
+title: "Santa Marta's Six New Tourist Piers: Who Actually Benefits?"
+description: "Santa Marta plans six new tourist piers backed by COP 21,624 million. Here is what the project actually covers, what is unknown, and who pays."
+directAnswer: "Santa Marta's planned six tourist piers aim to formalise passenger embarkation across Aeropuerto, Pozos Colorados, El Rodadero, Playa Blanca, Taganga, and Playa Grande. While COP 21,624 million is committed to modernise boarding, official plans reveal no details on operator concessions, ticketing costs, or whether local boatmen will retain shoreline access."
+pubDate: "2026-09-24"
+cluster: "coast"
+translationKey: "19"
+lang: "en"
+faq: [{"question":"Are the new piers going to have fixed ticket pricing?","answer":"There is no publicly available data on pier fee structures, ticketing mechanisms, or operator concession rates. The signed agreements between Fontur and Santa Marta outline infrastructure funding—COP 21,624 million in total—without detailing whether passenger rates will be capped, subsidised, or left to commercial operators. Until concession terms are published, pricing remains unverified."},{"question":"Can local fishermen still take passengers from open beaches?","answer":"Official project disclosures do not specify whether open-beach departures will be prohibited once the piers open. While the stated goal is to improve passenger embarkation and disembarkation, the available public records contain no legal decrees or scheduled dates restricting traditional shoreline boarding points in Taganga, El Rodadero, or neighbouring coves."},{"question":"Which specific beaches are slated to get a pier structure?","answer":"The six approved locations are Aeropuerto, Pozos Colorados, El Rodadero, Playa Blanca, Taganga, and Playa Grande. Public plans identify these sites only by geographic zone, without assigning separate individual facility names. All six sites fall under the single infrastructure agreement intended to connect key tourism hubs along Santa Marta's coast."}]
+sources: [{"title":"Caracol Radio","url":"https://caracol.com.co/2025/05/13/fontur-y-alcaldia-de-santa-marta-firman-convenio-para-la-construccion-de-seis-muelles-turisticos/"},{"title":"Caracol Radio","url":"https://caracol.com.co/2026/09/11/alcalde-de-santa-marta-anuncia-que-pronto-comenzara-la-construccion-de-seis-muelles-turisticos/"},{"title":"Caracol Radio","url":"https://caracol.com.co/2026/09/12/como-podrian-funcionar-los-seis-muelles-turisticos-que-proyectan-para-santa-marta/"}]
+draft: false
+---
+
+On 13 May 2025, Fontur and the Santa Marta district signed an agreement committing [COP 21,624 million to build six tourist piers](https://caracol.com.co/2025/05/13/fontur-y-alcaldia-de-santa-marta-firman-convenio-para-la-construccion-de-seis-muelles-turisticos/) along the shoreline. The stated objective was clear: modernise coastal embarkation and link the city's primary beach corridors. Months later, on 11 September 2026, the [mayor announced that construction would begin soon](https://caracol.com.co/2026/09/11/alcalde-de-santa-marta-anuncia-que-pronto-comenzara-la-construccion-de-seis-muelles-turisticos/).
+
+The contradiction sits right below the headline. Capital infrastructure promises safety, order, and predictable logistics. My read is that concrete does not, by itself, resolve coastal transit. It shifts control. When boarding moves from an open beach to a managed pier, someone decides who docks, what passengers pay, and which boats are turned away.
+
+## Where are the six piers going, and what will they cost?
+
+The public budget allocates COP 21,624 million across the project. National tourism fund Fontur covers COP 17,698 million, while Santa Marta's district administration covers COP 3,925 million. Initial execution terms projected a timeline of 25 months.
+
+The project designates six specific locations:
+- Aeropuerto
+- Pozos Colorados
+- El Rodadero
+- Playa Blanca
+- Taganga
+- Playa Grande
+
+Public filings list these sites purely by their geographic names. None carry distinct individual facility titles. As reported on 12 September 2026, the docks are meant to [improve passenger embarkation and disembarkation](https://caracol.com.co/2026/09/12/como-podrian-funcionar-los-seis-muelles-turisticos-que-proyectan-para-santa-marta/) and expand scheduled maritime transport options between central hubs.
+
+## Who runs coastal boat departures right now?
+
+Today, passenger transport along these bays runs directly off the sand. Picture boarding an outboard lancha along this coast: you walk down to the water in Taganga or El Rodadero, negotiate a fare, wade through the wash, and climb over the gunwale.
+
+I looked for the exact number of registered boat operators currently operating out of Taganga and El Rodadero in official project documents; the number is not published. I also looked for the typical current price range for boat trips running from Taganga out to destinations like Playa Cristal or Cabo San Juan; there is no verifiable official pricing record in the sources.
+
+## Will the new docks make boat trips easier or more expensive?
+
+Stepping onto a level deck is unquestionably safer than jumping onto a wet fiberglass hull in rolling shorebreak. For older travellers, families, or anyone carrying luggage, a fixed dock removes a genuine barrier.
+
+What remains unsettled is the financial model. I searched the available project disclosures for whether pier access requires commercial concessions, municipal operating licenses, or departure taxes, and what those would cost. That information is not in the public record. If the district or an operating contractor charges berthing fees, the published agreement does not say who absorbs them. That is the question to ask before assuming a trip from a pier will cost the same as one from the sand.
+
+## What happens to operators who do not get pier access?
+
+Consolidation creates gatekeepers. If city maritime authorities mandate that all commercial passenger departures leave from designated pier structures, informal launch drivers face an immediate dilemma: secure an authorized slot or stop operating.
+
+I looked for published dates or administrative decrees specifying when existing beach launch points will be restricted or closed. No such dates appear in the available documents. If concession fees are high, small-scale boat owners in Taganga risk getting cut out in favor of better-capitalised fleet operators. Until the district publishes the regulatory operating framework, we do not know whether local captains will receive protected docking rights or be forced off the water.
+
+## Should you change your travel plans right now?
+
+No. Do not alter your upcoming itinerary expecting newly opened docks.
+
+The initial agreement signed in May 2025 established a 25-month timeline, and by September 2026 city officials were still reporting that construction would start shortly. For the immediate future, coastal transit in Santa Marta will continue exactly as it operates today: off the beach, priced on the sand, and dependent on the weather. If I were planning a trip to Tayrona or the bays around Taganga this season, I would plan for wet boarding, confirm pricing on the shore before stepping into a boat, and watch for official concession decrees before assuming any pier is operational.
