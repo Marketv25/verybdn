@@ -1,7 +1,7 @@
 ---
 title: "Los seis nuevos muelles de Santa Marta: ¿a quién le sirven de verdad?"
 description: "Santa Marta proyecta seis muelles turísticos con COP 21.624 millones de presupuesto. Qué contempla la obra, qué falta por definir y quién terminará pagando."
-directAnswer: "Los seis muelles turísticos que proyecta Santa Marta son muelles fijos para embarcaciones menores en Aeropuerto, Pozos Colorados, El Rodadero, Playa Blanca, Taganga y Playa Grande. Hay COP 21.624 millones comprometidos, pero la licitación para construirlos se cayó en julio de 2026 y solo se reactivó en septiembre, con una meta oficial de arrancar obras en diciembre de 2026. Los convenios oficiales siguen sin aclarar cómo se adjudicarán las concesiones, cuánto costarán los pasajes ni si los lancheros tradicionales podrán seguir operando desde la orilla."
+directAnswer: "Santa Marta proyecta seis muelles fijos para embarcaciones menores en Aeropuerto, Pozos Colorados, El Rodadero, Playa Blanca, Taganga y Playa Grande. Hay COP 21.624 millones comprometidos, pero la licitación se cayó en julio de 2026; el proyecto se reactivó en septiembre, con meta de obras en diciembre. Nada oficial aclara aún concesiones, pasajes ni el futuro de los lancheros."
 pubDate: "2026-09-24"
 updatedDate: "2026-09-25"
 cluster: "coast"

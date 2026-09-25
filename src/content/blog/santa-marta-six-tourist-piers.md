@@ -1,7 +1,7 @@
 ---
 title: "Santa Marta's Six New Tourist Piers: Who Actually Benefits?"
 description: "Santa Marta plans six new tourist piers backed by COP 21,624 million. Here is what the project actually covers, what is unknown, and who pays."
-directAnswer: "Santa Marta's six planned tourist piers are fixed docks for small boats at Aeropuerto, Pozos Colorados, El Rodadero, Playa Blanca, Taganga, and Playa Grande. COP 21,624 million is committed to the work, but the construction tender fell through in July 2026 and was only restarted in September, with officials now targeting a December 2026 start. Official plans still reveal no details on operator concessions, ticketing costs, or whether local boatmen will retain shoreline access."
+directAnswer: "Santa Marta plans six fixed piers for small boats at Aeropuerto, Pozos Colorados, El Rodadero, Playa Blanca, Taganga, and Playa Grande. COP 21,624 million is committed, but the construction tender fell through in July 2026; the project restarted in September, targeting a December start. Official plans do not yet address concessions, ticket costs or boatmen's shoreline access."
 pubDate: "2026-09-24"
 updatedDate: "2026-09-25"
 cluster: "coast"
