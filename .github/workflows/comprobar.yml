@@ -1,0 +1,29 @@
+name: Comprobar el build
+
+# Corre en cada PR hacia main. Si el frontmatter de un articulo no cuadra con el schema de
+# src/content/config.ts, `astro build` falla aqui, con el PR abierto, en vez de fallar despues
+# del merge y dejar el sitio sin desplegar (como paso el 16 y el 18 de septiembre).
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
