@@ -146,6 +146,10 @@ export const postCopy: Record<Lang, Record<string, string>> = {
     back: 'All writing',
     keep: 'Keep reading',
     read: 'Read',
+    minutes: 'min read',
+    shortAnswer: 'The short answer',
+    contents: 'In this piece',
+    supports: 'Cited for',
     aboutTitle: 'Who writes this',
     aboutBody:
       'Honey lives in Minca, in the Sierra Nevada. What is here comes from living and working in the territory these pages cover, not from visiting it for a week. Where something is seasonal or has changed, the text says so.',
@@ -159,6 +163,10 @@ export const postCopy: Record<Lang, Record<string, string>> = {
     back: 'Todos los escritos',
     keep: 'Seguir leyendo',
     read: 'Leer',
+    minutes: 'min de lectura',
+    shortAnswer: 'En corto',
+    contents: 'En este artículo',
+    supports: 'Respalda',
     aboutTitle: 'Quién escribe esto',
     aboutBody:
       'Honey vive en Minca, en la Sierra Nevada. Lo que hay aquí sale de vivir y trabajar en el territorio que estas páginas cubren, no de visitarlo una semana. Cuando algo depende de la temporada o ha cambiado, el texto lo dice.',
@@ -173,5 +181,110 @@ export function formatDate(date: Date, lang: Lang, style: 'long' | 'short' = 'lo
     month: style === 'long' ? 'long' : 'short',
     day: 'numeric',
     timeZone: 'UTC',
+  });
+}
+
+/*
+ * Lo que la página del artículo saca del propio texto, sin pedirle al motor
+ * ningún campo nuevo: tiempo de lectura, cifras citadas y para qué se cita
+ * cada fuente. Todo sale del Markdown que ya escribe el motor.
+ */
+
+interface Source { title: string; url: string }
+
+export interface CitedFigure {
+  figure: string;
+  caption: string;
+  source: string;
+  date?: Date;
+}
+
+export interface SourceCard extends Source {
+  domain: string;
+  date?: Date;
+  cites: string[];
+}
+
+/** Dinero (COP, US$, $) y porcentajes, en formato inglés y español. */
+const FIGURE =
+  /(?:COP\s?\$?\s?|US\$\s?|USD\s?|\$\s?)\d{1,3}(?:[.,]\d{3})*(?:[.,]\d+)?(?:\s(?:mil millones|millones|millón|million|billion))?|\d+(?:[.,]\d+)?\s?%/;
+
+const MD_LINK = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
+
+/** El mismo criterio que la comprobación del motor: sin barra final, host en minúsculas, sin utm_. */
+function normUrl(url: string) {
+  try {
+    const u = new URL(url);
+    u.hostname = u.hostname.toLowerCase();
+    for (const clave of [...u.searchParams.keys()]) if (clave.startsWith('utm_')) u.searchParams.delete(clave);
+    return u.toString().replace(/\/+$/, '').replace(/\/\?/, '?');
+  } catch {
+    return url.replace(/\/+$/, '');
+  }
+}
+
+/** Los medios suelen llevar la fecha en la ruta (/2025/05/13/). Si no, no se inventa. */
+export function dateFromUrl(url: string): Date | undefined {
+  const m = url.match(/\/(20\d\d)\/(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\//);
+  return m ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])) : undefined;
+}
+
+function cuerpo(body: string) {
+  return body.replace(/\r\n/g, '\n').replace(/<!--[\s\S]*?-->/g, '');
+}
+
+const sinMarcas = (texto: string) =>
+  texto.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim();
+
+export function readingMinutes(body: string) {
+  const palabras = sinMarcas(cuerpo(body)).split(' ').filter(Boolean).length;
+  return Math.max(1, Math.round(palabras / 220));
+}
+
+/** Cada enlace del texto a una fuente, con el párrafo en el que está. */
+function enlaces(body: string, sources: Source[]) {
+  const porUrl = new Map(sources.map((s) => [normUrl(s.url), s]));
+  const out: { text: string; source: Source; parrafo: string }[] = [];
+  for (const parrafo of cuerpo(body).split(/\n\s*\n/)) {
+    for (const m of parrafo.matchAll(MD_LINK)) {
+      const source = porUrl.get(normUrl(m[2]));
+      if (source) out.push({ text: m[1].trim(), source, parrafo });
+    }
+  }
+  return out;
+}
+
+/**
+ * Las cifras que se destacan en grande. Solo las que van DENTRO del texto de
+ * un enlace a una fuente del artículo: esa es la frase que la fuente respalda.
+ * Una cifra sin fuente no se agranda, aunque esté en el texto.
+ */
+export function citedFigures(body: string, sources: Source[], max = 3): CitedFigure[] {
+  const vistas = new Set<string>();
+  const out: CitedFigure[] = [];
+  for (const { text, source, parrafo } of enlaces(body, sources)) {
+    const m = text.match(FIGURE);
+    if (!m || vistas.has(m[0])) continue;
+    vistas.add(m[0]);
+    let caption = text.replace(m[0], '').replace(/^[\s,;:—–-]+|[\s,;:—–-]+$/g, '');
+    if (caption.split(' ').length < 3) {
+      // Con dos palabras no se entiende sola: se usa la frase entera en la que va.
+      const frase = sinMarcas(parrafo).split(/(?<=[.!?])\s+/).find((f) => f.includes(m[0]));
+      caption = frase && frase.length <= 220 ? frase : text;
+    }
+    out.push({ figure: m[0], caption, source: source.title, date: dateFromUrl(source.url) });
+    if (out.length === max) break;
+  }
+  return out;
+}
+
+/** Las fuentes como tarjetas: medio, fecha si la URL la trae, y la frase que respaldan. */
+export function sourceCards(body: string, sources: Source[]): SourceCard[] {
+  const citas = enlaces(body, sources);
+  return sources.map((source) => {
+    let domain = source.url;
+    try { domain = new URL(source.url).hostname.replace(/^www\./, ''); } catch {}
+    const cites = [...new Set(citas.filter((c) => c.source === source).map((c) => sinMarcas(c.text)))].slice(0, 2);
+    return { ...source, domain, date: dateFromUrl(source.url), cites };
   });
 }
