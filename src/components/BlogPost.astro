@@ -4,6 +4,7 @@ import Navigation from './Navigation.astro';
 import Footer from './Footer.astro';
 import {
   blogBase, postPath, formatDate, postCopy, threadLabels,
+  readingMinutes, citedFigures, sourceCards,
   type BlogPost, type Lang, type Cluster,
 } from '../lib/blog';
 
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const { post, related, alternateUrl } = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 const d = post.data;
 const lang = d.lang as Lang;
 
@@ -30,6 +31,14 @@ const base = blogBase(lang);
 // no, al índice del otro idioma. El hreflang es más estricto y solo se emite
 // cuando la traducción existe.
 const navAlternate = alternateUrl ?? (lang === 'es' ? '/blog/' : '/es/blog/');
+
+// Todo esto sale del texto que ya escribe el motor: los H2 (que son preguntas)
+// hacen el índice, y los enlaces a las fuentes dicen qué cifra respalda cada una.
+const toc = headings.filter((h) => h.depth === 2);
+const minutes = readingMinutes(post.body);
+const figures = citedFigures(post.body, d.sources);
+const cards = sourceCards(post.body, d.sources);
+const [abre, cierra] = lang === 'es' ? ['«', '»'] : ['“', '”'];
 
 /**
  * Un solo bloque JSON-LD con `@graph`: el Article y, si hay preguntas, el
@@ -91,39 +100,89 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
         <span>{t.by} <strong>Honey</strong>, Minca</span>
         <span>{t.published}: {formatDate(d.pubDate, lang)}</span>
         {d.updatedDate && <span>{t.updated}: {formatDate(d.updatedDate, lang)}</span>}
+        <span>{minutes} {t.minutes}</span>
       </div>
     </header>
 
     <div class="post-body">
-      {/* Respuesta directa: el bloque autocontenido que los motores generativos citan. */}
-      <p class="direct-answer">{d.directAnswer}</p>
+      {/* Respuesta directa: el bloque autocontenido que los motores generativos citan.
+          Con cifras citadas se abre más ancho que el texto y las pone al lado. */}
+      <div class:list={['resumen', { ancho: figures.length > 0 }]}>
+        <div class="resumen-texto">
+          <span class="eyebrow">{t.shortAnswer}</span>
+          <p class="direct-answer">{d.directAnswer}</p>
+        </div>
+        {figures.length > 0 && (
+          <ul class="cifras">
+            {figures.map((c) => (
+              <li>
+                <span class="cifra">{c.figure}</span>
+                <span class="cifra-texto">{c.caption}</span>
+                <span class="cifra-fuente">{c.source}{c.date && ` · ${formatDate(c.date, lang)}`}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
-      <div class="prose">
+      {toc.length >= 2 && (
+        <nav class="indice" aria-label={t.contents}>
+          <span class="eyebrow">{t.contents}</span>
+          <ol>
+            {toc.map((h, i) => (
+              <li>
+                <a href={`#${h.slug}`}>
+                  <span class="indice-num">{i + 1}</span>
+                  <span class="indice-txt">{h.text}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
+      <div class:list={['prose', { numerada: toc.length >= 2 }]}>
         <Content />
       </div>
 
       {d.faq.length > 0 && (
         <section class="post-faq">
           <h2>{t.faq}</h2>
-          {d.faq.map((item) => (
-            <div class="faq-item">
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
-            </div>
-          ))}
+          <div class="faq-list">
+            {d.faq.map((item) => (
+              <details class="faq-item">
+                <summary>
+                  <h3>{item.question}</h3>
+                  <span class="faq-signo" aria-hidden="true"></span>
+                </summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
         </section>
       )}
 
-      {d.sources.length > 0 && (
+      {cards.length > 0 && (
         <section class="post-sources">
           <h2>{t.sources}</h2>
-          <ul>
-            {d.sources.map((source) => (
+          <ol class="fuentes">
+            {cards.map((s) => (
               <li>
-                <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a>
+                <a class="fuente" href={s.url} target="_blank" rel="noopener noreferrer">
+                  <span class="fuente-medio">
+                    {s.title}{s.date && <span class="fuente-fecha"> · {formatDate(s.date, lang)}</span>}
+                  </span>
+                  {s.cites.length > 0 && (
+                    <span class="fuente-cita">
+                      <span class="fuente-etiqueta">{t.supports}</span>
+                      {s.cites.map((c) => `${abre}${c}${cierra}`).join(' · ')}
+                    </span>
+                  )}
+                  <span class="fuente-dominio">{s.domain} <span aria-hidden="true">↗</span></span>
+                </a>
               </li>
             ))}
-          </ul>
+          </ol>
         </section>
       )}
 
@@ -162,7 +221,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
 
   .post-head {
     max-width: 720px;
-    margin: 0 auto 40px;
+    margin: 0 auto 36px;
   }
 
   .post-head h1 {
@@ -182,7 +241,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     color: var(--sombra);
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 6px 24px;
     border-bottom: 1px solid var(--borde);
     padding-bottom: 20px;
   }
@@ -197,17 +256,150 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     color: var(--tierra);
   }
 
-  .direct-answer {
-    font-size: 19px;
-    line-height: 1.7;
-    color: var(--tierra);
-    border-left: 2px solid var(--barro);
-    padding-left: 22px;
-    margin-bottom: 36px;
+  /* Lo que se abre más ancho que el texto: el resumen con cifras y, cuando
+     lleguen, las fotos. En el móvil ocupa la pantalla menos un margen de 16 px. */
+  .ancho,
+  .prose :global(figure),
+  .prose :global(p:has(> img:only-child)) {
+    width: min(920px, calc(100vw - 32px));
+    margin-left: calc(50% - min(460px, calc(50vw - 16px)));
   }
 
+  /* ── En corto ─────────────────────────────────────────────── */
+  .resumen {
+    background: var(--tierra);
+    color: var(--crema);
+    border-radius: 4px;
+    padding: 30px 32px 32px;
+    margin-bottom: 40px;
+  }
+
+  .resumen.ancho {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 0 36px;
+  }
+
+  .resumen .eyebrow {
+    color: var(--barro-claro);
+  }
+
+  .direct-answer {
+    margin-top: 12px;
+    font-size: 19px;
+    line-height: 1.65;
+    color: #E9E1D3;
+  }
+
+  .cifras {
+    list-style: none;
+    border-left: 1px solid rgba(217, 208, 192, 0.2);
+    padding-left: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 26px;
+  }
+
+  .cifras li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cifra {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 42px);
+    line-height: 1.02;
+    color: var(--barro-claro);
+  }
+
+  .cifra-texto {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #CFC5B4;
+  }
+
+  .cifra-fuente {
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #9A8E7E;
+  }
+
+  @media (max-width: 760px) {
+    .resumen {
+      padding: 24px 22px 26px;
+    }
+
+    .resumen.ancho {
+      grid-template-columns: 1fr;
+    }
+
+    .direct-answer {
+      font-size: 17.5px;
+    }
+
+    .cifras {
+      border-left: 0;
+      border-top: 1px solid rgba(217, 208, 192, 0.2);
+      padding: 22px 0 0;
+      margin-top: 22px;
+    }
+  }
+
+  /* ── Índice ───────────────────────────────────────────────── */
+  .indice {
+    margin-bottom: 44px;
+  }
+
+  .indice ol {
+    list-style: none;
+    margin-top: 12px;
+    border-top: 1px solid var(--borde);
+  }
+
+  .indice a {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 12px;
+    align-items: baseline;
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--borde);
+    font-size: 16px;
+    line-height: 1.45;
+    font-weight: 400;
+    color: var(--tierra);
+    transition: padding-left 0.25s, background 0.25s, color 0.2s;
+  }
+
+  .indice a:hover {
+    padding-left: 12px;
+    background: rgba(155, 107, 58, 0.05);
+    color: var(--barro);
+  }
+
+  .indice-num,
+  .prose.numerada :global(h2)::before {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--barro);
+  }
+
+  .indice-num {
+    font-size: 19px;
+  }
+
+  /* ── Texto ────────────────────────────────────────────────── */
   /* El HTML que sale del Markdown no lleva el hash de scope de Astro,
      así que sus etiquetas se alcanzan con :global(). */
+  .prose {
+    counter-reset: seccion;
+  }
+
   .prose :global(p) {
     margin-bottom: 24px;
   }
@@ -219,7 +411,19 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     font-size: clamp(24px, 3.4vw, 32px);
     line-height: 1.15;
     color: var(--tierra);
-    margin: 48px 0 18px;
+    margin: 56px 0 18px;
+    /* la barra de navegación es fija: sin esto, el índice dejaría el título debajo */
+    scroll-margin-top: 96px;
+  }
+
+  /* El mismo número que en el índice, para saber dónde se está. */
+  .prose.numerada :global(h2)::before {
+    counter-increment: seccion;
+    content: counter(seccion);
+    display: block;
+    font-size: 20px;
+    line-height: 1;
+    margin-bottom: 10px;
   }
 
   .prose :global(h3) {
@@ -230,6 +434,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     line-height: 1.2;
     color: var(--tierra);
     margin: 34px 0 14px;
+    scroll-margin-top: 96px;
   }
 
   .prose :global(ul),
@@ -239,6 +444,11 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
 
   .prose :global(li) {
     margin-bottom: 10px;
+    padding-left: 4px;
+  }
+
+  .prose :global(li::marker) {
+    color: var(--barro);
   }
 
   .prose :global(a) {
@@ -257,11 +467,18 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
   }
 
   .prose :global(blockquote) {
-    border-left: 2px solid var(--borde);
-    padding-left: 22px;
-    margin: 0 0 24px;
+    border-left: 2px solid var(--barro);
+    padding: 4px 0 4px 22px;
+    margin: 32px 0;
+    font-family: var(--serif);
     font-style: italic;
-    color: var(--sombra);
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--tierra);
+  }
+
+  .prose :global(blockquote p) {
+    margin-bottom: 0;
   }
 
   .prose :global(table) {
@@ -283,11 +500,27 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     font-weight: 500;
   }
 
+  /* Fotos: más anchas que el texto (ver .ancho arriba). */
+  .prose :global(figure),
+  .prose :global(p:has(> img:only-child)) {
+    margin-top: 36px;
+    margin-bottom: 36px;
+  }
+
   .prose :global(img) {
-    max-width: 100%;
+    display: block;
+    width: 100%;
     height: auto;
     border-radius: 4px;
-    margin-bottom: 24px;
+  }
+
+  .prose :global(figcaption) {
+    max-width: 720px;
+    margin: 12px auto 0;
+    padding: 0 16px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--sombra);
   }
 
   .prose :global(code) {
@@ -295,6 +528,14 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     background: var(--hueso);
     padding: 2px 6px;
     border-radius: 2px;
+  }
+
+  /* ── Preguntas y fuentes ──────────────────────────────────── */
+  /* global.css le da 82 px de relleno a todo <section>; aquí sobra abajo. */
+  .post-faq,
+  .post-sources,
+  .post-related {
+    padding-bottom: 0;
   }
 
   .post-faq,
@@ -311,41 +552,147 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     font-weight: 400;
     font-size: 28px;
     line-height: 1.15;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+  }
+
+  .faq-list {
+    border-top: 1px solid var(--borde);
   }
 
   .faq-item {
-    margin-bottom: 26px;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 22px;
+    gap: 18px;
+    align-items: center;
+    padding: 18px 4px;
+    transition: background 0.25s;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary:hover {
+    background: rgba(155, 107, 58, 0.05);
+  }
+
+  .faq-item summary:focus-visible {
+    outline: 2px solid var(--barro);
+    outline-offset: 2px;
   }
 
   .faq-item h3 {
     font-family: var(--sans);
     font-weight: 500;
     font-size: 17px;
-    margin-bottom: 8px;
+    line-height: 1.45;
     color: var(--tierra);
   }
 
+  /* Un + que se vuelve × al abrir. */
+  .faq-signo {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    justify-self: end;
+    transition: transform 0.25s;
+  }
+
+  .faq-signo::before,
+  .faq-signo::after {
+    content: '';
+    position: absolute;
+    background: var(--barro);
+  }
+
+  .faq-signo::before {
+    left: 0;
+    right: 0;
+    top: 6.5px;
+    height: 1.5px;
+  }
+
+  .faq-signo::after {
+    top: 0;
+    bottom: 0;
+    left: 6.5px;
+    width: 1.5px;
+  }
+
+  .faq-item[open] .faq-signo {
+    transform: rotate(45deg);
+  }
+
   .faq-item p {
+    padding: 0 40px 22px 4px;
+    color: var(--sombra);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .fuentes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .fuente {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 20px 16px;
+    border: 1px solid var(--borde);
+    border-radius: 2px;
+    transition: background 0.25s, border-color 0.25s;
+  }
+
+  .fuente:hover {
+    background: #fff;
+    border-color: var(--barro);
+  }
+
+  .fuente-medio {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--tierra);
+  }
+
+  .fuente-fecha {
+    font-weight: 300;
     color: var(--sombra);
   }
 
-  .post-sources ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .fuente-cita {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--sombra);
   }
 
-  .post-sources li {
-    margin-bottom: 10px;
-    font-size: 15px;
+  .fuente-etiqueta {
+    display: block;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 10.5px;
+    margin-bottom: 3px;
   }
 
-  .post-sources a {
+  .fuente-dominio {
+    margin-top: auto;
+    font-size: 13px;
     color: var(--barro);
-    border-bottom: 1px solid var(--borde);
   }
 
+  /* ── Cierre ───────────────────────────────────────────────── */
   .post-back {
     display: inline-block;
     margin-top: 56px;
@@ -448,5 +795,13 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     display: inline-block;
     transform: translateX(4px);
     transition: transform 0.25s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .indice a,
+    .faq-signo,
+    .related-item:hover .arrow {
+      transition: none;
+    }
   }
 </style>
