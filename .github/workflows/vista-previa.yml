@@ -1,0 +1,75 @@
+name: Vista previa
+
+# Publica en GitHub Pages (https://marketv25.github.io/verybdn/) la rama que se le pida, para ver un
+# cambio ANTES de fusionarlo. Se lanza a mano: Actions -> Vista previa -> Run workflow, o
+#   gh workflow run vista-previa.yml -R Marketv25/verybdn -f rama=NOMBRE-DE-LA-RAMA
+# No toca verybdn.com ni su indexación: cada página lleva noindex, las canónicas siguen apuntando a
+# https://verybdn.com y no se publican sitemap ni robots. Hay una sola vista previa a la vez: la última.
+# Corre desde main (por eso el entorno github-pages lo acepta) y construye la rama pedida.
+on:
+  workflow_dispatch:
+    inputs:
+      rama:
+        description: 'Rama que se quiere ver (por ejemplo diseno/articulo)'
+        required: true
+        default: main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: vista-previa
+  cancel-in-progress: true
+
+jobs:
+  construir:
+    name: Construir la vista previa
+    runs-on: ubuntu-latest
+    env:
+      RAMA: ${{ inputs.rama }}
+    steps:
+      - name: Código de la rama pedida
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.rama }}
+
+      - name: Script de la vista previa (siempre el de main)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: .vista-previa
+          sparse-checkout: .github/scripts
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Noindex, rutas bajo /verybdn/ y franja de aviso
+        run: node .vista-previa/.github/scripts/preparar-vista-previa.mjs dist /verybdn "$RAMA"
+
+      - name: Subir para Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  publicar:
+    name: Publicar en GitHub Pages
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - name: Publicar
+        id: pages
+        uses: actions/deploy-pages@v4
