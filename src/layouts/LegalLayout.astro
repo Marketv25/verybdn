@@ -1,0 +1,28 @@
+---
+import Layout from './Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { business } from '../data/business';
+
+interface Props {
+  title: string;
+  heading: string;
+  description: string;
+  lang: 'en' | 'es';
+  canonicalUrl: string;
+  alternateUrl: string;
+}
+
+const { title, heading, description, lang, canonicalUrl, alternateUrl } = Astro.props;
+---
+
+<Layout title={title} description={description} lang={lang} canonicalUrl={canonicalUrl} alternateUrl={alternateUrl}>
+  <Navigation lang={lang} />
+  <main id="main" class="legal">
+    <span class="eyebrow">Legal</span>
+    <h1>{heading}</h1>
+    <p class="updated">{lang === 'en' ? 'Last updated: ' : 'Última actualización: '}{business.lastUpdated[lang]}</p>
+    <slot />
+  </main>
+  <Footer lang={lang} />
+</Layout>

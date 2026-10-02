@@ -1,0 +1,43 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { business } from '../data/business';
+---
+
+<LegalLayout
+  title="Cancellation and refund policy — Entre Río y Fuego"
+  heading="Cancellation and refund policy"
+  description="Deposit, cancellations, rescheduling and refunds for direct bookings at Entre Río y Fuego, Minca."
+  lang="en"
+  canonicalUrl="https://verybdn.com/refunds/"
+  alternateUrl="https://verybdn.com/es/reembolsos/"
+>
+  <p>This policy applies to bookings made <strong>directly</strong> with Entre Río y Fuego (on WhatsApp). If you booked through Airbnb, Booking or another platform, that platform's cancellation and refund policy applies. The Spanish version is the reference text.</p>
+
+  <h2>1. How a booking is confirmed</h2>
+  <p>Your booking is confirmed once you pay a <strong>30% deposit</strong> of the total price of the stay and we send you written confirmation. Published rates are in Colombian pesos (COP) and are per night. When confirming, we tell you in writing the total price, the deposit amount, when the balance is due and the payment methods.</p>
+
+  <h2>2. If you cancel</h2>
+  <ul>
+    <li><strong>Up to 7 days before</strong> your arrival date: we refund the full deposit.</li>
+    <li><strong>Less than 7 days</strong> before: the deposit is not refunded, but you can reschedule your stay to another date within <strong>6 months</strong> of the original date, subject to availability.</li>
+  </ul>
+  <p>To cancel or reschedule, message us on <a href={business.whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp at {business.whatsapp}</a>{business.email && <> or write to <a href={`mailto:${business.email}`}>{business.email}</a></>}. The cancellation date is the day we receive your message.</p>
+
+  <h2>3. If we cancel</h2>
+  <p>If we have to cancel your booking —for example because of a road closure, an emergency or any reason that prevents us from hosting you— you can choose between a full refund of what you paid or rescheduling at no cost.</p>
+
+  <h2>4. How and when we refund</h2>
+  <p>We refund through the same method you paid with, or another one we agree with you, within 30 calendar days of your request. If the bank or payment platform charges fees for the refund, we will tell you beforehand.</p>
+
+  <h2>5. Extras</h2>
+  <ul>
+    <li>The sauna is included in direct bookings. For bookings made through Airbnb or Booking it costs an additional $60,000 COP.</li>
+    <li>Breakfast and use of the wood-fired oven cost extra and are arranged separately.</li>
+  </ul>
+
+  <h2>6. Your consumer rights</h2>
+  <p>Nothing in this policy limits your rights under Colombian Law 1480 of 2011 (Consumer Statute), including the right of withdrawal for distance sales where it applies. If you have a complaint, please write to us first; you can also go to Colombia's Superintendence of Industry and Commerce (<a href="https://www.sic.gov.co" target="_blank" rel="noopener noreferrer">sic.gov.co</a>).</p>
+
+  <h2>7. Digital products</h2>
+  <p>verybdn does not currently sell digital products. If we sell paid guides in the future, we will publish their terms here before offering them.</p>
+</LegalLayout>

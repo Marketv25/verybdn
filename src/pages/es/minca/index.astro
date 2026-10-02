@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
 const title = "Minca Destination Hub: verybdn";
-const description = "Guías de primera mano y directorio curado de negocios locales en Minca, Sierra Nevada de Santa Marta. Respuestas verificadas y recomendaciones locales.";
+const description = "Guías de primera mano sobre Minca, Sierra Nevada de Santa Marta: cómo llegar, cuántos días y si vale la pena el desvío.";
 const canonicalUrl = "https://verybdn.com/es/minca/";
 const alternateUrl = "https://verybdn.com/minca/";
 
@@ -14,6 +14,8 @@ const alternateUrl = "https://verybdn.com/minca/";
 const lugares = await getCollection('lugares');
 const mincaLugares = lugares
   .filter(l => l.data.city.toLowerCase() === 'minca')
+  // Las fichas de ejemplo ([DUMMY ...]) no se publican: mostraban negocios, direcciones y teléfonos inventados
+  .filter(l => !l.data.name.includes('DUMMY'))
   .sort((a, b) => a.data.ordenCuracion - b.data.ordenCuracion);
 const categoryTranslations: Record<string, string> = {
   "Hospedaje": "Hospedaje",
@@ -51,7 +53,7 @@ const categoryTranslations: Record<string, string> = {
 
   <a id="top"></a>
 
-  <main style="background: var(--crema); min-height: 100vh;">
+  <main id="main" style="background: var(--crema); min-height: 100vh;">
     <div class="wrap">
       <section style="padding: 60px 0 80px;">
         {/* Editorial Header Section */}
@@ -61,7 +63,7 @@ const categoryTranslations: Record<string, string> = {
             Minca
           </h1>
           <div style="font-family: var(--sans); font-weight: 300; font-size: 17px; line-height: 1.8; color: var(--sombra); border-bottom: 1px solid var(--borde); padding-bottom: 32px;">
-            <p>[PENDIENTE: texto de Joney]</p>
+            <p>Minca es un pueblo pequeño de montaña en la Sierra Nevada de Santa Marta, hacia el interior desde Santa Marta. Estas guías responden primero lo práctico: si vale la pena el desvío, cuántos días necesita y cómo llegar.</p>
           </div>
         </header>
 
@@ -73,10 +75,26 @@ const categoryTranslations: Record<string, string> = {
             </h2>
           </div>
           <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+            <a href="/es/minca/vale-la-pena-el-desvio-a-minca/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
+              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Decisión</span>
+              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">¿Vale la pena el desvío a Minca?</h3>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Una respuesta honesta y de primera mano sobre si Minca merece un lugar en tu itinerario por Colombia.</p>
+              <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
+                Leer guía <span style="transition: transform 0.25s;">&rarr;</span>
+              </span>
+            </a>
+            <a href="/es/minca/cuantos-dias/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
+              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Planificación</span>
+              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">¿Cuántos días necesita Minca?</h3>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Tres días si viniste a recorrer. Lo que cambia si no.</p>
+              <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
+                Leer guía <span style="transition: transform 0.25s;">&rarr;</span>
+              </span>
+            </a>
             <a href="/es/minca/como-llegar-a-minca/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
               <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Guía Práctica</span>
               <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">Cómo llegar a Minca: La guía completa</h3>
-              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Guía de primera mano y verificada sobre cómo ir de Santa Marta a Minca en colectivo o taxi, y cómo resolver el segundo tramo por trocha hasta tu hospedaje.</p>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Guía de primera mano sobre cómo ir de Santa Marta a Minca en colectivo o taxi, y cómo resolver el segundo tramo por trocha hasta tu hospedaje.</p>
               <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
                 Leer guía <span style="transition: transform 0.25s;">&rarr;</span>
               </span>
@@ -84,7 +102,8 @@ const categoryTranslations: Record<string, string> = {
           </div>
         </div>
 
-        {/* Directory Section */}
+        {/* Directory Section: solo se muestra cuando hay fichas reales */}
+        {mincaLugares.length > 0 && (
         <div>
           <div style="border-bottom: 1px solid var(--borde); padding-bottom: 16px; margin-bottom: 32px;">
             <h2 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; color: var(--tierra); margin: 0;">
@@ -129,6 +148,7 @@ const categoryTranslations: Record<string, string> = {
             ))}
           </div>
         </div>
+        )}
       </section>
     </div>
   </main>

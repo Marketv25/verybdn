@@ -1,0 +1,113 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import Responsable from '../components/legal/Responsable.astro';
+import { business } from '../data/business';
+---
+
+<LegalLayout
+  title="Privacy policy — verybdn"
+  heading="Privacy policy"
+  description="How verybdn and Entre Río y Fuego handle your personal data under Colombian Law 1581 of 2012 and, where it applies, the GDPR."
+  lang="en"
+  canonicalUrl="https://verybdn.com/privacy/"
+  alternateUrl="https://verybdn.com/es/privacidad/"
+>
+  <p>This policy explains what personal data we handle when you visit verybdn.com, subscribe to our letters or message us to book at Entre Río y Fuego, and what rights you have. It is governed by Colombian Law 1581 of 2012 and Decree 1377 of 2013 (compiled in Decree 1074 of 2015). If you visit from the European Economic Area or the United Kingdom, your rights under the General Data Protection Regulation (GDPR) also apply. The Spanish version is the reference text.</p>
+
+  <h2>1. Data controller</h2>
+  <Responsable lang="en" />
+
+  <h2>2. What data we handle and why</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>When</th><th>Data</th><th>Purpose</th><th>Legal basis</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>You browse the site</td>
+          <td>IP address, browser, date and page requested (technical logs kept by the hosting provider)</td>
+          <td>Serving the site and keeping it secure</td>
+          <td>Legitimate interest in site security</td>
+        </tr>
+        <tr>
+          <td>You message us on WhatsApp</td>
+          <td>Name, number, messages, travel dates, number of guests</td>
+          <td>Answering your question and managing your booking</td>
+          <td>Your authorization, given by writing to us, and performing the booking you request</td>
+        </tr>
+        <tr>
+          <td>You stay at Entre Río y Fuego</td>
+          <td>Name, ID document, nationality, dates of stay and other details the law requires from lodging providers</td>
+          <td>Completing the Hotel Registration Card and, for foreign guests, the report to Migración Colombia</td>
+          <td>Legal obligation</td>
+        </tr>
+        <tr>
+          <td>You pay a deposit</td>
+          <td>Payer name and payment receipt details</td>
+          <td>Confirming the booking, processing refunds and meeting accounting duties</td>
+          <td>Contract and legal obligation</td>
+        </tr>
+        <tr>
+          <td>You subscribe to the letters</td>
+          <td>Email address (collected by Substack, not by this site)</td>
+          <td>Sending you verybdn letters</td>
+          <td>Your consent, which you can withdraw anytime with the unsubscribe link in every email</td>
+        </tr>
+        <tr>
+          <td>You accept affiliate cookies</td>
+          <td>Browser identifiers and clicks on affiliate links</td>
+          <td>Attributing bookings made through our links</td>
+          <td>Your consent (see the <a href="/cookies/">Cookie policy</a>)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>This site has no forms of its own, uses no analytics tools and installs no advertising pixels. We do not ask for sensitive data. We do not sell or rent personal data, and we do not use it for automated decisions or profiling.</p>
+  <p><strong>Minors:</strong> we only handle data about children when they stay with their legal guardian, with the guardian's authorization and in the child's best interest, as the law requires.</p>
+
+  <h2>3. Who we share data with</h2>
+  <p>Only with the providers needed for each purpose:</p>
+  <ul>
+    <li><strong>Hostinger</strong>: website hosting.</li>
+    <li><strong>WhatsApp (Meta Platforms)</strong>: messaging with guests.</li>
+    <li><strong>Substack</strong>: sending the letters. See its <a href="https://substack.com/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a>.</li>
+    <li><strong>Travelpayouts</strong>: affiliate program, only if you accept cookies.</li>
+    <li><strong>Authorities</strong>: when the law requires it (for example Migración Colombia or the courts).</li>
+  </ul>
+  <p>Some of these providers store data outside Colombia, including in countries the Colombian data protection authority does not consider to offer an adequate level of protection. These transfers happen because they are necessary to provide the service you ask for, or with your authorization, under article 26 of Law 1581 of 2012. If you book through Airbnb or Booking, those platforms handle your data under their own policies.</p>
+
+  <h2>4. How long we keep data</h2>
+  <ul>
+    <li>WhatsApp enquiries that do not become a booking: up to 12 months.</li>
+    <li>Booking and stay data: for as long as the relationship lasts and then for the period required by tourism, tax and accounting rules.</li>
+    <li>Letter subscriptions: until you unsubscribe.</li>
+    <li>Server logs: according to the hosting provider's settings.</li>
+  </ul>
+
+  <h2>5. Your rights</h2>
+  <p>Under article 8 of Law 1581 of 2012 you can:</p>
+  <ul>
+    <li>Know, update and correct your data.</li>
+    <li>Ask for proof of the authorization you gave us.</li>
+    <li>Be told how we have used your data.</li>
+    <li>Withdraw your authorization or ask us to delete your data, unless a legal or contractual duty requires us to keep it.</li>
+    <li>Access your data free of charge.</li>
+    <li>Complain to Colombia's Superintendence of Industry and Commerce (<a href="https://www.sic.gov.co" target="_blank" rel="noopener noreferrer">sic.gov.co</a>) after first raising your request with us.</li>
+  </ul>
+  <p>If you are in the European Economic Area or the United Kingdom you can also ask us to restrict processing, request portability, object to processing based on legitimate interest, and complain to your local data protection authority.</p>
+
+  <h2>6. How to exercise your rights</h2>
+  <p>Write to us {business.email ? <>at <a href={`mailto:${business.email}`}>{business.email}</a> or </> : ''}on <a href={business.whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp at {business.whatsapp}</a> with your name, your request and a way to reach you. We may ask you to confirm your identity.</p>
+  <ul>
+    <li><strong>Enquiries</strong> (what data we hold and how we use it): we answer within 10 business days, extendable by 5 business days if we tell you why.</li>
+    <li><strong>Claims</strong> (correction, update, deletion or withdrawal): we answer within 15 business days, extendable by 8 business days if we tell you why.</li>
+  </ul>
+  <p>For GDPR requests we answer within one month.</p>
+
+  <h2>7. Security</h2>
+  <p>We take reasonable measures to protect your data: restricted access to the devices and accounts where it is stored, and keeping only what is needed. No system is infallible; if an incident affects your data, we will tell you and report it to the authority where required.</p>
+
+  <h2>8. Changes to this policy</h2>
+  <p>If we change this policy, we will publish the new version on this page with its date. If a change affects the purposes you authorized, we will tell you before applying it.</p>
+</LegalLayout>

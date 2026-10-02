@@ -1,0 +1,52 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Cookie policy — verybdn"
+  heading="Cookie policy"
+  description="Which cookies and local storage verybdn.com uses, why, and how to accept or reject them."
+  lang="en"
+  canonicalUrl="https://verybdn.com/cookies/"
+  alternateUrl="https://verybdn.com/es/cookies/"
+>
+  <p>Cookies are small files a site stores in your browser. Local storage (localStorage) works in a similar way. This page lists what we use. The short version: this site uses no analytics and no advertising, and the only thing that is not strictly necessary —an affiliate script— loads only if you accept it.</p>
+
+  <h2>1. What we use</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Name / provider</th><th>Type</th><th>Purpose</th><th>Duration</th><th>Needs your consent?</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>vbdn_cookie_consent</code> (verybdn, localStorage)</td>
+          <td>Strictly necessary</td>
+          <td>Remembering whether you accepted or rejected cookies, so we don't ask on every page</td>
+          <td>Until you clear your browser data</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Travelpayouts (script from <code>emrldco.com</code>)</td>
+          <td>Affiliate / marketing, third party</td>
+          <td>Recognising clicks on affiliate links and attributing to verybdn the bookings you make on partner sites. verybdn earns a commission; it costs you nothing extra</td>
+          <td>Set by Travelpayouts; see its privacy policy</td>
+          <td>Yes. It only loads if you click “Accept”</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Fonts are served from our own domain, so loading them does not send your data to third parties.</p>
+
+  <h2>2. External sites</h2>
+  <p>When you leave verybdn.com —for example to open WhatsApp, Substack, Airbnb or an affiliate site— that site may use its own cookies under its own policy. We don't control them.</p>
+
+  <h2>3. How to accept, reject or change your mind</h2>
+  <p>On your first visit we show a notice with two buttons of the same size: “Accept” and “Reject”. Rejecting does not remove any feature of the site.</p>
+  <p>You can change your choice at any time:</p>
+  <p><button type="button" class="legal-btn" data-cookie-settings>Cookie settings</button></p>
+  <p>If you withdraw consent you had given, we reload the page so the affiliate script stops running. Any cookies that third party already set can be deleted from your browser settings.</p>
+
+  <h2>4. More information</h2>
+  <p>For how we handle personal data in general, read the <a href="/privacy/">Privacy policy</a>.</p>
+</LegalLayout>

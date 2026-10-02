@@ -18,7 +18,7 @@ const logoHref = isHome ? '#top' : homePrefix;
 
 <header class="nav">
   <div class="nav-inner">
-    <a href={logoHref} class="logo" aria-label="verybdn home"><span class="v">very</span><span class="b">bdn</span></a>
+    <a href={logoHref} class="logo" aria-label={lang === 'en' ? 'verybdn home' : 'verybdn inicio'}><span class="v">very</span><span class="b">bdn</span></a>
     <div class="nav-right">
       <nav class="nav-links" id="navlinks">
         {lang === 'en' ? (
@@ -40,10 +40,10 @@ const logoHref = isHome ? '#top' : homePrefix;
         )}
       </nav>
       <div class="lang" role="group" aria-label="Language / Idioma">
-        <a id="lang-en" class={lang === 'en' ? 'on' : ''} href={enTarget} aria-pressed={lang === 'en' ? 'true' : 'false'}>EN</a>
-        <a id="lang-es" class={lang === 'es' ? 'on' : ''} href={esTarget} aria-pressed={lang === 'es' ? 'true' : 'false'}>ES</a>
+        <a id="lang-en" class={lang === 'en' ? 'on' : ''} href={enTarget} lang="en" aria-label="English" aria-current={lang === 'en' ? 'page' : undefined}>EN</a>
+        <a id="lang-es" class={lang === 'es' ? 'on' : ''} href={esTarget} lang="es" aria-label="Español" aria-current={lang === 'es' ? 'page' : undefined}>ES</a>
       </div>
-      <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+      <button class="nav-burger" id="burger" aria-label={lang === 'en' ? 'Open menu' : 'Abrir menú'} aria-expanded="false" aria-controls="navlinks">&#9776;</button>
     </div>
   </div>
 </header>
@@ -64,21 +64,6 @@ const logoHref = isHome ? '#top' : homePrefix;
         links.classList.remove('open');
         burger.setAttribute('aria-expanded', 'false');
       });
-    });
-  }
-
-  // Guardar preferencia de idioma en localStorage cuando el usuario hace click en el toggle
-  const langEn = document.getElementById('lang-en');
-  const langEs = document.getElementById('lang-es');
-
-  if (langEn) {
-    langEn.addEventListener('click', () => {
-      try { localStorage.setItem('vbdn_lang', 'en'); } catch (e) {}
-    });
-  }
-  if (langEs) {
-    langEs.addEventListener('click', () => {
-      try { localStorage.setItem('vbdn_lang', 'es'); } catch (e) {}
     });
   }
 </script>

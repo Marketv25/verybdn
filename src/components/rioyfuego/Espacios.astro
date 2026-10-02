@@ -22,6 +22,8 @@ const spaces = [
     bedsEn: '1 double bed · 1 single bed',
     bedsEs: '1 cama doble · 1 cama sencilla',
     image: imgHabitacion,
+    altEn: 'Río Room: a double bed and a single bed, with linen curtains over the terrace door',
+    altEs: 'Habitación Río: una cama doble y una sencilla, con cortinas de lino sobre la puerta de la terraza',
     hasLocationNote: false,
     locationNote: '',
     descEn: 'The river as the backdrop for the whole night. The screen door lets it in; the glass one switches it off. You choose what sound you sleep with.',
@@ -34,6 +36,8 @@ const spaces = [
     bedsEn: '1 double bed · 1 single bed',
     bedsEs: '1 cama doble · 1 cama sencilla',
     image: imgBano,
+    altEn: 'Fuego Room bathroom: wooden door, vessel sink and mirror',
+    altEs: 'Baño de la Habitación Fuego: puerta de madera, lavamanos de sobreponer y espejo',
     hasLocationNote: false,
     locationNote: '',
     descEn: 'The same terrace facing the water, the same river below. The name already says what changes.',
@@ -46,6 +50,8 @@ const spaces = [
     bedsEn: '',
     bedsEs: '',
     image: imgRefugio,
+    altEn: 'El Refugio: floor cushions, candles and a long wooden counter facing the forest',
+    altEs: 'El Refugio: cojines en el piso, velas y una barra larga de madera frente al bosque',
     hasLocationNote: false,
     locationNote: '',
     descEn: 'One level down, closer to the river. Hammocks, quiet, and nothing else to ask for.',
@@ -58,6 +64,8 @@ const spaces = [
     bedsEn: '',
     bedsEs: '',
     image: imgFuego,
+    altEn: 'Firewood burning inside the wood-fired oven',
+    altEs: 'Leña ardiendo dentro del horno de leña',
     hasLocationNote: false,
     locationNote: '',
     descEn: 'The path down to the river. Where the nights end.',
@@ -70,6 +78,8 @@ const spaces = [
     bedsEn: '',
     bedsEs: '',
     image: imgCocina,
+    altEn: 'Outdoor shared kitchen with sink, gas stove and a wooden table',
+    altEs: 'Cocina compartida al aire libre con lavaplatos, estufa a gas y mesa de madera',
     hasLocationNote: false,
     locationNote: '',
     descEn: 'Separate from the grill and the wood-fired oven. Everything in its place.',
@@ -97,7 +107,7 @@ const spaces = [
           <div style="direction: ltr; position: relative; overflow: hidden; border: 1px solid var(--rf-borde, rgba(27,58,52,0.15)); aspect-ratio: 16/10;">
             <Image
               src={space.image}
-              alt={lang === 'en' ? space.labelEn : space.labelEs}
+              alt={lang === 'en' ? space.altEn : space.altEs}
               style="width: 100%; height: 100%; object-fit: cover;"
               width={720}
               height={450}

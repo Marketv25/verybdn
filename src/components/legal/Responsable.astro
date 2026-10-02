@@ -1,0 +1,20 @@
+---
+import { business } from '../../data/business';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+const en = lang === 'en';
+---
+
+<ul>
+  <li><strong>{en ? 'Name' : 'Nombre'}:</strong> {business.legalName || business.ownerDisplayName}{en ? ', who runs verybdn and Entre Río y Fuego' : ', quien opera verybdn y Entre Río y Fuego'}</li>
+  {business.idNumber && <li><strong>{en ? 'ID / Tax ID' : 'Identificación (C.C. / NIT)'}:</strong> {business.idNumber}</li>}
+  {business.address && <li><strong>{en ? 'Address' : 'Dirección'}:</strong> {business.address}</li>}
+  <li><strong>{en ? 'Location' : 'Domicilio'}:</strong> {business.city}</li>
+  {business.email && <li><strong>{en ? 'Email' : 'Correo'}:</strong> <a href={`mailto:${business.email}`}>{business.email}</a></li>}
+  <li><strong>WhatsApp:</strong> <a href={business.whatsappLink} target="_blank" rel="noopener noreferrer">{business.whatsapp}</a></li>
+  {business.rnt && <li><strong>{en ? 'National Tourism Registry (RNT)' : 'Registro Nacional de Turismo (RNT)'}:</strong> {business.rnt}</li>}
+</ul>

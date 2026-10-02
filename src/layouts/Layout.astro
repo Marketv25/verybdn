@@ -1,5 +1,12 @@
 ---
+// Fuentes servidas desde el propio dominio: evita enviar la IP del visitante a Google Fonts
+import '@fontsource/dm-serif-display/400.css';
+import '@fontsource/dm-serif-display/400-italic.css';
+import '@fontsource/dm-sans/300.css';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
 import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
   title: string;
@@ -24,21 +31,12 @@ const esHref = lang === 'es' ? canonicalUrl : alternateUrl;
 <html lang={lang}>
 <head>
 <meta charset="UTF-8">
-<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" is:inline>
-  (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.src = 'https://emrldco.com/MzY4ODc2.js?t=368876';
-      document.head.appendChild(script);
-  })();
-</script>
+{/* El script de afiliados (Travelpayouts, emrldco.com) ya no se carga aquí:
+    lo carga CookieConsent solo después de que el visitante acepta. */}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="/favicon.png">
 <title>{title}</title>
 <meta name="description" content={description}>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="canonical" href={canonicalUrl}>
 {alternateUrl && (
   <>
@@ -68,6 +66,8 @@ const esHref = lang === 'es' ? canonicalUrl : alternateUrl;
 <slot name="head" />
 </head>
 <body>
+  <a href="#main" class="skip-link">{lang === 'en' ? 'Skip to content' : 'Saltar al contenido'}</a>
   <slot />
+  <CookieConsent lang={lang} />
 </body>
 </html>

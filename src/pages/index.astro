@@ -9,7 +9,7 @@ import burroTrafico from '../assets/img/burro-trafico.png';
 import hornoLodge from '../assets/img/horno-lodge.png';
 
 const title = "verybdn — Minca & Colombia's Caribbean coast, from someone who lives here";
-const description = "First-hand, structured guides to Minca and Colombia's Caribbean coast — Santa Marta, Tayrona, Palomino, Cartagena & La Guajira. Verified answers to is Minca worth it, Minca vs Tayrona, how many days, where to stay. No sponsored bias. By Honey, living in Minca.";
+const description = "First-hand, structured guides to Minca and Colombia's Caribbean coast — Santa Marta, Tayrona, Palomino, Cartagena & La Guajira. Straight answers to is Minca worth it, how many days and how to get there. No paid placements; affiliate links are always disclosed. By Honey, living in Minca.";
 const canonicalUrl = "https://verybdn.com/";
 const alternateUrl = "https://verybdn.com/es/";
 ---
@@ -51,6 +51,7 @@ const alternateUrl = "https://verybdn.com/es/";
   <Navigation lang="en" isHome={true} />
   
   <a id="top"></a>
+  <main id="main">
   
   <section class="hero">
     <TopographyHero />
@@ -59,7 +60,7 @@ const alternateUrl = "https://verybdn.com/es/";
         <div class="reveal">
           <span class="eyebrow">Minca · Sierra Nevada · Colombia</span>
           <h1>The honest answer to <span class="accent">where to go</span>, from someone who actually lives here.</h1>
-          <p class="hero-sub">Not another travel blog written from a desk three continents away. <strong>Verified, structured, first-hand guidance</strong> on the decisions that cost you real time — what's worth it, what to skip, where to stay, how many days.</p>
+          <p class="hero-sub">Not another travel blog written from a desk three continents away. <strong>Structured, first-hand guidance</strong> on the decisions that cost you real time — what's worth it, what to skip, where to stay, how many days.</p>
           <p class="territory">First-hand guides to <b>Minca</b> and Colombia's Caribbean coast — Santa Marta, Tayrona, Palomino, Cartagena and La Guajira.</p>
           <div class="hero-actions">
             <a href="#preguntas" class="btn-primary">Start with a real question <span>&darr;</span></a>
@@ -74,9 +75,6 @@ const alternateUrl = "https://verybdn.com/es/";
   <div class="strip">
     <div class="wrap">
       <p><span class="lead">Built to be the source the answer comes from</span> — for the traveler, and for the engines they now ask first.</p>
-      <div class="ai-pills" aria-label="Cited by AI answer engines">
-        <span>ChatGPT</span><span>Perplexity</span><span>Gemini</span><span>Google AI Overviews</span>
-      </div>
     </div>
   </div>
 
@@ -97,7 +95,7 @@ const alternateUrl = "https://verybdn.com/es/";
           </div>
           <span class="q-go">Read <span class="arrow">&rarr;</span></span>
         </a>
-        <a class="q-row reveal" href="#">
+        <a class="q-row reveal" href="/minca/how-many-days/">
           <span class="q-num">02</span>
           <div class="q-main">
             <h3>How many days does Minca actually need?</h3>
@@ -106,24 +104,24 @@ const alternateUrl = "https://verybdn.com/es/";
           </div>
           <span class="q-go">Read <span class="arrow">&rarr;</span></span>
         </a>
-        <a class="q-row reveal" href="#">
+        <div class="q-row soon reveal">
           <span class="q-num">03</span>
           <div class="q-main">
             <h3>Minca or Tayrona, if you can only pick one.</h3>
             <div class="q-en">"Minca vs Tayrona"</div>
             <p>The most repeated dilemma on every forum: mountain versus beach, effort, crowds, atmosphere. Decided honestly.</p>
           </div>
-          <span class="q-go">Read <span class="arrow">&rarr;</span></span>
-        </a>
-        <a class="q-row reveal" href="#">
+          <span class="q-go">Coming soon</span>
+        </div>
+        <div class="q-row soon reveal">
           <span class="q-num">04</span>
           <div class="q-main">
             <h3>Where to stay in Minca if you came to rest.</h3>
             <div class="q-en">"Where to stay in Minca for relaxation"</div>
             <p>Not a list of every bed in town. The few places that match what you're actually looking for, and why.</p>
           </div>
-          <span class="q-go">Read <span class="arrow">&rarr;</span></span>
-        </a>
+          <span class="q-go">Coming soon</span>
+        </div>
       </div>
     </div>
   </section>
@@ -149,7 +147,7 @@ const alternateUrl = "https://verybdn.com/es/";
             <div class="place">Minca</div>
             <div class="desc">Jungle, coffee, waterfalls, the slow Sierra.</div>
           </div>
-          <span class="state"><span class="sdot"></span><span>Live — 4 guides</span></span>
+          <span class="state"><span class="sdot"></span><span>Live — 3 guides</span></span>
         </a>
         <div class="terr-cell soon reveal">
           <div>
@@ -237,52 +235,19 @@ const alternateUrl = "https://verybdn.com/es/";
           <p class="lede" style="color:var(--sombra)">No schedule, no filler, no selling. When the rivers change, when a place stops being worth it, when something opens that you'd actually want to know about — you hear it from someone who was there. That's the deal.</p>
         </div>
         <div class="list-card reveal">
-          <label for="email">Get the Minca guides and the letters</label>
-          <div class="field-row">
-            <input id="email" type="email" inputmode="email" placeholder="you@email.com" autocomplete="email" aria-label="Your email">
-            <button id="subscribe" type="button">Join</button>
-          </div>
-          <div class="list-msg" id="listmsg" role="status" aria-live="polite"></div>
-          <p class="fine">First-hand, occasional, and yours to leave anytime. No partner gets this list.</p>
+          <p class="list-card-title">Get the Minca guides and the letters</p>
+          <a class="btn-primary" href="https://verybdn.substack.com/subscribe" target="_blank" rel="noopener noreferrer">Subscribe on Substack <span aria-hidden="true">&rarr;</span><span class="sr-only"> (opens in a new tab)</span></a>
+          <p class="fine">First-hand, occasional, and yours to leave anytime. We never sell or share the list. Subscriptions are handled by Substack, which stores your email under its own <a href="https://substack.com/privacy" target="_blank" rel="noopener noreferrer">privacy policy</a>. See <a href="/privacy/">how we handle your data</a>.</p>
         </div>
       </div>
     </div>
   </section>
 
+  </main>
+
   <Footer lang="en" isHome={true} />
 
   <script>
-    // Formulario de suscripción
-    const sub = document.getElementById('subscribe');
-    const msg = document.getElementById('listmsg');
-    const email = document.getElementById('email') as HTMLInputElement;
-
-    function tryJoin() {
-      const v = (email.value || '').trim();
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) {
-        if (msg) {
-          msg.style.color = '#9B6B3A';
-          msg.textContent = 'Add a valid email and you are in.';
-        }
-        return;
-      }
-      if (msg) {
-        msg.style.color = '#3D5A3E';
-        msg.textContent = 'You are on the list. First letter comes when there is something real to say.';
-      }
-      email.value = '';
-    }
-
-    if (sub) sub.addEventListener('click', tryJoin);
-    if (email) email.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryJoin(); });
-
-    // Clics en q-row para evitar enlaces rotos (#)
-    document.querySelectorAll('.q-row, .terr-cell.live').forEach(r => {
-      r.addEventListener('click', (e) => {
-        if (r.getAttribute('href') === '#') { e.preventDefault(); }
-      });
-    });
-
     // Intersection Observer para animaciones
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if ('IntersectionObserver' in window && !prefersReduced) {

@@ -45,7 +45,7 @@ const faqs = lang === 'en'
   <div style="display: flex; flex-direction: column; border-top: 1px solid var(--borde);">
     {faqs.map(faq => (
       <details class="faq-item" style="border-bottom: 1px solid var(--borde); cursor: pointer; transition: background 0.25s;">
-        <summary style="font-family: var(--serif); font-weight: 400; font-size: clamp(18px, 2.5vw, 22px); color: var(--tierra); padding: 24px 8px; list-style: none; display: flex; justify-content: space-between; align-items: center; outline: none; user-select: none;">
+        <summary style="font-family: var(--serif); font-weight: 400; font-size: clamp(18px, 2.5vw, 22px); color: var(--tierra); padding: 24px 8px; list-style: none; display: flex; justify-content: space-between; align-items: center; user-select: none;">
           <span>{faq.q}</span>
           <span class="faq-icon" style="font-family: var(--sans); font-weight: 300; font-size: 20px; color: var(--barro); transition: transform 0.25s;">+</span>
         </summary>
@@ -55,9 +55,15 @@ const faqs = lang === 'en'
       </details>
     ))}
   </div>
+  <p class="faq-policy">
+    <a href={lang === 'en' ? '/refunds/' : '/es/reembolsos/'}>{lang === 'en' ? 'Read the full cancellation and refund policy' : 'Lee la política completa de cancelación y reembolsos'}</a>
+  </p>
 </section>
 
 <style>
+  .faq-policy { margin-top: 24px; font-family: var(--sans); font-size: 15px; }
+  .faq-policy a { color: var(--barro); text-decoration: underline; text-underline-offset: 3px; }
+  .faq-item summary:focus-visible { outline: 3px solid var(--barro-claro); outline-offset: 2px; }
   /* Remove default disclosure triangle in Webkit */
   summary::-webkit-details-marker {
     display: none;

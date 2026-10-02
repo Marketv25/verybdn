@@ -9,7 +9,7 @@ import burroTrafico from '../../assets/img/burro-trafico.png';
 import hornoLodge from '../../assets/img/horno-lodge.png';
 
 const title = "verybdn — Minca y la costa Caribe de Colombia, por alguien que vive aquí";
-const description = "Guías de primera mano y estructuradas sobre Minca y la costa Caribe colombiana — Santa Marta, Tayrona, Palomino, Cartagena y La Guajira. Respuestas verificadas a si vale la pena Minca, Minca vs Tayrona, cuántos días y dónde alojarse. Sin sesgo patrocinado. Por Honey, residente en Minca.";
+const description = "Guías de primera mano y estructuradas sobre Minca y la costa Caribe colombiana — Santa Marta, Tayrona, Palomino, Cartagena y La Guajira. Respuestas directas a si vale la pena Minca, cuántos días y cómo llegar. Sin espacios pagados; los enlaces de afiliado siempre se declaran. Por Honey, residente en Minca.";
 const canonicalUrl = "https://verybdn.com/es/";
 const alternateUrl = "https://verybdn.com/";
 ---
@@ -51,6 +51,7 @@ const alternateUrl = "https://verybdn.com/";
   <Navigation lang="es" isHome={true} />
   
   <a id="top"></a>
+  <main id="main">
   
   <section class="hero">
     <TopographyHero />
@@ -59,7 +60,7 @@ const alternateUrl = "https://verybdn.com/";
         <div class="reveal">
           <span class="eyebrow">Minca · Sierra Nevada · Colombia</span>
           <h1>La respuesta honesta sobre <span class="accent">a dónde ir</span>, de alguien que de verdad vive aquí.</h1>
-          <p class="hero-sub">No es otro blog de viajes escrito desde un escritorio a tres continentes de aquí. <strong>Criterio verificado, estructurado y de primera mano</strong> sobre las decisiones que te cuestan tiempo de verdad: qué vale la pena, qué saltarte, dónde dormir, cuántos días.</p>
+          <p class="hero-sub">No es otro blog de viajes escrito desde un escritorio a tres continentes de aquí. <strong>Criterio estructurado y de primera mano</strong> sobre las decisiones que te cuestan tiempo de verdad: qué vale la pena, qué saltarte, dónde dormir, cuántos días.</p>
           <p class="territory">Guías de primera mano sobre <b>Minca</b> y la costa Caribe de Colombia — Santa Marta, Tayrona, Palomino, Cartagena y La Guajira.</p>
           <div class="hero-actions">
             <a href="#preguntas" class="btn-primary">Empieza por una pregunta real <span>&darr;</span></a>
@@ -74,9 +75,6 @@ const alternateUrl = "https://verybdn.com/";
   <div class="strip">
     <div class="wrap">
       <p><span class="lead">Hecho para ser la fuente de donde sale la respuesta</span> — para el viajero, y para los motores que ahora consulta primero.</p>
-      <div class="ai-pills" aria-label="Cited by AI answer engines">
-        <span>ChatGPT</span><span>Perplexity</span><span>Gemini</span><span>Google AI Overviews</span>
-      </div>
     </div>
   </div>
 
@@ -97,7 +95,7 @@ const alternateUrl = "https://verybdn.com/";
           </div>
           <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
         </a>
-        <a class="q-row reveal" href="#">
+        <a class="q-row reveal" href="/es/minca/cuantos-dias/">
           <span class="q-num">02</span>
           <div class="q-main">
             <h3>¿Cuántos días necesita Minca de verdad?</h3>
@@ -106,24 +104,24 @@ const alternateUrl = "https://verybdn.com/";
           </div>
           <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
         </a>
-        <a class="q-row reveal" href="#">
+        <div class="q-row soon reveal">
           <span class="q-num">03</span>
           <div class="q-main">
             <h3>Minca o Tayrona, si solo puedes elegir uno.</h3>
             <div class="q-en">"Minca vs Tayrona"</div>
             <p>El dilema más repetido en todos los foros: montaña contra playa, esfuerzo, gente, ambiente. Resuelto con honestidad.</p>
           </div>
-          <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
-        </a>
-        <a class="q-row reveal" href="#">
+          <span class="q-go">Próximamente</span>
+        </div>
+        <div class="q-row soon reveal">
           <span class="q-num">04</span>
           <div class="q-main">
             <h3>Dónde quedarse en Minca si viniste a descansar.</h3>
             <div class="q-en">"Where to stay in Minca for relaxation"</div>
             <p>No una lista de cada cama del pueblo. Los pocos lugares que encajan con lo que de verdad buscas, y por qué.</p>
           </div>
-          <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
-        </a>
+          <span class="q-go">Próximamente</span>
+        </div>
       </div>
     </div>
   </section>
@@ -149,7 +147,7 @@ const alternateUrl = "https://verybdn.com/";
             <div class="place">Minca</div>
             <div class="desc">Selva, café, cascadas, la Sierra lenta.</div>
           </div>
-          <span class="state"><span class="sdot"></span><span>Disponible — 4 guías</span></span>
+          <span class="state"><span class="sdot"></span><span>Disponible — 3 guías</span></span>
         </a>
         <div class="terr-cell soon reveal">
           <div>
@@ -237,52 +235,19 @@ const alternateUrl = "https://verybdn.com/";
           <p class="lede" style="color:var(--sombra)">Sin calendario, sin relleno, sin venta. Cuando cambian los ríos, cuando un lugar deja de valer la pena, cuando abre algo que de verdad querrías conocer — lo sabes por alguien que estuvo ahí. Ese es el trato.</p>
         </div>
         <div class="list-card reveal">
-          <label for="email">Recibe las guías de Minca y las cartas</label>
-          <div class="field-row">
-            <input id="email" type="email" inputmode="email" placeholder="tu@correo.com" autocomplete="email" aria-label="Tu correo">
-            <button id="subscribe" type="button">Unirme</button>
-          </div>
-          <div class="list-msg" id="listmsg" role="status" aria-live="polite"></div>
-          <p class="fine">De primera mano, ocasional, y tuya para dejarla cuando quieras. Ningún tercero recibe esta lista.</p>
+          <p class="list-card-title">Recibe las guías de Minca y las cartas</p>
+          <a class="btn-primary" href="https://verybdn.substack.com/subscribe" target="_blank" rel="noopener noreferrer">Suscribirme en Substack <span aria-hidden="true">&rarr;</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          <p class="fine">De primera mano, ocasional, y tuya para dejarla cuando quieras. Nunca vendemos ni compartimos la lista. La suscripción la gestiona Substack, que guarda tu correo según su propia <a href="https://substack.com/privacy" target="_blank" rel="noopener noreferrer">política de privacidad</a>. Mira <a href="/es/privacidad/">cómo tratamos tus datos</a>.</p>
         </div>
       </div>
     </div>
   </section>
 
+  </main>
+
   <Footer lang="es" isHome={true} />
 
   <script>
-    // Formulario de suscripción
-    const sub = document.getElementById('subscribe');
-    const msg = document.getElementById('listmsg');
-    const email = document.getElementById('email') as HTMLInputElement;
-
-    function tryJoin() {
-      const v = (email.value || '').trim();
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) {
-        if (msg) {
-          msg.style.color = '#9B6B3A';
-          msg.textContent = 'Pon un correo valido y quedas dentro.';
-        }
-        return;
-      }
-      if (msg) {
-        msg.style.color = '#3D5A3E';
-        msg.textContent = 'Estas en la lista. La primera carta llega cuando haya algo real que decir.';
-      }
-      email.value = '';
-    }
-
-    if (sub) sub.addEventListener('click', tryJoin);
-    if (email) email.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryJoin(); });
-
-    // Clics en q-row para evitar enlaces rotos (#)
-    document.querySelectorAll('.q-row, .terr-cell.live').forEach(r => {
-      r.addEventListener('click', (e) => {
-        if (r.getAttribute('href') === '#') { e.preventDefault(); }
-      });
-    });
-
     // Intersection Observer para animaciones
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if ('IntersectionObserver' in window && !prefersReduced) {
