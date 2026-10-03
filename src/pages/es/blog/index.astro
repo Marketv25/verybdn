@@ -1,0 +1,139 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navigation from '../../../components/Navigation.astro';
+import Footer from '../../../components/Footer.astro';
+import AuthorCard from '../../../components/AuthorCard.astro';
+import TopographyHero from '../../../components/TopographyHero.astro';
+import {
+  getPublishedPosts, sortByDate, clusterCopy, formatDate, postPath,
+} from '../../../lib/blog';
+
+const posts = sortByDate(await getPublishedPosts()).filter((post) => post.data.lang === 'es');
+
+const clusters = clusterCopy.es.map((cluster) => ({
+  ...cluster,
+  posts: posts.filter((post) => post.data.cluster === cluster.id),
+}));
+
+const canonicalUrl = 'https://verybdn.com/es/blog/';
+---
+
+<Layout
+  title="Escritos — verybdn"
+  description="Notas sobre turismo, territorio y hospitalidad en la costa Caribe de Colombia. Escritas desde Minca por alguien que vive y trabaja aquí, no de paso."
+  lang="es"
+  canonicalUrl={canonicalUrl}
+  alternateUrl="https://verybdn.com/blog/"
+>
+  <Navigation lang="es" alternateUrl="/blog/" />
+
+  <a id="top"></a>
+
+  <main id="main">
+  <section class="hero">
+    <TopographyHero />
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">verybdn · escritos</span>
+          <h1>Notas desde una carretera que <span class="accent">se vacía</span> a las cuatro de la tarde.</h1>
+          <p class="hero-sub">
+            Las guías responden a lo que la gente pregunta antes de venir. Esto es la otra mitad:
+            <strong>cómo se ve el lugar desde dentro</strong>, y lo que cuesta de verdad sostener
+            algo aquí.
+          </p>
+          <p class="territory">
+            Tres hilos. Uno para quien está de paso, otro para quien se quedó y construyó algo, y
+            otro para cuando resulta que son la misma pregunta.
+          </p>
+          <div class="hero-actions">
+            <a href="#travel" class="btn-primary">Si vas a venir <span>&darr;</span></a>
+            <a href="#operators" class="btn-ghost">Si llevas un lugar <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+        <AuthorCard lang="es" />
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <p>
+        <span class="lead">Aquí no se publica por llenar calendario.</span>
+        Si pasa una semana sin nada que merezca decirse, no sale nada.
+      </p>
+      <div class="ai-pills" aria-label="Cómo se escribe esto">
+        <span>De primera mano</span><span>Con fuentes</span><span>Actualizado desde el terreno</span>
+      </div>
+    </div>
+  </div>
+
+  {clusters.map((cluster, i) => (
+    <section id={cluster.id} class={i === 1 ? 'terr-sec' : undefined}>
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="eyebrow">{cluster.eyebrow}</span>
+          <h2>{cluster.title}</h2>
+          <p class="lede">{cluster.lede}</p>
+        </div>
+
+        {cluster.posts.length === 0 ? (
+          <p class="cluster-empty reveal">{cluster.empty}</p>
+        ) : (
+          <div class="q-list">
+            {cluster.posts.map((post, index) => (
+              <a class="q-row reveal" href={postPath('es', post.slug)}>
+                <span class="q-num">{String(index + 1).padStart(2, '0')}</span>
+                <div class="q-main">
+                  <h3>{post.data.title}</h3>
+                  <div class="q-en">{formatDate(post.data.pubDate, 'es', 'short')}</div>
+                  <p>{post.data.description}</p>
+                </div>
+                <span class="q-go">Leer <span class="arrow">&rarr;</span></span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <section class="list-sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Cómo se escribe esto</span>
+        <h2>Despacio, y con los recibos.</h2>
+        <p class="lede">
+          Cada cifra está enlazada a su fuente. Cuando algo depende de la temporada, o ha cambiado
+          desde que se escribió, el texto lo dice en vez de disimularlo. Cuando una pieza deja de
+          ser cierta, se actualiza — no se borra en silencio.
+        </p>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <Footer lang="es" />
+</Layout>
+
+<style>
+  .cluster-empty {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    color: var(--sombra);
+    margin-top: 40px;
+    padding-top: 26px;
+    border-top: 1px solid var(--borde);
+  }
+
+  .list-sec .sec-head {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .list-sec .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

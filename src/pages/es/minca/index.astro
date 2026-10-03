@@ -5,8 +5,8 @@ import Footer from '../../../components/Footer.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
-const title = "Minca Destination Hub: verybdn";
-const description = "Guías de primera mano sobre Minca, Sierra Nevada de Santa Marta: cómo llegar, cuántos días y si vale la pena el desvío.";
+const title = "Minca: guías de primera mano — verybdn";
+const description = "Guías de primera mano sobre Minca, Sierra Nevada de Santa Marta: cómo llegar, cuántos días necesitas y si vale la pena el desvío.";
 const canonicalUrl = "https://verybdn.com/es/minca/";
 const alternateUrl = "https://verybdn.com/minca/";
 
@@ -49,7 +49,7 @@ const categoryTranslations: Record<string, string> = {
     }
   </script>
 
-  <Navigation lang="es" />
+  <Navigation lang="es" alternateUrl={alternateUrl} />
 
   <a id="top"></a>
 

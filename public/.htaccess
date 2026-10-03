@@ -1,0 +1,8 @@
+# www.verybdn.com -> verybdn.com, con 301, para que Google vea un solo sitio.
+# Solo mira el nombre del host: el paso de http a https ya lo hace el CDN de Hostinger antes de llegar
+# aquí, y esta regla no puede entrar en bucle porque su destino no empieza por www.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.verybdn\.com$ [NC]
+  RewriteRule ^ https://verybdn.com%{REQUEST_URI} [L,R=301]
+</IfModule>

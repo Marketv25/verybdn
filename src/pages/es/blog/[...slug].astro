@@ -1,0 +1,18 @@
+---
+import BlogPost from '../../../components/BlogPost.astro';
+import { buildPostPaths, type BlogPost as Post } from '../../../lib/blog';
+
+export async function getStaticPaths() {
+  return await buildPostPaths("es");
+}
+
+interface Props {
+  post: Post;
+  related: Post[];
+  alternateUrl?: string;
+}
+
+const { post, related, alternateUrl } = Astro.props;
+---
+
+<BlogPost post={post} related={related} alternateUrl={alternateUrl} />
