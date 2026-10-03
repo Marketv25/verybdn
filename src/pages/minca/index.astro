@@ -14,9 +14,9 @@ const alternateUrl = "https://verybdn.com/es/minca/";
 const lugares = await getCollection('lugares');
 const mincaLugares = lugares
   .filter(l => l.data.city.toLowerCase() === 'minca')
+  // Las fichas de ejemplo ([DUMMY ...]) no se publican: mostraban negocios, direcciones y teléfonos inventados
+  .filter(l => !l.data.name.includes('DUMMY'))
   .sort((a, b) => a.data.ordenCuracion - b.data.ordenCuracion);
-// Los lugares de src/content/lugares son de prueba (DUMMY): ocultos hasta que haya lugares reales.
-const SHOW_CURATED_PLACES = false;
 const categoryTranslations: Record<string, string> = {
   "Hospedaje": "Lodging",
   "Eco-lodge": "Eco-lodge",
@@ -53,7 +53,7 @@ const categoryTranslations: Record<string, string> = {
 
   <a id="top"></a>
 
-  <main style="background: var(--crema); min-height: 100vh;">
+  <main id="main" style="background: var(--crema); min-height: 100vh;">
     <div class="wrap">
       <section style="padding: 60px 0 80px;">
         {/* Editorial Header Section */}
@@ -62,6 +62,9 @@ const categoryTranslations: Record<string, string> = {
           <h1 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin-bottom: 24px; color: var(--tierra);">
             Minca
           </h1>
+          <div style="font-family: var(--sans); font-weight: 300; font-size: 17px; line-height: 1.8; color: var(--sombra); border-bottom: 1px solid var(--borde); padding-bottom: 32px;">
+            <p>Minca is a small mountain village in the Sierra Nevada de Santa Marta, inland from Santa Marta. These guides answer the practical questions first: whether it is worth the detour, how many days it needs, and how to get there.</p>
+          </div>
         </header>
 
         {/* Guides Section */}
@@ -72,26 +75,26 @@ const categoryTranslations: Record<string, string> = {
             </h2>
           </div>
           <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
-            <a href="/minca/how-to-get-to-minca/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
-              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Practical Guide</span>
-              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">How to get to Minca: The complete guide</h3>
-              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">First-hand, verified guide on how to get from Santa Marta to Minca by colectivo or taxi, and navigating the upland tracks to your lodging.</p>
+            <a href="/minca/is-minca-worth-the-detour/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
+              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Decision</span>
+              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">Is Minca worth the detour?</h3>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">A first-hand, honest answer to whether Minca deserves a spot in your Colombia itinerary.</p>
               <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
                 Read guide <span style="transition: transform 0.25s;">&rarr;</span>
               </span>
             </a>
             <a href="/minca/how-many-days/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
-              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Field Guide</span>
+              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Planning</span>
               <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">How many days do you actually need in Minca?</h3>
-              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Three days if you came to see things. What changes if you didn't. Field guide from Minca with verified detail on transport, payments, power cuts, Ciudad Perdida and real routes.</p>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">Three days if you came to see things. What changes if you didn't.</p>
               <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
                 Read guide <span style="transition: transform 0.25s;">&rarr;</span>
               </span>
             </a>
-            <a href="/minca/is-minca-worth-the-detour/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
-              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Honest Answer</span>
-              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">Is Minca worth the detour?</h3>
-              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">A first-hand, honest answer to whether Minca deserves a spot in your Colombia itinerary — what's true about the crowded town center, the trails beyond it, and who actually pays when a place gets 'discovered.'</p>
+            <a href="/minca/how-to-get-to-minca/" style="display: block; padding: 24px; background: var(--hueso); border: 1px solid var(--borde); border-radius: 4px; transition: border-color 0.25s, transform 0.25s; text-decoration: none;">
+              <span class="eyebrow" style="font-size: 11px; color: var(--barro); font-weight: 500; display: block; margin-bottom: 8px;">Practical Guide</span>
+              <h3 style="font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 22px; color: var(--tierra); margin-bottom: 8px;">How to get to Minca: The complete guide</h3>
+              <p style="font-family: var(--sans); font-weight: 300; font-size: 15px; color: var(--sombra); margin: 0; line-height: 1.6;">First-hand guide on how to get from Santa Marta to Minca by colectivo or taxi, and navigating the upland tracks to your lodging.</p>
               <span style="font-family: var(--sans); font-weight: 300; text-transform: uppercase; letter-spacing: 0.16em; font-size: 12px; color: var(--barro); display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;">
                 Read guide <span style="transition: transform 0.25s;">&rarr;</span>
               </span>
@@ -99,8 +102,8 @@ const categoryTranslations: Record<string, string> = {
           </div>
         </div>
 
-        {/* Directory Section: hidden while src/content/lugares holds placeholder places */}
-        {SHOW_CURATED_PLACES && (
+        {/* Directory Section: solo se muestra cuando hay fichas reales */}
+        {mincaLugares.length > 0 && (
         <div>
           <div style="border-bottom: 1px solid var(--borde); padding-bottom: 16px; margin-bottom: 32px;">
             <h2 style="font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; color: var(--tierra); margin: 0;">

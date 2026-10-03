@@ -4,6 +4,8 @@ interface Props {
   isHome?: boolean;
 }
 
+import { business } from '../data/business';
+
 const { lang, isHome = false } = Astro.props;
 const currentYear = new Date().getFullYear();
 
@@ -26,14 +28,39 @@ const anchor = (id: string) => isHome ? `#${id}` : `${homePrefix}#${id}`;
         {lang === 'en' ? (
           <>
             <h4>Minca guides</h4>
+            <a href="/minca/is-minca-worth-the-detour/">Is Minca worth the detour?</a>
+            <a href="/minca/how-many-days/">How many days in Minca</a>
             <a href="/minca/how-to-get-to-minca/">How to get to Minca</a>
             <a href="/blog/">Writing</a>
           </>
         ) : (
           <>
             <h4>Guías de Minca</h4>
+            <a href="/es/minca/vale-la-pena-el-desvio-a-minca/">¿Vale la pena el desvío a Minca?</a>
+            <a href="/es/minca/cuantos-dias/">Cuántos días en Minca</a>
             <a href="/es/minca/como-llegar-a-minca/">Cómo llegar a Minca</a>
             <a href="/es/blog/">Escritos</a>
+          </>
+        )}
+      </div>
+      <div class="foot-col">
+        {lang === 'en' ? (
+          <>
+            <h4>Legal</h4>
+            <a href="/privacy/">Privacy policy</a>
+            <a href="/cookies/">Cookie policy</a>
+            <a href="/terms/">Terms of use</a>
+            <a href="/refunds/">Cancellations &amp; refunds</a>
+            <button type="button" class="foot-link-btn" data-cookie-settings>Cookie settings</button>
+          </>
+        ) : (
+          <>
+            <h4>Legal</h4>
+            <a href="/es/privacidad/">Política de privacidad</a>
+            <a href="/es/cookies/">Política de cookies</a>
+            <a href="/es/terminos/">Términos de uso</a>
+            <a href="/es/reembolsos/">Cancelaciones y reembolsos</a>
+            <button type="button" class="foot-link-btn" data-cookie-settings>Configurar cookies</button>
           </>
         )}
       </div>
@@ -57,11 +84,10 @@ const anchor = (id: string) => isHome ? `#${id}` : `${homePrefix}#${id}`;
       </div>
     </div>
     <div class="foot-bottom">
-      {lang === 'en' ? (
-        <p>© {currentYear} verybdn · by Honey, Minca, Colombia</p>
-      ) : (
-        <p>© {currentYear} verybdn · por Honey, Minca, Colombia</p>
-      )}
+      <p>
+        © {currentYear} verybdn · {lang === 'en' ? 'by' : 'por'} {business.legalName || business.ownerDisplayName}{business.idNumber && ` · ${business.idNumber}`} · {business.city}
+        <br />WhatsApp <a href={business.whatsappLink} target="_blank" rel="noopener noreferrer">{business.whatsapp}</a>{business.email && <> · <a href={`mailto:${business.email}`}>{business.email}</a></>}
+      </p>
       <span class="tag">turismo · territorio · narrativa</span>
     </div>
   </div>

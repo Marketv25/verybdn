@@ -1,0 +1,130 @@
+---
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+const policyHref = lang === 'en' ? '/cookies/' : '/es/cookies/';
+---
+
+<div
+  id="cookie-banner"
+  class="cookie-banner"
+  role="dialog"
+  aria-live="polite"
+  aria-labelledby="cookie-title"
+  aria-describedby="cookie-desc"
+  hidden
+>
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <p id="cookie-title" class="cookie-title">{lang === 'en' ? 'Cookies' : 'Cookies'}</p>
+      <p id="cookie-desc">
+        {lang === 'en'
+          ? 'We use an affiliate script (Travelpayouts) that may set cookies to attribute bookings made through our links. It only loads if you accept. The site works the same if you reject.'
+          : 'Usamos un script de afiliados (Travelpayouts) que puede instalar cookies para atribuir reservas hechas desde nuestros enlaces. Solo se carga si aceptas. El sitio funciona igual si rechazas.'}
+        {' '}<a href={policyHref}>{lang === 'en' ? 'Cookie policy' : 'Política de cookies'}</a>
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" id="cookie-reject">{lang === 'en' ? 'Reject' : 'Rechazar'}</button>
+      <button type="button" id="cookie-accept">{lang === 'en' ? 'Accept' : 'Aceptar'}</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 200;
+    background: #1A1814;
+    color: #F2ECE0;
+    border-radius: 4px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+  .cookie-banner[hidden] { display: none; }
+  .cookie-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cookie-text { flex: 1 1 420px; }
+  .cookie-title { font-weight: 500; font-size: 15px; margin-bottom: 4px; }
+  .cookie-text p { font-size: 14px; line-height: 1.55; color: #E3DACB; }
+  .cookie-text a { color: #F2ECE0; text-decoration: underline; text-underline-offset: 3px; }
+  .cookie-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  /* Mismo peso visual para aceptar y rechazar: el rechazo no puede ser más difícil */
+  .cookie-actions button {
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 15px;
+    min-width: 120px;
+    padding: 11px 20px;
+    border-radius: 2px;
+    border: 1px solid #F2ECE0;
+    background: #F2ECE0;
+    color: #1A1814;
+    cursor: pointer;
+  }
+  .cookie-actions button:hover { background: #fff; }
+  .cookie-actions button:focus-visible,
+  .cookie-text a:focus-visible { outline: 3px solid #C4895A; outline-offset: 2px; }
+</style>
+
+<script is:inline>
+  (function () {
+    var KEY = 'vbdn_cookie_consent';
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+
+    function read() {
+      try { return localStorage.getItem(KEY); } catch (e) { return null; }
+    }
+    function save(v) {
+      try { localStorage.setItem(KEY, v); } catch (e) {}
+    }
+    function loadAffiliate() {
+      if (window.__vbdnAffiliateLoaded) return;
+      window.__vbdnAffiliateLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://emrldco.com/MzY4ODc2.js?t=368876';
+      document.head.appendChild(s);
+    }
+
+    var choice = read();
+    if (choice === 'accepted') loadAffiliate();
+    else if (choice !== 'rejected') banner.hidden = false;
+
+    document.getElementById('cookie-accept').addEventListener('click', function () {
+      save('accepted');
+      banner.hidden = true;
+      loadAffiliate();
+    });
+    document.getElementById('cookie-reject').addEventListener('click', function () {
+      var wasAccepted = read() === 'accepted';
+      save('rejected');
+      banner.hidden = true;
+      // Un script ya cargado no se puede descargar: recargar para retirar el consentimiento de verdad
+      if (wasAccepted) location.reload();
+    });
+
+    // Cualquier elemento con data-cookie-settings reabre el banner
+    document.addEventListener('click', function (e) {
+      var t = e.target && e.target.closest && e.target.closest('[data-cookie-settings]');
+      if (!t) return;
+      e.preventDefault();
+      banner.hidden = false;
+      document.getElementById('cookie-accept').focus();
+    });
+  })();
+</script>

@@ -92,6 +92,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
 
   <a id="top"></a>
 
+  <main id="main">
   <article class="wrap post">
     <header class="post-head">
       <a class="eyebrow post-eyebrow" href={`${base}#${d.cluster}`}>{d.eyebrow ?? threadLabel}</a>
@@ -209,6 +210,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
       <a class="post-back" href={base}>← {t.back}</a>
     </div>
   </article>
+  </main>
 
   <Footer lang={lang} />
 </Layout>

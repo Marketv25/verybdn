@@ -1,0 +1,43 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { business } from '../../data/business';
+---
+
+<LegalLayout
+  title="Política de cancelación y reembolsos — Entre Río y Fuego"
+  heading="Política de cancelación y reembolsos"
+  description="Anticipo, cancelaciones, reagendamiento y reembolsos para reservas directas en Entre Río y Fuego, Minca."
+  lang="es"
+  canonicalUrl="https://verybdn.com/es/reembolsos/"
+  alternateUrl="https://verybdn.com/refunds/"
+>
+  <p>Esta política aplica a las reservas hechas <strong>directamente</strong> con Entre Río y Fuego (por WhatsApp). Si reservaste por Airbnb, Booking u otra plataforma, aplican la política de cancelación y los reembolsos de esa plataforma.</p>
+
+  <h2>1. Cómo se confirma una reserva</h2>
+  <p>La reserva queda confirmada cuando pagas un <strong>anticipo del 30%</strong> del valor total de la estadía y te enviamos la confirmación por escrito. Las tarifas publicadas están en pesos colombianos (COP) y son por noche. Al confirmar te indicamos por escrito el valor total, el valor del anticipo, cuándo se paga el saldo y los medios de pago.</p>
+
+  <h2>2. Si cancelas</h2>
+  <ul>
+    <li><strong>Hasta 7 días antes</strong> de la fecha de llegada: te devolvemos el anticipo completo.</li>
+    <li><strong>Con menos de 7 días</strong> de anticipación: el anticipo no se devuelve, pero puedes reagendar tu estadía para otra fecha dentro de los <strong>6 meses</strong> siguientes a la fecha original, según disponibilidad.</li>
+  </ul>
+  <p>Para cancelar o reagendar, escríbenos por <a href={business.whatsappLink} target="_blank" rel="noopener noreferrer">WhatsApp al {business.whatsapp}</a>{business.email && <> o a <a href={`mailto:${business.email}`}>{business.email}</a></>}. Tomamos como fecha de cancelación la del día en que recibimos tu mensaje.</p>
+
+  <h2>3. Si cancelamos nosotros</h2>
+  <p>Si tenemos que cancelar tu reserva —por ejemplo, por un cierre de la vía, una emergencia o cualquier causa que nos impida recibirte— puedes elegir entre la devolución total de lo que hayas pagado o reagendar sin costo.</p>
+
+  <h2>4. Cómo y cuándo devolvemos el dinero</h2>
+  <p>Hacemos los reembolsos por el mismo medio con el que pagaste, o por otro que acordemos contigo, dentro de los 30 días calendario siguientes a la solicitud. Si el banco o la plataforma de pago cobran comisiones por la devolución, te las informamos antes.</p>
+
+  <h2>5. Servicios adicionales</h2>
+  <ul>
+    <li>El sauna está incluido en las reservas directas. En reservas hechas por Airbnb o Booking tiene un costo adicional de $60.000 COP.</li>
+    <li>El desayuno y el uso del horno de leña tienen costo adicional y se acuerdan aparte.</li>
+  </ul>
+
+  <h2>6. Tus derechos como consumidor</h2>
+  <p>Nada en esta política limita los derechos que te reconoce la Ley 1480 de 2011 (Estatuto del Consumidor), incluido el derecho de retracto en las ventas a distancia cuando sea aplicable. Si tienes un reclamo, escríbenos primero; también puedes acudir a la Superintendencia de Industria y Comercio (<a href="https://www.sic.gov.co" target="_blank" rel="noopener noreferrer">sic.gov.co</a>).</p>
+
+  <h2>7. Productos digitales</h2>
+  <p>Hoy verybdn no vende productos digitales. Si en el futuro vendemos guías pagas, publicaremos aquí sus condiciones antes de ofrecerlas.</p>
+</LegalLayout>

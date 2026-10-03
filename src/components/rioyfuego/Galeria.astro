@@ -12,10 +12,10 @@ interface Props {
 const { lang } = Astro.props;
 
 const images = [
-  { src: imgCabana, alt: lang === 'en' ? 'Exterior view of the lodge cabin surrounded by forest' : 'Vista exterior de la cabaña del lodge rodeada de bosque' },
-  { src: imgRio, alt: lang === 'en' ? 'Clean river flowing with stones near the lodge' : 'Río cristalino corriendo sobre piedras cerca del lodge' },
-  { src: imgSauna, alt: lang === 'en' ? 'Exterior view of the wooden sauna building' : 'Vista exterior del sauna de madera' },
-  { src: imgFogata, alt: lang === 'en' ? 'Night bonfire lit on the path' : 'Fogata nocturna encendida en el sendero' }
+  { src: imgCabana, alt: lang === 'en' ? 'Room with two beds seen from the terrace through open glass doors' : 'Habitación con dos camas vista desde la terraza, con las puertas de vidrio abiertas' },
+  { src: imgRio, alt: lang === 'en' ? 'River running over mossy stones, surrounded by forest' : 'Río corriendo sobre piedras con musgo, rodeado de bosque' },
+  { src: imgSauna, alt: lang === 'en' ? 'Inside the wooden sauna: bench, rolled towels and a plant' : 'Interior del sauna de madera: banca, toallas enrolladas y una planta' },
+  { src: imgFogata, alt: lang === 'en' ? 'Stone fire pit lit at night, with floor cushions and candles around it' : 'Fogón de piedra encendido de noche, con cojines y velas alrededor' }
 ];
 ---
 
@@ -26,7 +26,7 @@ const images = [
       {lang === 'en' ? 'Gallery' : 'Galería'}
     </h2>
     <p class="lede" style="font-family: var(--sans); font-weight: 300; font-size: 18px; color: var(--sombra); margin-top: 16px; line-height: 1.6;">
-      {lang === 'en' ? 'The place, as it is.' : 'El lugar, tal como es.'}
+      {lang === 'en' ? 'The rooms, the river, the sauna and the fire.' : 'Las habitaciones, el río, el sauna y el fuego.'}
     </p>
   </div>
 
